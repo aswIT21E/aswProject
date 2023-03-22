@@ -1,8 +1,8 @@
 {
-  "name": "culturale-server",
+  "name": "asw-server",
   "version": "1.0.0",
   "main": "src/server.ts",
-  "repository": "https://github.com/Culturale/culturale-server.git",
+  "repository": "https://github.com/aswIT21E/aswProject.git",
   "author": "quimvi <quim.baget@estudiantat.upc.edu>",
   "license": "MIT",
   "scripts": {
@@ -23,6 +23,7 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-typescript": "^3.5.3",
     "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-react": "^7.32.2",
     "jest": "^29.4.3",
     "mocha": "^10.2.0",
     "ts-jest": "^29.0.5",
