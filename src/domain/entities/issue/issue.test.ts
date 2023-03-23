@@ -9,7 +9,11 @@ describe("Issue Entity", function () {
       "test-id",
       "test-subject",
       "test-description",
-      "test-creator"
+      "test-creator",
+      "test-status",
+      "test-type",
+      "test-severity",
+      "test-priority",
     );
   });
 
