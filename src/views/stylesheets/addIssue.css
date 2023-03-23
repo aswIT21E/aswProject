@@ -8,6 +8,29 @@ body {
     margin: 0 auto; 
 }
 
+.cerrar {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+a.cerrar-enlace {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    color: #fff;
+    background-color: #f00;
+    border-radius: 50%;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  a.cerrar-enlace:hover {
+    background-color: #d00;
+  }
+
 form {
     flex-basis: 700px;
     position: relative;
@@ -120,4 +143,65 @@ button {
     cursor: pointer;
     overflow: visible;
 }
+
+
+
+.custom-select {
+    height: 40px;
+    margin-right: 10px;
+}
+  
+#dropdown {
+    border-radius: 3px;
+    background:#70728F;
+    color: #fff;
+    cursor: pointer;
+    height: 100%;
+    outline: none;
+    padding: 0 0 0 20px;
+    width: 100%;
+}
+#dropdown option {
+    background: #fff;
+    color: #008aa8;
+    height: 20px;
+}
+
+.custom-params {
+    margin-top: 30px;
+}
+
+.dropdown-cont {
+    display: flex;
+    padding-top: 3px;
+    justify-content: space-between;
+    margin-right: 10px;
+    margin-top: 20px;
+    background-color: #f9f9fb;
+}
+
+#dropdown2 {
+    border-radius: 3px;
+    background: #f9f9fb;
+    font-size: large;
+    color: #000;
+    cursor: pointer;
+    height: 100%;
+    outline: none;
+    padding: 0 0 0 20px;
+    width: 50%;
+    border: none;
+}
+
+#dropdown2 option {
+    background: #fff;
+    color: #008aa8;
+    height: 20px;
+}
+
+.label {
+    color: #70728f;
+}
+
+
 

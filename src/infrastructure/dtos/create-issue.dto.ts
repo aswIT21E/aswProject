@@ -14,6 +14,22 @@ class CreateIssueDto {
   @IsString()
   @IsNotEmpty()
   creator: string; // FK a IUser
+
+  @IsString()
+  @IsNotEmpty()
+  status: string;
+
+  @IsString()
+  @IsNotEmpty()
+  type: string;
+
+  @IsString()
+  @IsNotEmpty()
+  severity: string;
+
+  @IsString()
+  @IsNotEmpty()
+  priority: string;
 }
 
 export async function createIssueDto(
@@ -25,6 +41,12 @@ export async function createIssueDto(
   DTO.subject = req.body.subject;
   DTO.description = req.body.description;
   DTO.creator = req.body.creator;
+  DTO.status = req.body.status;
+  DTO.type = req.body.type;
+  DTO.severity = req.body.severity;
+  DTO.priority = req.body.priority;
+
+
 
   const errors = await validate(DTO);
   if (errors.length) {
