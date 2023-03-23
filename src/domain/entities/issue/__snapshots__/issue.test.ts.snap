@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Issue Entity can be created 1`] = `
+Issue {
+  "creator": "test-creator",
+  "description": "test-description",
+  "id": "test-id",
+  "priority": "high",
+  "severity": "high",
+  "status": "done",
+  "subject": "test-subject",
+  "type": "bug",
+}
+`;
