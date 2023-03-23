@@ -8,6 +8,29 @@ body {
     margin: 0 auto; 
 }
 
+.cerrar {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+a.cerrar-enlace {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    color: #fff;
+    background-color: #f00;
+    border-radius: 50%;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  a.cerrar-enlace:hover {
+    background-color: #d00;
+  }
+
 form {
     flex-basis: 700px;
     position: relative;
