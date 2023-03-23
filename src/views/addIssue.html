@@ -10,8 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap" rel="stylesheet">
     <title>Add Issue</title>
 </head>
+
+
 <body>
-    <form method="post" action="localhost:8080/issues/new" class="issue">
+    <form id="issueForm" method="post" action="http://13.39.86.38:80/issues/create" class="issue">
         <h2 class="Title">
             <span>Nueva petición</span>
         </h2>
@@ -21,8 +23,13 @@
                     <fieldset>
                         <input type="text" id="inp" name="subject" placeholder="Asunto" data-required="true">
                     </fieldset>
+
                     <fieldset>
-                        <textarea name="description" id="" rows="7" placeholder="Por favor, añade un texto descriptivo que ayude a otros a entender mejor esta petición" data-required="true"></textarea>
+                        <input type="text" id="creator" name="creator" value="test-creator" placeholder="Creador" data-required="true">
+                    </fieldset>
+
+                    <fieldset>
+                        <textarea name="description" id="descp" rows="7" placeholder="Por favor, añade un texto descriptivo que ayude a otros a entender mejor esta petición" data-required="true"></textarea>
                     </fieldset>
                 </div>
             </div>
@@ -34,4 +41,23 @@
         </div>
     </form>
 </body>
+
+<!--<script>
+    const issueForm = document.getElementById('issueForm');
+
+
+    issueForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let input = document.getElementById("inp");
+        let description = document.getElementById("descp");
+        let me = 'me';
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://13.39.86.38:80/issues/create', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            console.log(this.responseText);
+        };
+        xhr.send('subject=input&description=description&creator=me');
+    });
+</script>-->
 </html>
