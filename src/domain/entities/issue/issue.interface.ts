@@ -3,4 +3,8 @@ export interface IIssue {
   subject: string;
   description: string;
   creator: string; // FK a IUser
+  status: string;
+  type: string;
+  severity: string;
+  priority: string;
 }
