@@ -21,3 +21,7 @@ issueRouter.get('/issues', IssueController.getAllIssues);
 issueRouter.get('/issues/newIssue', IssueController.getNewIssuePage);
 
 issueRouter.get('/issue', IssueController.getIssuePage);
+
+issueRouter.get('/issue/generahtml', IssueController.generaHtml);
+
+issueRouter.get('/issue/stylesheets/previewIssue.css', IssueController.getIssuePageCss);
