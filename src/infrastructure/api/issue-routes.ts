@@ -20,4 +20,9 @@ issueRouter.get('/issues', IssueController.getAllIssues);
 
 issueRouter.get('/issues/newIssue', IssueController.getNewIssuePage);
 
+issueRouter.get(
+  '/issues/stylesheets/addIssue.css',
+  IssueController.getNewIssuePageCss,
+);
+
 issueRouter.get('/issue', IssueController.getIssuePage);

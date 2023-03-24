@@ -45,6 +45,13 @@ export class IssueController {
     res.sendFile('public/views/addIssue.html', { root: 'src' });
   }
 
+  public static async getNewIssuePageCss(
+    _req: Request,
+    res: Response,
+  ): Promise<void> {
+    res.sendFile('public/stylesheets/addIssue.css', { root: 'src' });
+  }
+
   public static async getIssuePage(
     _req: Request,
     res: Response,
