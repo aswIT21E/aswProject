@@ -28,6 +28,6 @@ issueRouter.get(
 issueRouter.get('/issue', IssueController.getIssuePage);
 
 issueRouter.get(
-  '/issue/stylesheets/previewIssue.css',
+  '/stylesheets/previewIssue.css',
   IssueController.getIssuePageCss,
 );

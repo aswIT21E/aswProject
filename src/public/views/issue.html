@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap"
-      rel="stylesheet"
-    />
-    <title>ASW</title>
-  </head>
+<link rel="stylesheet" type="text/css" href="stylesheets/issue.css" />
 
-  <body>
-    <a>Projecte ASW</a>
-  </body>
-</html>
+<div class="issue">
+  <div class="bola" id="TipoBola"></div>
+  <div class="bola" id="GravedadBola"></div>
+  <div class="bola" id="PrioridadBola"></div>
+  <div class="informacion">
+    <div class="numero-peticion" id="NumPeticion"></div>
+    <div class="texto-peticion" id="TextoPeticion">
+      <a id="linkIssue" href="localhost:8080/issues/issue=000"
+        >Node 12 is end-of-life aaaaaaaaaa</a
+      >
+    </div>
+  </div>
+  <div class="estado" id="EstadoPeticion"></div>
+  <div class="fecha-creacion" id="FechaPeticion"></div>
+</div>

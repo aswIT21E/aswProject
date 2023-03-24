@@ -84,6 +84,6 @@ export class IssueController {
     _req: Request,
     res: Response,
   ): Promise<void> {
-    res.sendFile('/views/stylesheets/previewIssue.css', { root: 'src' });
+    res.sendFile('public/stylesheets/previewIssue.css', { root: 'src' });
   }
 }
