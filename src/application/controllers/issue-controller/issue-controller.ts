@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 
 import type { IIssue } from '~/domain/entities/issue';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
-
+import fs from 'fs';
 import cheerio from 'cheerio';
 
 export class IssueController {
@@ -58,12 +58,11 @@ export class IssueController {
 
 public static async generaHtml(req: Request, res: Response): Promise<void> {
   const issues: IIssue[] = await IssueRepository.getAllIssues();
-  const fs = require('fs');
-  var Indexhtml = fs.readFileSync('src/views/index.html');
-  var $ = cheerio.load(Indexhtml);
+  const Indexhtml = fs.readFileSync('src/views/index.html');
+  const $ = cheerio.load(Indexhtml);
 
     for (const issue of issues) {
-          var scriptNode = `                           
+          const scriptNode = `                           
               <div class="issue">
               <div class="bola" id="${issue.type}"></div>
               <div class="bola" id="${issue.severity}"></div>
