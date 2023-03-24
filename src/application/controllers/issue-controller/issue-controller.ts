@@ -49,6 +49,6 @@ export class IssueController {
     _req: Request,
     res: Response,
   ): Promise<void> {
-    res.sendFile('views/issue.html', { root: 'src' });
+    res.sendFile('/public/views/issue.html', { root: 'src' });
   }
 }
