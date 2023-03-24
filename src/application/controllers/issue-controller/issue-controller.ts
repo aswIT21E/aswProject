@@ -3,7 +3,6 @@ import { load } from 'cheerio';
 import fs from 'fs';
 import type { IIssue } from '~/domain/entities/issue';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
-import cheerio from 'cheerio';
 
 export class IssueController {
   public static async createIssue(req: Request, res: Response): Promise<void> {
@@ -59,19 +58,12 @@ export class IssueController {
     _req: Request,
     res: Response,
   ): Promise<void> {
-    let $ = load(fs.readFileSync('src/public/views/issue.html'));
-
-    res.send($.html());
-  }
-
-
-public static async generaHtml(req: Request, res: Response): Promise<void> {
-  const issues: IIssue[] = await IssueRepository.getAllIssues();
-  const Indexhtml = fs.readFileSync('src/views/index.html');
-  const $ = cheerio.load(Indexhtml);
+    const issues: IIssue[] = await IssueRepository.getAllIssues();
+    const Indexhtml = fs.readFileSync('src/views/index.html');
+    const $ = load(Indexhtml);
 
     for (const issue of issues) {
-          const scriptNode = `                           
+      const scriptNode = `                           
               <div class="issue">
               <div class="bola" id="${issue.type}"></div>
               <div class="bola" id="${issue.severity}"></div>
@@ -82,17 +74,16 @@ public static async generaHtml(req: Request, res: Response): Promise<void> {
               </div>
               <div class="estado" id= "${issue.status}"></div>
               <div class="fecha-creacion" id = "FechaPeticion">${issue.creator}</div>
-              </div>`;        
-              $('body').append(scriptNode);
+              </div>`;
+      $('body').append(scriptNode);
     }
-  res.send($.html());
+    res.send($.html());
+  }
 
-    }
-  
-  public static async getIssuePageCss(req: Request, res: Response): Promise<void> {
-  
+  public static async getIssuePageCss(
+    _req: Request,
+    res: Response,
+  ): Promise<void> {
     res.sendFile('/views/stylesheets/previewIssue.css', { root: 'src' });
   }
- 
-
 }
