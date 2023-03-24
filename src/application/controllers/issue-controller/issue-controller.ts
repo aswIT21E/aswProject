@@ -1,8 +1,8 @@
 import type { Request, Response } from 'express';
-
+import { load } from 'cheerio';
+import fs from 'fs';
 import type { IIssue } from '~/domain/entities/issue';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
-import fs from 'fs';
 import cheerio from 'cheerio';
 
 export class IssueController {
@@ -45,14 +45,23 @@ export class IssueController {
     _req: Request,
     res: Response,
   ): Promise<void> {
-    res.sendFile('views/addIssue.html', { root: 'src' });
+    res.sendFile('public/views/addIssue.html', { root: 'src' });
+  }
+
+  public static async getNewIssuePageCss(
+    _req: Request,
+    res: Response,
+  ): Promise<void> {
+    res.sendFile('public/stylesheets/addIssue.css', { root: 'src' });
   }
 
   public static async getIssuePage(
     _req: Request,
     res: Response,
   ): Promise<void> {
-    res.sendFile('views/issue.html', { root: 'src' });
+    let $ = load(fs.readFileSync('src/public/views/issue.html'));
+
+    res.send($.html());
   }
 
 

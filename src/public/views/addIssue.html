@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/addIssue.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <title>Add Issue</title>
+  </head>
+
+  <body>
+    <form
+      id="issueForm"
+      method="post"
+      action="http://13.39.86.38:80/issues/create"
+      class="issue"
+    >
+      <div class="cerrar">
+        <a class="cerrar-enlace" href="./searchIssue.html">X</a>
+      </div>
+      <h2 class="Title">
+        <span>Nueva petición</span>
+      </h2>
+      <div class="wrapper">
+        <div class="form-wrapper">
+          <div class="main">
+            <fieldset>
+              <input
+                type="text"
+                id="inp"
+                name="subject"
+                placeholder="Asunto"
+                data-required="true"
+              />
+            </fieldset>
+
+            <fieldset>
+              <input
+                type="text"
+                id="creator"
+                name="creator"
+                value="test-creator"
+                placeholder="Creador"
+                data-required="true"
+              />
+            </fieldset>
+
+            <fieldset>
+              <textarea
+                name="description"
+                id="descp"
+                rows="7"
+                placeholder="Por favor, añade un texto descriptivo que ayude a otros a entender mejor esta petición"
+                data-required="true"
+              ></textarea>
+            </fieldset>
+          </div>
+          <sidebar class="sidebar">
+            <div class="side-wrap">
+              <div class="custom-select">
+                <select name="status" id="dropdown">
+                  <option value="Nueva">Nueva</option>
+                  <option value="En curso">En curso</option>
+                  <option value="Lista para testear">Lista para testear</option>
+                  <option value="Cerrada">Cerrada</option>
+                  <option value="Necesita información">
+                    Necesita información
+                  </option>
+                  <option value="Rechazada">Rechazada</option>
+                  <option value="Pospuesta">Pospuesta</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="custom-params">
+              <div class="dropdown-cont">
+                <label for="type" class="label">tipo</label>
+                <select name="type" id="dropdown2" class="tipo">
+                  <option value="Bug">Bug</option>
+                  <option value="Pregunta">Pregunta</option>
+                  <option value="Mejora">Mejora</option>
+                </select>
+              </div>
+              <div class="dropdown-cont">
+                <label for="severity" class="label">gravedad</label>
+                <select name="severity" id="dropdown2" class="tipo">
+                  <option value="Deseada">Deseada</option>
+                  <option value="Menor">Menor</option>
+                  <option value="Normal" selected="selected">Normal</option>
+                  <option value="Importante">Importante</option>
+                  <option value="Crítica">Crítica</option>
+                </select>
+              </div>
+              <div class="dropdown-cont">
+                <label for="priority" class="label">prioridad</label>
+                <select name="priority" id="dropdown2" class="tipo">
+                  <option value="Baja">Baja</option>
+                  <option value="Media" selected="selected">Media</option>
+                  <option value="Alta">Alta</option>
+                </select>
+              </div>
+            </div>
+          </sidebar>
+        </div>
+        <div class="btn-wrapper">
+          <button id="submitButton" type="submit">
+            <span>Crear</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </body>
+
+  <!--<script>
+    const issueForm = document.getElementById('issueForm');
+
+
+    issueForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let input = document.getElementById("inp");
+        let description = document.getElementById("descp");
+        let me = 'me';
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://13.39.86.38:80/issues/create', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            console.log(this.responseText);
+        };
+        xhr.send('subject=input&description=description&creator=me');
+    });
+</script>-->
+</html>
