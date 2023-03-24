@@ -1,0 +1,113 @@
+/*Estilo para el contenedor de la issue*/
+.issue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    margin-left: 20%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    max-width: 60%;
+    min-width: 700px;
+    
+  }
+  
+  .elemento:hover {
+    background-color: #eee;
+  }
+  
+  .bola {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+   
+  }
+  /* Estilos para tipos de Issue */
+  .bug{
+    background-color: red;
+  }
+  
+  .question {
+    background-color: rgb(6, 42, 247);
+  }
+  .enhancement{
+    background-color: green;
+  }
+  
+  /* Estilo para  pending*/
+  .pending{
+    background-color: grey;
+  }
+  
+  /* Estilos para gravedad*/
+  .menor{
+    background-color: blue;
+  }
+  
+  .normal{
+    background-color: green;
+  }
+  
+  .important{
+    background-color: orange;
+  }
+  
+  .critical {
+    background-color: red;
+  }
+  
+  /* Estilos para prioridad*/
+  .baja {
+    background-color: green;
+  }
+  .estandar {
+    background-color: orange;
+  }
+  .alta {
+    background-color: red;
+  }
+  
+  /* Estilos para estado*/
+  .completed {
+    background-color: green;
+  }
+  .onGoing{
+    background-color: orange;
+  }
+  .incomplete {
+    background-color: red;
+  }
+  
+  /*Estilos para elementos de la issue*/
+  
+  .informacion {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .numero-peticion {
+    font-weight: bold;
+    text-align: center;
+  }
+  .texto-peticion {
+    margin-left: 10px;
+  }
+  
+  #linkIssue{
+    color: rgb(51, 46, 46);
+    text-decoration: none;
+  }
+  .estado {
+    text-align: center;
+    width: 100px;
+  }
+  
+  .fecha-creacion {
+    text-align: center;
+    width: 100px;
+    color:#8f8989
+  }
