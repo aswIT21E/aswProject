@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
-
+import { load } from 'cheerio';
+import fs from 'fs';
 import type { IIssue } from '~/domain/entities/issue';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
 
@@ -56,6 +57,8 @@ export class IssueController {
     _req: Request,
     res: Response,
   ): Promise<void> {
-    res.sendFile('public/views/issue.html', { root: 'src' });
+    let $ = load(fs.readFileSync('src/public/views/issue.html'));
+
+    res.send($.html());
   }
 }
