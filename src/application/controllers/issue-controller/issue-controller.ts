@@ -67,7 +67,7 @@ export class IssueController {
 
 public static async generaHtml(req: Request, res: Response): Promise<void> {
   const issues: IIssue[] = await IssueRepository.getAllIssues();
-  const Indexhtml = fs.readFileSync('src/views/index.html');
+  const Indexhtml = fs.readFileSync('src/public/views/index.html');
   const $ = cheerio.load(Indexhtml);
 
     for (const issue of issues) {
@@ -78,9 +78,9 @@ public static async generaHtml(req: Request, res: Response): Promise<void> {
               <div class="bola" id="${issue.priority}"></div>
               <div class="informacion">
                   <div class="numero-peticion" id="NumPeticion"> ${issue.id}</div>
-                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="localhost:8080/issues/issue=000">${issue.description}</a> </div>
+                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="localhost:8080/issues/issue=000">${issue.subject}</a> </div>
               </div>
-              <div class="estado" id= "${issue.status}"></div>
+              <div class="estado" >${issue.status}</div>
               <div class="fecha-creacion" id = "FechaPeticion">${issue.creator}</div>
               </div>`;        
               $('body').append(scriptNode);
@@ -91,7 +91,7 @@ public static async generaHtml(req: Request, res: Response): Promise<void> {
   
   public static async getIssuePageCss(req: Request, res: Response): Promise<void> {
   
-    res.sendFile('/views/stylesheets/previewIssue.css', { root: 'src' });
+    res.sendFile('public/stylesheets/previewIssue.css', { root: 'src' });
   }
  
 

@@ -26,58 +26,58 @@
    
   }
   /* Estilos para tipos de Issue */
-  .bug{
+  #bug{
     background-color: red;
   }
   
-  .question {
+  #question {
     background-color: rgb(6, 42, 247);
   }
-  .enhancement{
+  #enhancement{
     background-color: green;
   }
   
   /* Estilo para  pending*/
-  .pending{
+  #pending{
     background-color: grey;
   }
   
   /* Estilos para gravedad*/
-  .menor{
+  #menor{
     background-color: blue;
   }
   
-  .normal{
+  #normal{
     background-color: green;
   }
   
-  .important{
+  #important{
     background-color: orange;
   }
   
-  .critical {
+  #critical {
     background-color: red;
   }
   
   /* Estilos para prioridad*/
-  .baja {
+  #baja {
     background-color: green;
   }
-  .estandar {
+  #estandar {
     background-color: orange;
   }
-  .alta {
+  #alta {
     background-color: red;
   }
   
   /* Estilos para estado*/
-  .completed {
+  #completed {
     background-color: green;
   }
-  .onGoing{
+  #onGoing{
     background-color: orange;
   }
-  .incomplete {
+  #incomplete {
     background-color: red;
   }
   
