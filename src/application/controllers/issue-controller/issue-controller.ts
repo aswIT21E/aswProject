@@ -3,7 +3,6 @@ import { load } from 'cheerio';
 import fs from 'fs';
 import type { IIssue } from '~/domain/entities/issue';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
-import cheerio from 'cheerio';
 
 export class IssueController {
 
@@ -74,7 +73,7 @@ public static async generaHtml(req: Request, res: Response): Promise<void> {
   const $ = cheerio.load(Indexhtml);
 
     for (const issue of issues) {
-          const scriptNode = `                           
+      const scriptNode = `                           
               <div class="issue">
               <abbr title = "${issue.type}"> <div class="bola" id="${issue.type}"></div></abbr>
               <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"></div></abbr>
@@ -85,8 +84,8 @@ public static async generaHtml(req: Request, res: Response): Promise<void> {
               </div>
               <div class="estado" >${issue.status}</div>
               <div class="fecha-creacion" id = "FechaPeticion">${issue.creator}</div>
-              </div>`;        
-              $('body').append(scriptNode);
+              </div>`;
+      $('body').append(scriptNode);
     }
   res.send($.html());
 
@@ -96,6 +95,4 @@ public static async generaHtml(req: Request, res: Response): Promise<void> {
   
     res.sendFile('public/stylesheets/previewIssue.css', { root: 'src' });
   }
- 
-
 }
