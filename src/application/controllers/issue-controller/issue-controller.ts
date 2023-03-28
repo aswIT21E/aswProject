@@ -10,7 +10,6 @@ export class IssueController {
     try {
       const issue: IIssue = req.body;
       await IssueRepository.addIssue(issue);
-      IssueController.generaHtml(req, res);
       res.status(200);
       res.json({
         message: 'issue created',
@@ -61,7 +60,7 @@ export class IssueController {
     _req: Request,
     res: Response,
   ): Promise<void> {
-    let $ = load(fs.readFileSync('src/public/views/issue.html'));
+    const $ = load(fs.readFileSync('src/public/views/issue.html'));
 
     res.send($.html());
   }
@@ -70,7 +69,7 @@ export class IssueController {
 public static async generaHtml(req: Request, res: Response): Promise<void> {
   const issues: IIssue[] = await IssueRepository.getAllIssues();
   const Indexhtml = fs.readFileSync('src/public/views/index.html');
-  const $ = cheerio.load(Indexhtml);
+  const $ = load(Indexhtml);
 
     for (const issue of issues) {
       const scriptNode = `                           
@@ -79,7 +78,7 @@ public static async generaHtml(req: Request, res: Response): Promise<void> {
               <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"></div></abbr>
               <abbr title = "${issue.priority}"><div class="bola" id="${issue.priority}"></div></abbr>
               <div class="informacion">
-                  <div class="numero-peticion" id="NumPeticion"> ${issue.numIssue}</div>
+                  <div class="numero-peticion" id="NumPeticion"> ${issue.id}</div>
                   <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="localhost:8080/issues/issue=000">${issue.subject}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>

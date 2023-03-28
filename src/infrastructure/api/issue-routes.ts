@@ -31,3 +31,6 @@ issueRouter.get(
   '/stylesheets/previewIssue.css',
   IssueController.getIssuePageCss,
 );
+
+issueRouter.get('/issues/generaHTML', IssueController.generaHtml);
+issueRouter.get('/issues/stylesheets/previewIssue.css', IssueController.getIssuePageCss);
