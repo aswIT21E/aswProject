@@ -20,17 +20,10 @@ issueRouter.get('/issues', IssueController.getAllIssues);
 
 issueRouter.get('/issues/newIssue', IssueController.getNewIssuePage);
 
-issueRouter.get(
-  '/issues/stylesheets/addIssue.css',
-  IssueController.getNewIssuePageCss,
+issueRouter.get('/issues/stylesheets/addIssue.css', IssueController.getNewIssuePageCss,
 );
 
 issueRouter.get('/issue', IssueController.getIssuePage);
-
-issueRouter.get(
-  '/stylesheets/previewIssue.css',
-  IssueController.getIssuePageCss,
-);
 
 issueRouter.get('/issues/generaHTML', IssueController.generaHtml);
 issueRouter.get('/issues/stylesheets/previewIssue.css', IssueController.getIssuePageCss);
