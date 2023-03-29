@@ -4,6 +4,7 @@ import type { IIssue } from "./issue.interface";
 
 const IssueSchema = new Schema({
   subject: { required: true, type: String },
+  numberIssue: { required: true, type: Number },
   description: { required: true, type: String },
   creator: { required: true, type: String }, // FK a IUser
   status: { required: true, type: String },
