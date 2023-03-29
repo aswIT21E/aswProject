@@ -59,9 +59,11 @@ export class IssueController {
     res: Response,
   ): Promise<void> {
     const issues: IIssue[] = await IssueRepository.getAllIssues();
-    const Indexhtml = fs.readFileSync('src/views/index.html');
+    const Indexhtml = fs.readFileSync('src/public/views/index.html');
+    const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
     const $ = load(Indexhtml);
-
+    
+    $('body').append(load(searchPage).html());
     for (const issue of issues) {
       const scriptNode = `                           
               <div class="issue">
