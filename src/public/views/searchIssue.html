@@ -1,0 +1,41 @@
+
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
+  </head>
+    <header>
+      <h1 style="color: #008aa8; font-family: Arial, verdana">Issues</h1>
+    </header>
+      <div class="search-filter">
+        <button type="button" class="filter-button">
+          <span><i class="fas fa-filter"></i></span>
+          <span>Filters</span>
+        </button>
+        <div class="search-box">
+          <input
+            class="search-input"
+            type="text"
+            id="input"
+            placeholder="Subject or reference"
+          />
+          <span><i class="fas fa-search"></i></span>
+        </div>
+        <div class="switch">
+          <input type="checkbox" id="toggle" />
+          <label for="toggle"></label>
+          <span class="label"> Tags</span>
+        </div>
+
+        <button
+          type="button"
+          class="new-issue-button"
+          onclick="window.location.href='/issues/newIssue'"
+        >
+          <span>+ New Issue</span>
+        </button>
+      </div>
