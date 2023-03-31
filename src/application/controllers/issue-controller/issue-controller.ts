@@ -9,7 +9,9 @@ export class IssueController {
   public static async createIssue(req: Request, res: Response): Promise<void> {
     try {
       const issue: IIssue = req.body;
-      await IssueRepository.addIssue(issue);
+      const lastNumberIssue = await IssueRepository.getLastIssue();
+      console.log(lastNumberIssue);
+      await IssueRepository.addIssue(issue, lastNumberIssue);
       res.status(200);
       res.json({
         message: 'issue created',
@@ -73,8 +75,8 @@ export class IssueController {
               <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"></div></abbr>
               <abbr title = "${issue.priority}"><div class="bola" id="${issue.priority}"></div></abbr>
               <div class="informacion">
-                  <div class="numero-peticion" id="NumPeticion"> ${issue.id}</div>
-                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="/issue/${issue.id}">${issue.subject}</a> </div>
+                  <div class="numero-peticion" id="NumPeticion"> ${issue.numberIssue}</div>
+                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="localhost:8080/issues/issue=000">${issue.description}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>
               <div class="fecha-creacion" id = "FechaPeticion">${issue.creator}</div>

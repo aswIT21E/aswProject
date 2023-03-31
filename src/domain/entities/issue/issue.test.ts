@@ -7,6 +7,7 @@ describe('Issue Entity', function () {
   beforeEach(function () {
     instance = new Issue(
       'test-id',
+      1234,
       'test-subject',
       'test-description',
       'test-creator',
