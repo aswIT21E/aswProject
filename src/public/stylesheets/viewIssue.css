@@ -1,0 +1,284 @@
+* {
+    box-sizing: border-box;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+}
+
+body {
+    width: 700px;
+    margin: 0 auto;
+}
+
+.master {
+    height: 100%;
+    min-height: 100%;
+    position: relative;
+}
+
+.main {
+    flex: 1;
+    background: #f1f1f4;
+    padding: 0;
+    min-width: 0;
+    width: 100%;
+
+}
+
+.header-container{
+    display: flex;
+    margin: 0 0 0.5rem;
+    position: relative;
+    background: #fff;
+    padding: 1rem;
+}
+
+.detail-header {
+    flex: 1;
+    flex-grow: 1;
+}
+
+.detail-title {
+    display: flex;
+    margin: 0 2rem 0.5rem 0;
+}
+
+.title {
+    font-size: 1.7rem;
+    align-items: baseline;
+    color: #2e3440;
+    display: flex;
+    line-height: 2rem;
+    margin: 0;
+}
+
+.ref {
+    flex-shrink: 1;
+    font-family: Ubuntu-Medium,Arial,Helvetica,sans-serif;
+    font-weight: 500;
+    font-size: 1.7rem;
+    color: #008aa8;
+    margin-right: 0.5rem;
+}
+
+.subject {
+    color: #2e3440;
+    flex-grow: 1;
+    word-break: break-word;
+}
+
+.detail-project {
+    font-family: Ubuntu-Regular,Arial,Helvetica,sans-serif;
+    color: #2e3440;
+    display: flex;
+    margin: 0 0 1rem;
+    text-transform: uppercase;
+}
+
+.subheader {
+    align-items: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.created-by {
+    flex-shrink: 1;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.created-by a {
+    text-decoration: none;
+    color: #008aa8;
+}
+
+.detail-content {
+    background: #fff;
+    padding: 1rem;
+}
+
+.duty-content {
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.description {
+    width: auto;
+    min-width: 50px;
+    height: auto;
+    min-height: 20px;
+    padding: 10px;
+    margin: 0;
+    resize: both;
+    overflow: auto;
+    border: none;
+  }
+
+  .description.editing {
+    border: 1px solid black;
+  }
+
+.save-button {
+    opacity: 0;
+    margin-left: 4px;
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.save-button:hover {
+    opacity: 1;
+}
+
+
+.attachments {
+    margin: 20px 0;
+  }
+  
+  .attachment-header {
+    display: flex;
+    margin-bottom: 10px;
+    background-color: #eceff4;
+    font-size: 1rem;
+    color: #4c566a;
+    padding: 0 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .attachment-count {
+    color: #888;
+    font-weight: normal;
+  }
+  
+  .attachment-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+  
+  .attachment-label {
+    background-color: #83eede;
+    color: white;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .attachment-label:hover {
+    background-color: #41726b;
+  }
+  
+  .attachment-input {
+    display: none;
+  }
+  
+  .attachment-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .attachment-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .attachment-item-name {
+    margin-right: 10px;
+  }
+  
+  .attachment-item-remove {
+    color: #888;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .attachment-item-remove:hover {
+    color: #ff5c5c;
+  }
+
+  .comment-section {
+    margin-top: 40px;
+  }
+  
+  .comment-section h2 {
+    margin-bottom: 10px;
+    background-color: #eceff4;
+    font-size: 1rem;
+    color: #4c566a;
+    padding: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .comment-section form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .comment-section form .form-group {
+    margin-bottom: 10px;
+  }
+  
+  .comment-section form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .comment-section form textarea {
+    height: 50px;
+    width: 100%;
+    line-height: 40px;
+  }
+  
+  .comment-section form button {
+    align-self: flex-end;
+  }
+  
+  .comment {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .comment .avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .comment .content {
+    flex-grow: 1;
+  }
+  
+  .comment .content h4 {
+    margin: 0;
+  }
+  
+  .comment .content p {
+    margin: 5px 0 0 0;
+  }
+  
+  .comment .metadata {
+    font-size: 14px;
+    color: #999;
+    text-align: right;
+  }
+  
+  
+
+
+
+
+
+  
+
+
+
