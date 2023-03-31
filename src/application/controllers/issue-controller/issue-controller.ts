@@ -86,6 +86,8 @@ export class IssueController {
   res.send($.html());
 
     }
+
+    
   
   public static async getIssuePageCss(req: Request, res: Response): Promise<void> {
   

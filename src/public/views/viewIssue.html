@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/viewIssue.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>View Issue</title>
+  </head>
+
+  <body>
+    <div class="master">
+        <div class="main">
+            <div class="header-container">
+                <div class="detail-header">
+                    <div class="detail-nom">
+                        <div class="detail-title">
+                            <h2 class="title">
+                                <div class="ref">#1</div>
+                                <span  class="subject">nombreIssue</span>
+                            </h2>
+                        </div>
+                        <div class="detail-project">
+                            <div class="section-name">PETICIÓN</div>
+                        </div>
+                    </div>
+                    <div class="subheader">
+                        <div class="created-by">
+                            <a href="profile/rubitor5" class="created-title">Creado por Rubén Torrente</a>
+                            <div class="created-date">
+                                24 mar. 2023 16:20
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-content">
+                <section class="duty-content">
+                    <div contenteditable="true" class="description">
+                        descripcion
+                    </div>
+                    <button class="save-button" onclick="saveDescription()"><ion-icon name="save"></ion-icon></button>
+                </section>
+                <section class="attachments">
+                    <h2 class="attachment-header">
+                        <div class="attachment-ad">
+                            <span class="attachment-count">0</span> Adjuntos
+                        </div>
+                        
+                        <div class="attachment-container">
+                            <label for="attachment-input" class="attachment-label">+</label>
+                            <input type="file" id="attachment-input" class="attachment-input" multiple>
+                        </div>
+                    </h2>
+                    <ul class="attachment-list"></ul>
+                </section>
+                <section class="comment-section">
+                    <h2 class="comment-h2"><span id="comment-count">0</span> Comentarios</h2>
+                    <form id="comment-form">
+                      <div class="form-group">
+                        <textarea id="comment" name="comment" placeholder="Escribe un nuevo comentario aquí" required></textarea>
+                      </div>
+                      <button type="submit">Comentar</button>
+                    </form>
+                    <div id="comments-section">
+                        <ul id="comments-list"></ul>
+                      </div>
+                  </section>
+                  
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var descriptionField = document.querySelector(".description");
+    
+        if (localStorage.getItem("description")) {
+          descriptionField.innerHTML = localStorage.getItem("description");
+        }
+    
+ 
+        descriptionField.addEventListener("click", function() {
+          descriptionField.classList.add("editing");
+        });
+    
+   
+        descriptionField.addEventListener("blur", function() {
+          descriptionField.classList.remove("editing");
+          localStorage.setItem("description", this.innerHTML);
+        });
+        </script>
+      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+      <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+      <script>
+        const attachmentInput = document.getElementById('attachment-input');
+        const attachmentList = document.querySelector('.attachment-list');
+        const attachmentCount = document.querySelector('.attachment-count');
+
+        let attachments = [];
+
+attachmentInput.addEventListener('change', () => {
+  const files = attachmentInput.files;
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    attachments.push(file);
+    displayAttachment(file);
+  }
+  updateAttachmentCount();
+});
+
+function displayAttachment(file) {
+  const item = document.createElement('li');
+  item.className = 'attachment-item';
+  item.innerHTML = `
+    <span class="attachment-item-name">${file.name}</span>
+    <span class="attachment-item-remove">&times;</span>
+  `;
+  const removeBtn = item.querySelector('.attachment-item-remove');
+  removeBtn.addEventListener('click', () => {
+    removeAttachment(file);
+    attachmentList.removeChild(item);
+    updateAttachmentCount();
+  });
+  attachmentList.appendChild(item);
+}
+
+function removeAttachment(file) {
+  const index = attachments.indexOf(file);
+  if (index > -1) {
+    attachments.splice(index, 1);
+  }
+}
+
+function updateAttachmentCount() {
+  attachmentCount.textContent = attachments.length;
+}
+
+    </script>
+
+      
+  </body>
+</html>
