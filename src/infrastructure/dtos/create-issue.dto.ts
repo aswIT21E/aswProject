@@ -3,6 +3,7 @@ import { validate } from "class-validator";
 import type { NextFunction, Request, Response } from "express";
 
 class CreateIssueDto {
+
   @IsString()
   @IsNotEmpty()
   subject: string;
