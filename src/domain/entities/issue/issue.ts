@@ -2,6 +2,7 @@ import type { IIssue } from "./issue.interface";
 
 export class Issue implements IIssue {
   public id: string;
+  public numberIssue: number;
   public subject: string;
   public description: string;
   public creator: string; // FK a IUser
@@ -12,6 +13,7 @@ export class Issue implements IIssue {
 
   constructor(
     id: string,
+    numberIssue: number,
     subject: string,
     description: string,
     creator: string,
@@ -21,6 +23,7 @@ export class Issue implements IIssue {
     priority: string,
   ) {
     this.id = id;
+    this.numberIssue = numberIssue;
     this.subject = subject;
     this.description = description;
     this.creator = creator;

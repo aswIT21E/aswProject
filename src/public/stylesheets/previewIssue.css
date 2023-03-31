@@ -4,7 +4,6 @@
     align-items: center;
     justify-content: center;
     flex-direction: row;
-    margin-left: 20%;
     padding: 10px;
     border: 2px solid #ccc;
     border-radius: 5px;
@@ -26,58 +25,47 @@
    
   }
   /* Estilos para tipos de Issue */
-  .bug{
+  #Bug{
     background-color: red;
   }
   
-  .question {
+  #Pregunta {
     background-color: rgb(6, 42, 247);
   }
-  .enhancement{
+  #Mejora{
     background-color: green;
   }
   
   /* Estilo para  pending*/
-  .pending{
+  #Deseada{
     background-color: grey;
   }
   
   /* Estilos para gravedad*/
-  .menor{
+  #Menor{
     background-color: blue;
   }
   
-  .normal{
+  #Normal{
     background-color: green;
   }
   
-  .important{
+  #Importante{
     background-color: orange;
   }
   
-  .critical {
+  #Crítica {
     background-color: red;
   }
   
   /* Estilos para prioridad*/
-  .baja {
+  #Baja {
     background-color: green;
   }
-  .estandar {
+  #Media {
     background-color: orange;
   }
-  .alta {
-    background-color: red;
-  }
-  
-  /* Estilos para estado*/
-  .completed {
-    background-color: green;
-  }
-  .onGoing{
-    background-color: orange;
-  }
-  .incomplete {
+  #Alta {
     background-color: red;
   }
   
