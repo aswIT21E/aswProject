@@ -9,4 +9,8 @@ export class IssueRepository {
   public static async getAllIssues(): Promise<IIssue[]> {
     return await IssueModel.find();
   }
+
+  public static async getIssueById(issueID: string): Promise<IIssue> {
+    return await IssueModel.findById(issueID); 
+  }
 }

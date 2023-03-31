@@ -1,3 +1,4 @@
+
 import type { Request, Response } from 'express';
 import express from 'express';
 
@@ -24,5 +25,8 @@ issueRouter.get('/issues/stylesheets/addIssue.css',IssueController.getNewIssuePa
 
 issueRouter.get('/issue', IssueController.getIssuePage);
 
+issueRouter.get('/issue/:id', IssueController.getIndividualIssuePage);
+
+issueRouter.get('/stylesheets/searchIssue.css', IssueController.getSearchIssueCss,);
 
 issueRouter.get( '/stylesheets/previewIssue.css',IssueController.getIssuePageCss,);

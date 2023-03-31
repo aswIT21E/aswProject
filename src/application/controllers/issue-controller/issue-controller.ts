@@ -65,7 +65,7 @@ export class IssueController {
     const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
     const $ = load(Indexhtml);
     
-    $('body').append(load(searchPage).html());
+    $('#searchbar').append(load(searchPage).html());
     for (const issue of issues) {
       const scriptNode = `                           
               <div class="issue">
@@ -74,7 +74,7 @@ export class IssueController {
               <abbr title = "${issue.priority}"><div class="bola" id="${issue.priority}"></div></abbr>
               <div class="informacion">
                   <div class="numero-peticion" id="NumPeticion"> ${issue.id}</div>
-                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="localhost:8080/issues/issue=000">${issue.subject}</a> </div>
+                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="/issue/${issue.id}">${issue.subject}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>
               <div class="fecha-creacion" id = "FechaPeticion">${issue.creator}</div>
@@ -89,4 +89,15 @@ export class IssueController {
   
     res.sendFile('public/stylesheets/previewIssue.css', { root: 'src' });
   }
+  public static async getSearchIssueCss(req: Request, res: Response): Promise<void> {
+  
+    res.sendFile('public/stylesheets/searchIssue.css', { root: 'src' });
+  }
+
+  public static async getIndividualIssuePage(req: Request, res: Response): Promise<void>{
+    console.log(req.params.id);
+    const issue: IIssue = await IssueRepository.getIssueById(req.params.id); 
+    console.log(issue);
+  }
+
 }
