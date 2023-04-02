@@ -1,3 +1,5 @@
+import { IComment } from "../comment";
+
 export interface IIssue {
   id: string;
   numberIssue: number;
@@ -8,4 +10,5 @@ export interface IIssue {
   type: string;
   severity: string;
   priority: string;
+  comments?: IComment[];
 }

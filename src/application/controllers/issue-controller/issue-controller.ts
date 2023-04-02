@@ -10,11 +10,11 @@ export class IssueController {
     try {
       const issue: IIssue = req.body;
       const lastNumberIssue = await IssueRepository.getLastIssue();
-      console.log(lastNumberIssue);
-      await IssueRepository.addIssue(issue, lastNumberIssue);
+      const newIssue: IIssue =  await IssueRepository.addIssue(issue, lastNumberIssue);
       res.status(200);
       res.json({
         message: 'issue created',
+        issue: newIssue,
       });
       res.sendFile('public/views/index.html', { root: 'src' });
     } catch (e) {
@@ -86,8 +86,6 @@ export class IssueController {
   res.send($.html());
 
     }
-
-    
   
   public static async getIssuePageCss(req: Request, res: Response): Promise<void> {
   
