@@ -1,3 +1,4 @@
+import { IComment } from "~/domain/entities/comment";
 import type { IIssue } from "~/domain/entities/issue";
 import { IssueModel } from "~/domain/entities/issue";
 
@@ -25,5 +26,12 @@ export class IssueRepository {
     } else {
       return 0;
     }
+  }
+  public static async addComment(issueID: string, comment: IComment): Promise<IIssue>{
+    const issue = await IssueModel.findById(issueID);
+    console.log(issue);
+    issue.comments.push(comment);
+    const updatedIssue = await issue.save();
+    return updatedIssue;
   }
 }

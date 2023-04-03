@@ -48,9 +48,10 @@
                     <ul class="attachment-list"></ul>
                 </section>
                 <section class="comment-section">
-                    <h2 class="comment-h2"><span id="comment-count">0</span> Comentarios</h2>
-                    <form id="comment-form">
+                    <h2 class="comment-h2"><span id="issues/:id/comment-count">0</span> Comentarios</h2>
+                    <form action="issues/:id/new-comment" method="POST">
                       <div class="form-group">
+                        <input type="hidden" name="id" value="642480b893dbcbc26938179b">
                         <textarea id="comment" name="comment" placeholder="Escribe un nuevo comentario aquí" required></textarea>
                       </div>
                       <button type="submit">Comentar</button>
@@ -67,7 +68,16 @@
         </aside>
     </div>
 
+    <script>
+      // Obtener la ID de la issue de la URL actual
+      const url = window.location.href;
+      const issueId = url.substring(url.lastIndexOf('/') + 1);
     
+      // Actualizar el valor del atributo "action" del formulario
+      const form = document.querySelector('form');
+      form.action = `/issue/${issueId}/new-comment`;
+    </script>
+
       <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
       <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
@@ -77,7 +87,6 @@
       const attachmentCount = document.querySelector(".attachment-count");
 
       let attachments = [];
-
       attachmentInput.addEventListener("change", () => {
         const files = attachmentInput.files;
         for (let i = 0; i < files.length; i++) {
