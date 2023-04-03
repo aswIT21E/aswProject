@@ -25,7 +25,7 @@ issueRouter.get('/issues/stylesheets/addIssue.css',IssueController.getNewIssuePa
 
 issueRouter.get('/issue', IssueController.getIssuePage);
 
-issueRouter.get('/issue/:id', IssueController.getIndividualIssuePage);
+issueRouter.get('/issue/:id', IssueController.getIssue);
 
 issueRouter.get('/stylesheets/searchIssue.css', IssueController.getSearchIssueCss,);
 

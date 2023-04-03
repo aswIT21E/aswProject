@@ -76,7 +76,7 @@ export class IssueController {
               <abbr title = "${issue.priority}"><div class="bola" id="${issue.priority}"></div></abbr>
               <div class="informacion">
                   <div class="numero-peticion" id="NumPeticion"> ${issue.numberIssue}</div>
-                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="localhost:8080/issues/issue=000">${issue.description}</a> </div>
+                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8081/issue/${issue.id}">${issue.subject}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>
               <div class="fecha-creacion" id = "FechaPeticion">${issue.creator}</div>
@@ -86,10 +86,47 @@ export class IssueController {
   res.send($.html());
 
     }
+
+  public static async getIssue(_req: Request, res: Response): Promise<void> {
+    const id = _req.params.id
+    console.log(id)
+    const issue: IIssue = await IssueRepository.getIssueById(id);
+    const viewIssueHTML = fs.readFileSync('src/public/views/viewIssue.html');
+    const $ = load(viewIssueHTML);
+
+    const scriptNode = `
+                      <div class="detail-nom">
+                        <div class="detail-title">
+                            <h2 class="title">
+                                <div class="ref">#${issue.numberIssue}</div>
+                                <span  class="subject">${issue.subject}</span>
+                            </h2>
+                        </div>
+                        <div class="detail-project">
+                            <div class="section-name">PETICIÓN</div>
+                        </div>
+                    </div>
+                    <div class="subheader">
+                        <div class="created-by">
+                            <a href="" class="created-title">Creado por ${issue.creator}</a>
+                            <div class="created-date">
+                                24 mar. 2023 16:20
+                            </div>
+                        </div>
+                    </div>`;
+
+
+    $('#detail-header').append(scriptNode);
+    res.send($.html());
+  } 
   
   public static async getIssuePageCss(req: Request, res: Response): Promise<void> {
   
     res.sendFile('public/stylesheets/previewIssue.css', { root: 'src' });
+  }
+
+  public static async getViewIssuePageCss(req: Request, res: Response): Promise<void> {
+    res.sendFile('public/sytlesheets/viewIssue.css', { root: 'src' });
   }
   public static async getSearchIssueCss(req: Request, res: Response): Promise<void> {
   
