@@ -60,24 +60,7 @@
         </div>
     </div>
 
-    <script>
-        var descriptionField = document.querySelector(".description");
     
-        if (localStorage.getItem("description")) {
-          descriptionField.innerHTML = localStorage.getItem("description");
-        }
-    
- 
-        descriptionField.addEventListener("click", function() {
-          descriptionField.classList.add("editing");
-        });
-    
-   
-        descriptionField.addEventListener("blur", function() {
-          descriptionField.classList.remove("editing");
-          localStorage.setItem("description", this.innerHTML);
-        });
-        </script>
       <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
       <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
