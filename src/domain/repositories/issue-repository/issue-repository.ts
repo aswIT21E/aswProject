@@ -2,9 +2,11 @@ import type { IIssue } from "~/domain/entities/issue";
 import { IssueModel } from "~/domain/entities/issue";
 
 export class IssueRepository {
-  public static async addIssue(issue: IIssue, lastNumberIssue: number): Promise<void> {
-    const newIssue = new IssueModel({ ...issue, numberIssue: lastNumberIssue + 1 });
+  public static async addIssue(issue: IIssue, lastNumberIssue: number): Promise<IIssue> {
+    const date = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' });
+    const newIssue = new IssueModel({ ...issue, numberIssue: lastNumberIssue + 1, date: date, comments: []});
     await newIssue.save();
+    return newIssue;
   }
 
   public static async getAllIssues(): Promise<IIssue[]> {

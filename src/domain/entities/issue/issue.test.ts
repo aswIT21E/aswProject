@@ -15,6 +15,7 @@ describe('Issue Entity', function () {
       'bug',
       'high',
       'high',
+      [],
     );
   });
 

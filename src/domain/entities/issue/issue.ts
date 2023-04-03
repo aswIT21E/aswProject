@@ -1,3 +1,4 @@
+import { IComment } from "../comment";
 import type { IIssue } from "./issue.interface";
 
 export class Issue implements IIssue {
@@ -10,7 +11,9 @@ export class Issue implements IIssue {
   public type: string;
   public severity: string;
   public priority: string;
-
+  public date: string;
+  public comments?: IComment[];
+  
   constructor(
     id: string,
     numberIssue: number,
@@ -21,6 +24,7 @@ export class Issue implements IIssue {
     type: string,
     severity: string,
     priority: string,
+    comments: IComment[],
   ) {
     this.id = id;
     this.numberIssue = numberIssue;
@@ -31,5 +35,6 @@ export class Issue implements IIssue {
     this.type = type;
     this.severity = severity;
     this.priority = priority;
+    this.comments = comments;
   }
 }

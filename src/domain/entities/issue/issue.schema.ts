@@ -9,8 +9,10 @@ const IssueSchema = new Schema({
   creator: { required: true, type: String }, // FK a IUser
   status: { required: true, type: String },
   type: { required: true, type: String },
+  date: { required: true, type: String },
   severity: { required: true, type: String },
   priority: { required: true, type: String },
+  comments: [{ required: true, type: Schema.Types.ObjectId }],
 });
 
 const IssueModel = model<IIssue>("Issue", IssueSchema);
