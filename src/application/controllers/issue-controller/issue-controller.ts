@@ -13,10 +13,11 @@ export class IssueController {
       console.log(lastNumberIssue);
       await IssueRepository.addIssue(issue, lastNumberIssue);
       res.status(200);
-      res.json({
+      /*res.json({
         message: 'issue created',
-      });
-      res.sendFile('public/views/index.html', { root: 'src' });
+      });*/
+      res.redirect('http://localhost:8081/issue');
+      /*res.sendFile('public/views/index.html', { root: 'src' });*/
     } catch (e) {
       res.status(500);
       res.json({
@@ -115,8 +116,61 @@ export class IssueController {
                         </div>
                     </div>`;
 
+    const scriptNode2 = `
+    <div class="side-wrap">
+    <div class="custom-select">
+      <select name="status" id="dropdown">
+        <option value="Nueva">Nueva</option>
+        <option value="En curso">En curso</option>
+        <option value="Lista para testear">Lista para testear</option>
+        <option value="Cerrada">Cerrada</option>
+        <option value="Necesita información">Necesita información</option>
+        <option value="Rechazada">Rechazada</option>
+        <option value="Pospuesta">Pospuesta</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="custom-params">
+    <div class="dropdown-cont">
+      <label for="type" class="label">tipo</label>
+      <div class="bola" id="${issue.type}"></div>
+      <select name="type" id="dropdown2" class="tipo">
+        <option value="Bug" ${issue.type === "Bug" ? "selected" : ""}>Bug</option>
+        <option value="Pregunta" ${issue.type === "Pregunta" ? "selected" : ""}>Pregunta</option>
+        <option value="Mejora" ${issue.type === "Mejora" ? "selected" : ""}>Mejora</option>
+      </select>
+    </div>
+    <div class="dropdown-cont">
+      <label for="severity" class="label">gravedad</label>
+      <div class="bola" id="${issue.severity}"></div>
+      <select name="severity" id="dropdown2" class="tipo">
+        <option value="Deseada" ${issue.severity === "Deseada" ? "selected" : ""}>Deseada</option>
+        <option value="Menor" ${issue.severity === "Menor" ? "selected" : ""}>Menor</option>
+        <option value="Normal" ${issue.severity === "Normal" ? "selected" : ""}>Normal</option>
+        <option value="Importante" ${issue.severity === "Importante" ? "selected" : ""}>Importante</option>
+        <option value="Crítica" ${issue.severity === "Crítica" ? "selected" : ""}>Crítica</option>
+      </select>
+    </div>
+    <div class="dropdown-cont">
+      <label for="priority" class="label">prioridad</label>
+      <div class="bola" id="${issue.priority}"></div>
+      <select name="priority" id="dropdown2" class="tipo">
+        <option value="Baja" ${issue.priority === "Baja" ? "selected" : ""}>Baja</option>
+        <option value="Media" ${issue.priority === "Media" ? "selected" : ""}>Media</option>
+        <option value="Alta" ${issue.priority === "Alta" ? "selected" : ""}>Alta</option>
+      </select>
+    </div>
+
+  </div>
+  
+    `;
+
 
     $('#detail-header').append(scriptNode);
+    $('#sidebar').append(scriptNode2);
+
+
     res.send($.html());
   } 
   
