@@ -9,17 +9,16 @@ body {
 }
 
 .master {
+    display: flex;
     height: 100%;
     min-height: 100%;
-    position: relative;
+    width: 100%;
 }
 
 .main {
-    flex: 1;
     background: #f1f1f4;
     padding: 0;
-    min-width: 0;
-    width: 100%;
+    width: 70%;
 
 }
 
@@ -271,6 +270,122 @@ body {
     color: #999;
     text-align: right;
   }
+
+
+  .custom-select {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.sidebar {
+  margin-left: 20px }
+  
+#dropdown {
+    border-radius: 3px;
+    background:#70728F;
+    color: #fff;
+    cursor: pointer;
+    height: 100%;
+    outline: none;
+    padding: 0 0 0 20px;
+    width: 100%;
+}
+#dropdown option {
+    background: #fff;
+    color: #008aa8;
+    height: 20px;
+}
+
+.custom-params {
+    margin-top: 30px;
+}
+
+.dropdown-cont {
+    display: flex;
+    padding-top: 3px;
+    justify-content: space-between;
+    margin-right: 10px;
+    margin-top: 20px;
+    background-color: #f9f9fb;
+}
+
+#dropdown2 {
+    border-radius: 3px;
+    background: #f9f9fb;
+    font-size: large;
+    color: #000;
+    cursor: pointer;
+    height: 100%;
+    outline: none;
+    padding: 0 0 0 20px;
+    width: 50%;
+    border: none;
+}
+
+#dropdown2 option {
+    background: #fff;
+    color: #008aa8;
+    height: 20px;
+}
+
+.label {
+    color: #70728f;
+}
+
+bola {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+   
+  }
+  /* Estilos para tipos de Issue */
+  #Bug{
+    background-color: red;
+  }
+  
+  #Pregunta {
+    background-color: rgb(6, 42, 247);
+  }
+  #Mejora{
+    background-color: green;
+  }
+  
+  /* Estilo para  pending*/
+  #Deseada{
+    background-color: grey;
+  }
+  
+  /* Estilos para gravedad*/
+  #Menor{
+    background-color: blue;
+  }
+  
+  #Normal{
+    background-color: green;
+  }
+  
+  #Importante{
+    background-color: orange;
+  }
+  
+  #Crítica {
+    background-color: red;
+  }
+  
+  /* Estilos para prioridad*/
+  #Baja {
+    background-color: green;
+  }
+  #Media {
+    background-color: orange;
+  }
+  #Alta {
+    background-color: red;
+  }
+
+
+
   
   
 
