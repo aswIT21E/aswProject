@@ -10,7 +10,7 @@ export class IssueController {
     try {
       const issue: IIssue = req.body;
       const lastNumberIssue = await IssueRepository.getLastIssue();
-      const newIssue: IIssue =  await IssueRepository.addIssue(issue, lastNumberIssue);
+      await IssueRepository.addIssue(issue, lastNumberIssue);
       res.status(200);
       /*res.json({
         message: 'issue created',
