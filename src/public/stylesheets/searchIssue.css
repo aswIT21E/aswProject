@@ -4,8 +4,8 @@
 }
 
 body {
-    width: 700px;
-    margin: 0 auto; 
+    width: 90%;
+    margin: 0, auto; 
 }
 
 .cerrar {
@@ -31,17 +31,25 @@ a.cerrar-enlace {
     background-color: #d00;
   }
 
-.search-filter {
+  .search-filter {
     flex-basis: 700px;
     position: relative;
-    max-width: 700px;
-    width: 700px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     background-color: rgb(249, 255, 255);
     align-items: center;
     align-content: center;
+    
+    justify-content: space-between;
 }
+
+.form-wrapper {
+    display: flex;
+    margin-bottom: 1rem;
+    width: 700px;
+}
+
 
 .wrapper {
     flex: 1;
@@ -69,11 +77,6 @@ fieldset {
     margin-bottom: 3rem;
 }
 
-.form-wrapper {
-    display: flex;
-    margin-bottom: 1rem;
-    width: 700px;
-}
 
 .main {
     flex: 1;
@@ -199,4 +202,24 @@ button {
 
 .label {
     color: #70728f;
+}
+
+.search-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-basis: 1000px; 
+}
+
+.switch{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+.search-input{
+    width: 100%;
 }

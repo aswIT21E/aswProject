@@ -75,8 +75,8 @@ export class IssueController {
               <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"></div></abbr>
               <abbr title = "${issue.priority}"><div class="bola" id="${issue.priority}"></div></abbr>
               <div class="informacion">
-                  <div class="numero-peticion" id="NumPeticion"> ${issue.numberIssue}</div>
-                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="localhost:8080/issues/issue=000">${issue.description}</a> </div>
+                  <div class="numero-peticion" id="NumPeticion"> #${issue.numberIssue}</div>
+                    <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="localhost:8080/issues/:${issue.id}">${issue.subject}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>
               <div class="fecha-creacion" id = "FechaPeticion">${issue.creator}</div>
