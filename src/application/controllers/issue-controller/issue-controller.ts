@@ -3,6 +3,9 @@ import { load } from 'cheerio';
 import fs from 'fs';
 import type { IIssue } from '~/domain/entities/issue';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
+import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
+import { IComment } from '~/domain/entities/comment';
+//import { IComment } from '~/domain/entities/comment';
 
 export class IssueController {
 
@@ -89,7 +92,6 @@ export class IssueController {
 
   public static async getIssue(_req: Request, res: Response): Promise<void> {
     const id = _req.params.id
-    console.log(id)
     const issue: IIssue = await IssueRepository.getIssueById(id);
     const viewIssueHTML = fs.readFileSync('src/public/views/viewIssue.html');
     const $ = load(viewIssueHTML);
@@ -187,9 +189,32 @@ export class IssueController {
   }
 
   public static async getIndividualIssuePage(req: Request, res: Response): Promise<void>{
-    console.log(req.params.id);
-    const issue: IIssue = await IssueRepository.getIssueById(req.params.id); 
-    console.log(issue);
+    await IssueRepository.getIssueById(req.params.id); 
+  }
+
+  public static async getIndividualIssuePageCss(req: Request, res: Response): Promise<void>{
+    res.sendFile('public/sytlesheets/viewIssue.css', { root: 'src' });
+  }
+
+  public static async createComment(req: Request, res: Response): Promise<void> {
+    try {
+      const numberIssue: string  = req.params.id;
+      const content: string = req.body.comment;
+      const date = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' });
+      const comment: IComment = await CommentRepository.addComment(content, numberIssue , date, 'Author');
+      await IssueRepository.addComment(numberIssue, comment);
+      res.status(200);
+      /*res.json({
+        message: 'issue created',
+      });*/
+      res.redirect('http://localhost:8081/issue');
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+        message: 'comment not created',
+      });
+    }
   }
 
 }
