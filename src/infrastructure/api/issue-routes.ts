@@ -14,8 +14,9 @@ issueRouter.get('/test-issue', (req: Request, res: Response) => {
     hello: 'you',
   });
 });
-
 issueRouter.post('/issues/create', createIssueDto, IssueController.createIssue);
+
+issueRouter.post('/issue/:id/new-comment', IssueController.createComment);
 
 issueRouter.get('/issues', IssueController.getAllIssues);
 
