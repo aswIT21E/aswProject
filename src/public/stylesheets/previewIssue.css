@@ -80,6 +80,8 @@
   .numero-peticion {
     font-weight: bold;
     text-align: center;
+    color:rgb(59, 100, 235);
+
   }
   .texto-peticion {
     margin-left: 10px;
