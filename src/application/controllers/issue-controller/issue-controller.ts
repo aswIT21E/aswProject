@@ -61,17 +61,17 @@ export class IssueController {
     res.sendFile('public/stylesheets/addIssue.css', { root: 'src' });
   }
 
-  public static async getIssuePage(
-    _req: Request,
-    res: Response,
-  ): Promise<void> {
+  public static async getIssuePage(_req: Request, res: Response): Promise<void> {
+    
     const issues: IIssue[] = await IssueRepository.getAllIssues();
+    
     const Indexhtml = fs.readFileSync('src/public/views/index.html');
     const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
     const $ = load(Indexhtml);
     
     $('#searchbar').append(load(searchPage).html());
     for (const issue of issues) {
+
       const scriptNode = `                           
               <div class="issue">
               <abbr title = "${issue.type}"> <div class="bola" id="${issue.type}"></div></abbr>

@@ -17,6 +17,15 @@ export class IssueRepository {
   public static async getIssueById(issueID: string): Promise<IIssue> {
     return await IssueModel.findById(issueID); 
   }
+  public static async getIssueByType(issueType: string){
+    return await IssueModel.find({type: issueType});
+  }
+  public static async getIssueByT(issueType: string){
+    return await IssueModel.find({type: issueType});
+  }
+
+  
+
   public static async getLastIssue(): Promise<number>{
     const maxNumber = await IssueModel.aggregate([
       { $group: { _id: null, maxNumber: { $max: "$numberIssue" } } }
