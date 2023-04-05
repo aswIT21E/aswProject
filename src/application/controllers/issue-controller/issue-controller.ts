@@ -10,7 +10,7 @@ export class IssueController {
     try {
       const issue: IIssue = req.body;
       const lastNumberIssue = await IssueRepository.getLastIssue();
-      const newIssue: IIssue =  await IssueRepository.addIssue(issue, lastNumberIssue);
+      await IssueRepository.addIssue(issue, lastNumberIssue);
       res.status(200);
       /*res.json({
         message: 'issue created',
@@ -58,17 +58,17 @@ export class IssueController {
     res.sendFile('public/stylesheets/addIssue.css', { root: 'src' });
   }
 
-  public static async getIssuePage(
-    _req: Request,
-    res: Response,
-  ): Promise<void> {
+  public static async getIssuePage(_req: Request, res: Response): Promise<void> {
+    
     const issues: IIssue[] = await IssueRepository.getAllIssues();
+    
     const Indexhtml = fs.readFileSync('src/public/views/index.html');
     const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
     const $ = load(Indexhtml);
     
     $('#searchbar').append(load(searchPage).html());
     for (const issue of issues) {
+
       const scriptNode = `                           
               <div class="issue">
               <abbr title = "${issue.type}"> <div class="bola" id="${issue.type}"></div></abbr>
