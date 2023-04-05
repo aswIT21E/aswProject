@@ -13,6 +13,8 @@ export class Issue implements IIssue {
   public priority: string;
   public date: string;
   public comments?: IComment[];
+  public asigned_to?: string;
+  public tags?: string[];
   
   constructor(
     id: string,
@@ -25,6 +27,8 @@ export class Issue implements IIssue {
     severity: string,
     priority: string,
     comments: IComment[],
+    asigned_to?: string,
+    tags?: string[],
   ) {
     this.id = id;
     this.numberIssue = numberIssue;
@@ -36,6 +40,9 @@ export class Issue implements IIssue {
     this.severity = severity;
     this.priority = priority;
     this.comments = comments;
+    this.asigned_to = asigned_to;
+    this.tags = tags;
   }
+
   
 }

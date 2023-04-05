@@ -11,4 +11,6 @@ export interface IIssue {
   severity: string;
   priority: string;
   comments?: IComment[];
+  asigned_to?: string;
+  tags?: string[];
 }
