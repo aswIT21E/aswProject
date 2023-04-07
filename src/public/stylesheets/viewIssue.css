@@ -275,6 +275,7 @@ body {
   .custom-select {
     height: 40px;
     margin-right: 10px;
+    margin-top: 10px;
 }
 
 .sidebar {
@@ -303,7 +304,7 @@ body {
 .dropdown-cont {
     display: flex;
     padding-top: 3px;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-right: 10px;
     margin-top: 20px;
     background-color: #f9f9fb;
@@ -312,7 +313,6 @@ body {
 #dropdown2 {
     border-radius: 3px;
     background: #f9f9fb;
-    font-size: large;
     color: #000;
     cursor: pointer;
     height: 100%;
@@ -320,10 +320,12 @@ body {
     padding: 0 0 0 20px;
     width: 50%;
     border: none;
+    min-width: fit-content;
 }
 
 #dropdown2 option {
     background: #fff;
+    min-width: fit-content;
     color: #008aa8;
     height: 20px;
 }
