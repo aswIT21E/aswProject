@@ -61,17 +61,17 @@ export class IssueController {
     res.sendFile('public/stylesheets/addIssue.css', { root: 'src' });
   }
 
-  public static async getIssuePage(
-    _req: Request,
-    res: Response,
-  ): Promise<void> {
+  public static async getIssuePage(_req: Request, res: Response): Promise<void> {
+    
     const issues: IIssue[] = await IssueRepository.getAllIssues();
+    
     const Indexhtml = fs.readFileSync('src/public/views/index.html');
     const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
     const $ = load(Indexhtml);
     
     $('#searchbar').append(load(searchPage).html());
     for (const issue of issues) {
+
       const scriptNode = `                           
               <div class="issue">
               <abbr title = "${issue.type}"> <div class="bola" id="${issue.type}"></div></abbr>
@@ -86,7 +86,7 @@ export class IssueController {
               </div>`;
       $('body').append(scriptNode);
     }
-  res.send($.html());
+    res.send($.html());
 
     }
 
@@ -203,7 +203,6 @@ export class IssueController {
     $('#description').append(scriptNode4);
 
 
-
     res.send($.html());
   }
 
@@ -216,15 +215,14 @@ export class IssueController {
   } */
   
   public static async getIssuePageCss(req: Request, res: Response): Promise<void> {
-  
     res.sendFile('public/stylesheets/previewIssue.css', { root: 'src' });
   }
 
   public static async getViewIssuePageCss(req: Request, res: Response): Promise<void> {
-    res.sendFile('public/sytlesheets/viewIssue.css', { root: 'src' });
+    res.sendFile('public/stylesheets/viewIssue.css', { root: 'src' });
   }
+
   public static async getSearchIssueCss(req: Request, res: Response): Promise<void> {
-  
     res.sendFile('public/stylesheets/searchIssue.css', { root: 'src' });
   }
 
@@ -246,6 +244,26 @@ export class IssueController {
       await IssueRepository.addComment(numberIssue, comment);
       res.status(200);
       res.redirect(`http://localhost:8081/issue/${numberIssue}`);
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+        message: 'comment not created',
+      });
+    }
+  }
+
+  public static async modifyIssue(req: Request, res: Response): Promise<void> {
+    try {
+      const numberIssue: string  = req.params.id;
+      const parameter: string = req.body.parameter;
+      const newValue = req.body.newValue;
+      const modifiedIssue: IIssue = await IssueRepository.modifyParameterIssue(numberIssue, parameter, newValue);
+      res.status(200);
+      res.json({
+        message: 'issue modified',
+        issue: modifiedIssue,
+      });
     } catch (e) {
       res.status(500);
       res.json({

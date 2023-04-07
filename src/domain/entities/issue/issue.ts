@@ -37,4 +37,5 @@ export class Issue implements IIssue {
     this.priority = priority;
     this.comments = comments;
   }
+  
 }

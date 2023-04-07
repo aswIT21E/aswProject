@@ -8,8 +8,7 @@
     border: 2px solid #ccc;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    max-width: 60%;
-    min-width: 700px;
+    min-width: 80%;
     
   }
   
@@ -21,10 +20,11 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    margin-right: 10px;
-   
+    margin-left: auto; /* Agregar margen automático a la izquierda para empujar las bolas a la derecha */
+    margin-right: 6em; /* Aumentar el valor de margin-right para agregar más espacio entre las bolas */
   }
-  /* Estilos para tipos de Issue */
+  
+  /* Estilos para tipos de  Issue */
   #Bug{
     background-color: red;
   }
@@ -80,6 +80,8 @@
   .numero-peticion {
     font-weight: bold;
     text-align: center;
+    color:rgb(59, 100, 235);
+
   }
   .texto-peticion {
     margin-left: 10px;
