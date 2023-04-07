@@ -10,7 +10,7 @@ export class IssueController {
     try {
       const issue: IIssue = req.body;
       const lastNumberIssue = await IssueRepository.getLastIssue();
-      const newIssue: IIssue =  await IssueRepository.addIssue(issue, lastNumberIssue);
+      await IssueRepository.addIssue(issue, lastNumberIssue);
       res.status(200);
       /*res.json({
         message: 'issue created',
@@ -83,7 +83,7 @@ export class IssueController {
               </div>`;
       $('body').append(scriptNode);
     }
-  res.send($.html());
+    res.send($.html());
 
     }
 
@@ -169,20 +169,18 @@ export class IssueController {
     $('#detail-header').append(scriptNode);
     $('#sidebar').append(scriptNode2);
 
-
     res.send($.html());
   } 
   
   public static async getIssuePageCss(req: Request, res: Response): Promise<void> {
-  
     res.sendFile('public/stylesheets/previewIssue.css', { root: 'src' });
   }
 
   public static async getViewIssuePageCss(req: Request, res: Response): Promise<void> {
-    res.sendFile('public/sytlesheets/viewIssue.css', { root: 'src' });
+    res.sendFile('public/stylesheets/viewIssue.css', { root: 'src' });
   }
+
   public static async getSearchIssueCss(req: Request, res: Response): Promise<void> {
-  
     res.sendFile('public/stylesheets/searchIssue.css', { root: 'src' });
   }
 
