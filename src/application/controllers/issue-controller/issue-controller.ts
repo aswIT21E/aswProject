@@ -215,4 +215,24 @@ export class IssueController {
     }
   }
 
+  public static async modifyIssue(req: Request, res: Response): Promise<void> {
+    try {
+      const numberIssue: string  = req.params.id;
+      const parameter: string = req.body.parameter;
+      const newValue = req.body.newValue;
+      const modifiedIssue: IIssue = await IssueRepository.modifyParameterIssue(numberIssue, parameter, newValue);
+      res.status(200);
+      res.json({
+        message: 'issue modified',
+        issue: modifiedIssue,
+      });
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+        message: 'comment not created',
+      });
+    }
+  }
+
 }
