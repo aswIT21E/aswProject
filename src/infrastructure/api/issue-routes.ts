@@ -31,3 +31,5 @@ issueRouter.get('/issue/:id', IssueController.getIssue);
 issueRouter.get('/stylesheets/searchIssue.css', IssueController.getSearchIssueCss,);
 
 issueRouter.get( '/stylesheets/previewIssue.css',IssueController.getIssuePageCss,);
+
+issueRouter.get( '/stylesheets/viewIssue.css',IssueController.getViewIssuePageCss,);
