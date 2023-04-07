@@ -17,6 +17,7 @@ issueRouter.get('/test-issue', (req: Request, res: Response) => {
 issueRouter.post('/issues/create', createIssueDto, IssueController.createIssue);
 
 issueRouter.post('/issue/:id/new-comment', IssueController.createComment);
+issueRouter.post('/issue/:id/editIssue', IssueController.modifyIssue);
 
 issueRouter.get('/issues', IssueController.getAllIssues);
 
@@ -27,6 +28,7 @@ issueRouter.get('/issues/stylesheets/addIssue.css',IssueController.getNewIssuePa
 issueRouter.get('/issue', IssueController.getIssuePage);
 
 issueRouter.get('/issue/:id', IssueController.getIssue);
+
 
 issueRouter.get('/stylesheets/searchIssue.css', IssueController.getSearchIssueCss,);
 

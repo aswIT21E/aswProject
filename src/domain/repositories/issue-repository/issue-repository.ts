@@ -24,8 +24,6 @@ export class IssueRepository {
     return await IssueModel.find({type: issueType});
   }
 
-  
-
   public static async getLastIssue(): Promise<number>{
     const maxNumber = await IssueModel.aggregate([
       { $group: { _id: null, maxNumber: { $max: "$numberIssue" } } }
@@ -38,9 +36,17 @@ export class IssueRepository {
   }
   public static async addComment(issueID: string, comment: IComment): Promise<IIssue>{
     const issue = await IssueModel.findById(issueID);
-    console.log(issue);
     issue.comments.push(comment);
     const updatedIssue = await issue.save();
     return updatedIssue;
+  }
+
+  public static async modifyParameterIssue(numberIssue: string, parameter:string, newValue: string):Promise<IIssue>{
+    const modifiedIssue = await IssueModel.findByIdAndUpdate(
+      { _id: numberIssue },
+      { [parameter]: newValue },
+      { new: true }
+    );
+    return modifiedIssue;
   }
 }
