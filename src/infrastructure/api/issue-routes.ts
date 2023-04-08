@@ -1,7 +1,15 @@
 import express from 'express';
 
-import { IssueController, lockIssue } from '~/application';
-import { createIssueDto } from '~/infrastructure/dtos';
+import {
+  IssueController,
+  lockIssue,
+  addWatchers,
+  unlockIssue,
+  removeWatchers,
+} from '~/application';
+import { addWatchersDto, createIssueDto } from '~/infrastructure/dtos';
+
+import { removeWatchersDto } from '../dtos/remove-watchers.dto';
 
 export const issueRouter = express.Router();
 
@@ -24,6 +32,8 @@ issueRouter.get('/issue', IssueController.getIssuePage);
 
 issueRouter.get('/issue/:id', IssueController.getIssue);
 
+issueRouter.get('/info/:id', IssueController.getIssueInfo);
+
 issueRouter.get(
   '/stylesheets/searchIssue.css',
   IssueController.getSearchIssueCss,
@@ -40,3 +50,13 @@ issueRouter.get(
 );
 
 issueRouter.put('/issues/:id/lock-issue', lockIssue);
+
+issueRouter.put('/issues/:id/unlock-issue', unlockIssue);
+
+issueRouter.post('/issues/:id/add-watchers', addWatchersDto, addWatchers);
+
+issueRouter.post(
+  '/issues/:id/delete-watchers',
+  removeWatchersDto,
+  removeWatchers,
+);

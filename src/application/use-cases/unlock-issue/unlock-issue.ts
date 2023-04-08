@@ -3,7 +3,7 @@ import type { Request, Response } from 'express';
 import { Issue } from '~/domain/entities';
 import { IssueRepository } from '~/domain/repositories/issue-repository';
 
-export async function lockIssue(req: Request, res: Response): Promise<void> {
+export async function unlockIssue(req: Request, res: Response): Promise<void> {
   const issueID = req.params.id;
   try {
     const issue = await IssueRepository.getIssueById(issueID);
@@ -20,10 +20,10 @@ export async function lockIssue(req: Request, res: Response): Promise<void> {
       issue.comments,
     );
     if (issue) {
-      newIssue.lockIssue();
+      newIssue.unlockIssue();
       IssueRepository.updateIssue(newIssue);
       res.status(200).json({
-        message: 'Issue locked successfully',
+        message: 'Issue unlocked successfully',
         newIssue,
       });
     } else {

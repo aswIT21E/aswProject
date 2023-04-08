@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
-import type { IComment } from "./comment.interface";
+import type { IComment } from './comment.interface';
 
 const CommentSchema = new Schema({
   author: { required: true, type: String },
@@ -9,6 +9,6 @@ const CommentSchema = new Schema({
   date: { required: false, type: String },
 });
 
-const CommentModel = model<IComment>("Comment", CommentSchema);
+const CommentModel = model<IComment>('Comment', CommentSchema);
 
 export { CommentModel };

@@ -1,4 +1,4 @@
-import type { IComment } from "./comment.interface";
+import type { IComment } from './comment.interface';
 
 export class Comment implements IComment {
   public _id: string;

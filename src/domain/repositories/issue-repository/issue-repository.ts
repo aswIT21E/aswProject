@@ -1,5 +1,6 @@
-import { IComment } from '~/domain/entities/comment';
+import type { IComment } from '~/domain/entities/comment';
 import type { IIssue } from '~/domain/entities/issue';
+import { Issue } from '~/domain/entities/issue';
 import { IssueModel } from '~/domain/entities/issue';
 
 export class IssueRepository {
@@ -25,7 +26,26 @@ export class IssueRepository {
   }
 
   public static async getIssueById(issueID: string): Promise<IIssue> {
-    return await IssueModel.findById(issueID);
+    const issueDocument = await IssueModel.findById(issueID).populate({
+      path: 'watchers',
+      model: 'User',
+    });
+
+    const issue = new Issue(
+      issueDocument.id,
+      issueDocument.numberIssue,
+      issueDocument.subject,
+      issueDocument.description,
+      issueDocument.creator,
+      issueDocument.status,
+      issueDocument.type,
+      issueDocument.severity,
+      issueDocument.priority,
+      issueDocument.comments,
+      issueDocument.watchers,
+    );
+
+    return issue;
   }
   public static async getIssueByType(issueType: string) {
     return await IssueModel.find({ type: issueType });
