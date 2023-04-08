@@ -14,6 +14,7 @@ const IssueSchema = new Schema({
   priority: { required: true, type: String },
   comments: [{ required: true, type: Schema.Types.ObjectId }],
   locked: { required: true, type: Boolean, default: false },
+  watchers: [{ required: true, type: Schema.Types.ObjectId }],
 });
 
 const IssueModel = model<IIssue>('Issue', IssueSchema);

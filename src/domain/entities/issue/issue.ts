@@ -1,4 +1,5 @@
 import { IComment } from '../comment';
+import { IUser } from '../user';
 import type { IIssue } from './issue.interface';
 
 export class Issue implements IIssue {
@@ -14,6 +15,7 @@ export class Issue implements IIssue {
   public date: string;
   public comments?: IComment[];
   public locked: boolean;
+  public watchers: IUser[];
 
   constructor(
     id: string,
@@ -38,6 +40,7 @@ export class Issue implements IIssue {
     this.priority = priority;
     this.comments = comments;
     this.locked = false;
+    this.watchers = [];
   }
 
   public lockIssue(): void {
