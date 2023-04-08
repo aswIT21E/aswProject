@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 import { load } from 'cheerio';
 import fs from 'fs';
 import type { IIssue } from '~/domain/entities/issue';
+import type { IFilter } from '~/domain/entities/filter';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
 import { IComment } from '~/domain/entities/comment';
@@ -234,5 +235,24 @@ export class IssueController {
       });
     }
   }
+//Les issues s’han de poder filtrar segons si tenen in determinat status, assignee, tags, priority, assign_to, created_by.
+  public static async filterIssues(req: Request, res: Response): Promise<void> {
+    try {
+      const filter: IFilter = req.body;
+      const issues: IIssue[] = await IssueRepository.filterIssues(filter);
 
+      res.status(200);
+      res.json({
+        message: 'issues filtered',
+        issues: issues,
+      });
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+        message: 'issues not filtered',
+      });
+    }
+
+  }
 }

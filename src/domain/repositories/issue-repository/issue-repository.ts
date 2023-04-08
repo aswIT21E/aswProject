@@ -1,8 +1,11 @@
+
 import { IComment } from "~/domain/entities/comment";
+import { IFilter } from "~/domain/entities/filter";
 import type { IIssue } from "~/domain/entities/issue";
 import { IssueModel } from "~/domain/entities/issue";
 
 export class IssueRepository {
+ 
   public static async addIssue(issue: IIssue, lastNumberIssue: number): Promise<IIssue> {
     const date = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' });
     const newIssue = new IssueModel({ ...issue, numberIssue: lastNumberIssue + 1, date: date, comments: []});
@@ -48,5 +51,18 @@ export class IssueRepository {
       { new: true }
     );
     return modifiedIssue;
+  }
+
+  public static async filterIssues(filter: IFilter):  Promise<IIssue[]> {
+    const query = {
+      ...(filter.tipo && { type: { $in: filter.tipo } }),
+      ...(filter.estado && { status: filter.estado }),
+      ...(filter.gravedad && { severity: filter.gravedad }),
+      ...(filter.crated_by && { creator: filter.crated_by }),
+      ...(filter.asign_to && { assignedTo: filter.asign_to }),
+      ...(filter.tags && { tag: filter.tags })
+    };
+    return await IssueModel.find(query);
+
   }
 }
