@@ -90,12 +90,41 @@ export class IssueController {
 
     }
 
+  public static async updateIssue(req: Request, res: Response): Promise<void> {
+      const id = req.params.id;
+      const updatedIssue = req.body;
+      
+      try {
+        
+
+        await IssueRepository.modifyParameterIssue(id, "description", updatedIssue);
+        
+        res.status(200);
+      } catch (error) {
+        console.error('Error updating issue:', error);
+        res.status(500).json({ error: 'Failed to update issue' });
+      }
+    
+  }
+
   public static async getIssue(_req: Request, res: Response): Promise<void> {
     const id = _req.params.id
     const issue: IIssue = await IssueRepository.getIssueById(id);
+    const comments: IComment[] = issue.comments;
     const viewIssueHTML = fs.readFileSync('src/public/views/viewIssue.html');
     const $ = load(viewIssueHTML);
 
+    for (const comment of comments) {
+      const commentt = await CommentRepository.getComment(comment);
+        const scriptNode3 = `
+          <li>${commentt.content}</li>
+          `;
+          $('#comments-list').append(scriptNode3);
+    }
+
+    const scriptNode4 =`
+      ${issue.description}
+    `;
     const scriptNode = `
                       <div class="detail-nom">
                         <div class="detail-title">
@@ -121,13 +150,14 @@ export class IssueController {
     <div class="side-wrap">
     <div class="custom-select">
       <select name="status" id="dropdown">
-        <option value="Nueva">Nueva</option>
-        <option value="En curso">En curso</option>
-        <option value="Lista para testear">Lista para testear</option>
-        <option value="Cerrada">Cerrada</option>
-        <option value="Necesita información">Necesita información</option>
-        <option value="Rechazada">Rechazada</option>
-        <option value="Pospuesta">Pospuesta</option>
+      <option value="Nueva" ${issue.status === 'Nueva' ? 'selected' : ''}>Nueva</option>
+      <option value="En curso" ${issue.status === 'En curso' ? 'selected' : ''}>En curso</option>
+      <option value="Lista para testear" ${issue.status === 'Lista para testear' ? 'selected' : ''}>Lista para testear</option>
+      <option value="Cerrada" ${issue.status === 'Cerrada' ? 'selected' : ''}>Cerrada</option>
+      <option value="Necesita información" ${issue.status === 'Necesita información' ? 'selected' : ''}>Necesita información</option>
+      <option value="Rechazada" ${issue.status === 'Rechazada' ? 'selected' : ''}>Rechazada</option>
+      <option value="Pospuesta" ${issue.status === 'Pospuesta' ? 'selected' : ''}>Pospuesta</option>
+      
       </select>
     </div>
   </div>
@@ -170,9 +200,19 @@ export class IssueController {
 
     $('#detail-header').append(scriptNode);
     $('#sidebar').append(scriptNode2);
+    $('#description').append(scriptNode4);
+
 
     res.send($.html());
-  } 
+  }
+
+ /* public static async getComments(req: Request, res: Response) : Promise<void> {
+    
+    
+
+    
+
+  } */
   
   public static async getIssuePageCss(req: Request, res: Response): Promise<void> {
     res.sendFile('public/stylesheets/previewIssue.css', { root: 'src' });
@@ -197,15 +237,13 @@ export class IssueController {
   public static async createComment(req: Request, res: Response): Promise<void> {
     try {
       const numberIssue: string  = req.params.id;
+      console.log(numberIssue);
       const content: string = req.body.comment;
       const date = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' });
       const comment: IComment = await CommentRepository.addComment(content, numberIssue , date, 'Author');
       await IssueRepository.addComment(numberIssue, comment);
       res.status(200);
-      /*res.json({
-        message: 'issue created',
-      });*/
-      res.redirect('http://localhost:8081/issue');
+      res.redirect(`http://localhost:8081/issue/${numberIssue}`);
     } catch (e) {
       res.status(500);
       res.json({
