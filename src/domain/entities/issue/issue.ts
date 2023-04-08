@@ -39,4 +39,12 @@ export class Issue implements IIssue {
     this.comments = comments;
     this.locked = false;
   }
+
+  public lockIssue(): void {
+    this.locked = true;
+  }
+
+  public unlockIssue(): void {
+    this.locked = false;
+  }
 }

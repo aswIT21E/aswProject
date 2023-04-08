@@ -12,4 +12,7 @@ export interface IIssue {
   priority: string;
   comments?: IComment[];
   locked: boolean;
+
+  lockIssue: () => void;
+  unlockIssue: () => void;
 }
