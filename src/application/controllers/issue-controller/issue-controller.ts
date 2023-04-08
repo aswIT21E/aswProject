@@ -95,7 +95,22 @@ export class IssueController {
     for (const comment of comments) {
       const commentt = await CommentRepository.getComment(comment);
         const scriptNode3 = `
-          <li>${commentt.content}</li>
+          <li>
+            <div class="comment-wrapper">
+              <img class="comment-img" src="https://picsum.photos/50">
+              <div class="comment-info">
+                <div class="comment-data">
+                  <span class="comment-creator">${commentt.author}</span>
+                  <span class="comment-date">${commentt.date}</span>
+                </div>
+                <div class="comment-content">
+                  <span class="comment">${commentt.content}</span>
+                </div>
+              </div>
+            </div>
+          
+          </li>
+
           `;
           $('#comments-list').append(scriptNode3);
     }
