@@ -16,10 +16,9 @@ issueRouter.get('/test-issue', (req: Request, res: Response) => {
 });
 issueRouter.post('/issues/create', createIssueDto, IssueController.createIssue);
 
-issueRouter.post('/issue/:id/update', IssueController.updateIssue);
 
 issueRouter.post('/issue/:id/new-comment', IssueController.createComment);
-issueRouter.post('/issue/:id/editIssue', IssueController.modifyIssue);
+issueRouter.post('/issue/:id/modifyIssue', IssueController.modifyIssue);
 
 issueRouter.get('/issues', IssueController.getAllIssues);
 
