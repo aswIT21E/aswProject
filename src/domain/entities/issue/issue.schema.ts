@@ -13,6 +13,8 @@ const IssueSchema = new Schema({
   severity: { required: true, type: String },
   priority: { required: true, type: String },
   comments: [{ required: true, type: Schema.Types.ObjectId }],
+  asigned_to: { required: false, type: String },
+  tags: { required: false, type: [String] },
 });
 
 const IssueModel = model<IIssue>("Issue", IssueSchema);
