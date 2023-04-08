@@ -5,7 +5,6 @@ import type { IIssue } from "~/domain/entities/issue";
 import { IssueRepository } from "~/domain/repositories/issue-repository/issue-repository";
 import { CommentRepository } from "~/domain/repositories/comment-repository/comment-repository";
 import { IComment } from "~/domain/entities/comment";
-//import { IComment } from '~/domain/entities/comment';
 
 export class IssueController {
   public static async createIssue(req: Request, res: Response): Promise<void> {
@@ -14,11 +13,7 @@ export class IssueController {
       const lastNumberIssue = await IssueRepository.getLastIssue();
       await IssueRepository.addIssue(issue, lastNumberIssue);
       res.status(200);
-      /*res.json({
-        message: 'issue created',
-      });*/
       res.redirect("http://localhost:8081/issue");
-      /*res.sendFile('public/views/index.html', { root: 'src' });*/
     } catch (e) {
       res.status(500);
       res.json({
@@ -78,7 +73,7 @@ export class IssueController {
               <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"></div></abbr>
               <abbr title = "${issue.priority}"><div class="bola" id="${issue.priority}"></div></abbr>
               <div class="informacion">
-                  <div class="numero-peticion" id="NumPeticion"> ${issue.numberIssue}</div>
+                  <div class="numero-peticion" id="NumPeticion">#${issue.numberIssue}</div>
                   <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8081/issue/${issue.id}">${issue.subject}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>
@@ -89,22 +84,6 @@ export class IssueController {
     res.send($.html());
   }
 
-  public static async updateIssue(req: Request, res: Response): Promise<void> {
-      const id = req.params.id;
-      const updatedIssue = req.body;
-      
-      try {
-        
-
-        await IssueRepository.modifyParameterIssue(id, "description", updatedIssue);
-        
-        res.status(200);
-      } catch (error) {
-        console.error('Error updating issue:', error);
-        res.status(500).json({ error: 'Failed to update issue' });
-      }
-    
-  }
 
   public static async getIssue(_req: Request, res: Response): Promise<void> {
     const id = _req.params.id;
@@ -122,7 +101,8 @@ export class IssueController {
     }
 
     const scriptNode4 =`
-      ${issue.description}
+    <i id="edit-icon" class="fas fa-pencil-alt" style="padding-right: 0.5rem; color: #4c566a; font-size: 0.8rem;"></i>
+    <span id="text" contenteditable="false">${issue.description}</span>
     `;
     const scriptNode = `
                       <div class="detail-nom">
@@ -208,11 +188,10 @@ export class IssueController {
         <option value="Media" ${issue.priority === "Media" ? "selected" : ""}>Media</option>
         <option value="Alta" ${issue.priority === "Alta" ? "selected" : ""}>Alta</option>
       </select>
-                </div>
-  </div>
+      </div>
+    </div>
     `;
-
-
+    
     $('#detail-header').append(scriptNode);
     $('#sidebar').append(scriptNode2);
     $('#description').append(scriptNode4);

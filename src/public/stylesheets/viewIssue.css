@@ -118,18 +118,12 @@ body {
   }
 
 .save-button {
-    opacity: 0;
     margin-left: 4px;
-    background-color: transparent;
+    background-color: whitesmoke;
     border: none;
-    padding: 10px;
     border-radius: 5px;
+    box-sizing: border-box;
 }
-
-.save-button:hover {
-    opacity: 1;
-}
-
 
 .attachments {
     margin: 20px 0;

@@ -1,131 +1,129 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" type="text/css" href="../stylesheets/viewIssue.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" type="text/css" href="../stylesheets/viewIssue.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap" rel="stylesheet" />
 
-    <title>View Issue</title>
-  </head>
+  <title>View Issue</title>
+</head>
 
-  <body>
-    <div class="master">
-        <div class="main">
-            <div class="header-container">
-                <div id="detail-header" class="detail-header">
-                    
-                </div>
-            </div>
-            <div class="detail-content">
-                <section class="duty-content">
-                    <div id="description" contenteditable="true" class="description">
-                        
-                    </div>
-                    <button id="save-btn" class="save-button" onclick=""><ion-icon name="save"></ion-icon></button>
-                </section>
-                <section class="attachments">
-                    <h2 class="attachment-header">
-                        <div class="attachment-ad">
-                            <span class="attachment-count">0</span> Adjuntos
-                        </div>
-                        
-                        <div class="attachment-container">
-                            <label for="attachment-input" class="attachment-label">+</label>
-                            <input type="file" id="attachment-input" class="attachment-input" multiple>
-                        </div>
-                    </h2>
-                    <ul class="attachment-list"></ul>
-                </section>
-                <section class="comment-section">
-                    <h2 class="comment-h2"><span id="comment-count">0</span> Comentarios</h2>
-                    <form action="issues/:id/new-comment" method="POST">
-                      <div class="form-group">
-                        <input type="hidden" name="id" value="642480b893dbcbc26938179b">
-                        <textarea id="comment" name="comment" placeholder="Escribe un nuevo comentario aquí" required></textarea>
-                      </div>
-                      <button type="submit">Comentar</button>
-                    </form>
-                    <div id="comments-section">
-                        <ul id="comments-list">
-
-                        </ul>
-                      </div>
-                  </section>
-            </div>
+<body>
+  <div class="master">
+    <div class="main">
+      <div class="header-container">
+        <div id="detail-header" class="detail-header">
         </div>
-        <aside id="sidebar" class="sidebar">
+      </div>
+      <div class="detail-content">
+        <div id="description" class="description">
+        </div>
+        <button id="confirm" class="save-button" style="display:none">Confirmar</button>
+        <section class="attachments">
+          <h2 class="attachment-header">
+            <div class="attachment-ad">
+              <span class="attachment-count">0</span> Adjuntos
+            </div>
 
-        </aside>
+            <div class="attachment-container">
+              <label for="attachment-input" class="attachment-label">+</label>
+              <input type="file" id="attachment-input" class="attachment-input" multiple>
+            </div>
+          </h2>
+          <ul class="attachment-list"></ul>
+        </section>
+        <section class="comment-section">
+          <h2 class="comment-h2"><span id="comment-count">0</span> Comentarios</h2>
+          <form action="issues/:id/new-comment" method="POST">
+            <div class="form-group">
+              <input type="hidden" name="id">
+              <textarea id="comment" name="comment" placeholder="Escribe un nuevo comentario aquí" required></textarea>
+            </div>
+            <button type="submit">Comentar</button>
+          </form>
+          <div id="comments-section">
+            <ul id="comments-list">
+
+            </ul>
+          </div>
+        </section>
+      </div>
     </div>
+    <aside id="sidebar" class="sidebar">
 
-    <script>
-      // Obtener la ID de la issue de la URL actual
-      const url = window.location.href;
-      const issueId = url.substring(url.lastIndexOf('/') + 1);
-    
-      // Actualizar el valor del atributo "action" del formulario
-      const form = document.querySelector('form');
-      form.action = `/issue/${issueId}/new-comment`;
-    </script>
+    </aside>
+  </div>
+  <script>
+    // Obtener la ID de la issue de la URL actual
+    const url = window.location.href;
+    const issueId = url.substring(url.lastIndexOf('/') + 1);
 
-      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-      <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    // Actualizar el valor del atributo "action" del formulario
+    const form = document.querySelector('form');
+    form.action = `/issue/${issueId}/new-comment`;
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var textElement = document.getElementById('text');
+      var editIcon = document.getElementById('edit-icon');
+      var confirmButton = document.getElementById('confirm');
 
-    <script>
-      const saveBtn = document.getElementById('save-btn');
-      const currentUrl = window.location.href + "/update";
-      const textParraf = document.getElementById('description');
-      
-      console.log(textParraf);
-      saveBtn.addEventListener('click', async () => {
-        const newValue = textParraf.innerText;
-        console.log(newValue);
-        try {
-        const response = await fetch(currentUrl, {
-          method: 'POST',
-          headers:  {
-            'Content-Type':  'application/json'
-          },
-          body: JSON.stringify(newValue)  
-        });
-        if (!response.ok) {
-          throw new Error('Failed to update issue');
-        }
-
-        const data = await response.json();
-        console.log('Updated issue:', data);
-      } catch (error) {
-        console.error('Error updating issue:', error);
-      } 
-
+      // Al hacer clic en el icono de edición, habilitar la edición y mostrar el botón de confirmación
+      editIcon.addEventListener('click', function () {
+        textElement.contentEditable = true;
+        confirmButton.style.display = 'block';
       });
-      
-      
-        
-      
-      
 
-    </script>
-    <script>
-      const commentCount = document.getElementById('comment-count');
-      const commentsList = document.getElementById('comments-list');
+      // Al hacer clic en el botón de confirmación, deshabilitar la edición y ocultar el botón de confirmación
+      confirmButton.addEventListener('click', function () {
+        textElement.contentEditable = false;
+        confirmButton.style.display = 'none';
+        var newValue = textElement.innerText;
+        modifyIssue('description', newValue);
+      });
+      confirmButton.style.display = 'none';
+    });
+    function modifyIssue(parameter, newValue) {
+      fetch(`http://localhost:8081/issue/${issueId}/modifyIssue`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          parameter: parameter,
+          newValue: newValue,
+        }),
+        credentials: 'same-origin',
+      })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.log(error));
+    }
+  </script>
 
-      const updateCommentCount = () => {
-        const commentListItems = commentsList.getElementsByTagName('li');
-        const count = commentListItems.length;
-        commentCount.innerHTML = count;
-      };
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-        updateCommentCount();
-    </script>
-    
-  </body>
+  <script>
+    const commentCount = document.getElementById('comment-count');
+    const commentsList = document.getElementById('comments-list');
+
+    const updateCommentCount = () => {
+      const commentListItems = commentsList.getElementsByTagName('li');
+      const count = commentListItems.length;
+      commentCount.innerHTML = count;
+    };
+
+    updateCommentCount();
+  </script>
+
+</body>
+
 </html>
