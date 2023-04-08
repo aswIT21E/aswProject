@@ -34,6 +34,15 @@ export class IssueRepository {
       return 0;
     }
   }
+
+  public static async updateIssue(issueID: string, description: string): Promise<IIssue>{
+    const issue = await IssueModel.findById(issueID);
+    console.log(issue);
+    issue.description = description;
+    const updatedIssue = await issue.save();
+    return updatedIssue;
+  }
+
   public static async addComment(issueID: string, comment: IComment): Promise<IIssue>{
     const issue = await IssueModel.findById(issueID);
     issue.comments.push(comment);

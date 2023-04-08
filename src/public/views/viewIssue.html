@@ -4,14 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../stylesheets/viewIssue.css"
-    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" type="text/css" href="stylesheets/viewIssue.css" />
+    <link rel="stylesheet" type="text/css" href="../stylesheets/viewIssue.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap"
       rel="stylesheet"
@@ -30,10 +26,10 @@
             </div>
             <div class="detail-content">
                 <section class="duty-content">
-                    <div contenteditable="true" class="description">
-                        descripcion
+                    <div id="description" contenteditable="true" class="description">
+                        
                     </div>
-                    <button class="save-button" onclick="saveDescription()"><ion-icon name="save"></ion-icon></button>
+                    <button id="save-btn" class="save-button" onclick=""><ion-icon name="save"></ion-icon></button>
                 </section>
                 <section class="attachments">
                     <h2 class="attachment-header">
@@ -49,7 +45,7 @@
                     <ul class="attachment-list"></ul>
                 </section>
                 <section class="comment-section">
-                    <h2 class="comment-h2"><span id="issues/:id/comment-count">0</span> Comentarios</h2>
+                    <h2 class="comment-h2"><span id="comment-count">0</span> Comentarios</h2>
                     <form action="issues/:id/new-comment" method="POST">
                       <div class="form-group">
                         <input type="hidden" name="id" value="642480b893dbcbc26938179b">
@@ -58,7 +54,9 @@
                       <button type="submit">Comentar</button>
                     </form>
                     <div id="comments-section">
-                        <ul id="comments-list"></ul>
+                        <ul id="comments-list">
+
+                        </ul>
                       </div>
                   </section>
             </div>
@@ -82,47 +80,51 @@
       <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
     <script>
-      const attachmentInput = document.getElementById("attachment-input");
-      const attachmentList = document.querySelector(".attachment-list");
-      const attachmentCount = document.querySelector(".attachment-count");
-
-      let attachments = [];
-      attachmentInput.addEventListener("change", () => {
-        const files = attachmentInput.files;
-        for (let i = 0; i < files.length; i++) {
-          const file = files[i];
-          attachments.push(file);
-          displayAttachment(file);
-        }
-        updateAttachmentCount();
-      });
-
-      function displayAttachment(file) {
-        const item = document.createElement("li");
-        item.className = "attachment-item";
-        item.innerHTML = `
-    <span class="attachment-item-name">${file.name}</span>
-    <span class="attachment-item-remove">&times;</span>
-  `;
-        const removeBtn = item.querySelector(".attachment-item-remove");
-        removeBtn.addEventListener("click", () => {
-          removeAttachment(file);
-          attachmentList.removeChild(item);
-          updateAttachmentCount();
+      const saveBtn = document.getElementById('save-btn');
+      const currentUrl = window.location.href + "/update";
+      const textParraf = document.getElementById('description');
+      
+      console.log(textParraf);
+      saveBtn.addEventListener('click', async () => {
+        const newValue = textParraf.innerText;
+        console.log(newValue);
+        try {
+        const response = await fetch(currentUrl, {
+          method: 'POST',
+          headers:  {
+            'Content-Type':  'application/json'
+          },
+          body: JSON.stringify(newValue)  
         });
-        attachmentList.appendChild(item);
-      }
-
-      function removeAttachment(file) {
-        const index = attachments.indexOf(file);
-        if (index > -1) {
-          attachments.splice(index, 1);
+        if (!response.ok) {
+          throw new Error('Failed to update issue');
         }
-      }
 
-      function updateAttachmentCount() {
-        attachmentCount.textContent = attachments.length;
-      }
+        const data = await response.json();
+        console.log('Updated issue:', data);
+      } catch (error) {
+        console.error('Error updating issue:', error);
+      } 
+
+      });
+      
+      
+        
+      
+      
+
+    </script>
+    <script>
+      const commentCount = document.getElementById('comment-count');
+      const commentsList = document.getElementById('comments-list');
+
+      const updateCommentCount = () => {
+        const commentListItems = commentsList.getElementsByTagName('li');
+        const count = commentListItems.length;
+        commentCount.innerHTML = count;
+      };
+
+        updateCommentCount();
     </script>
     
   </body>

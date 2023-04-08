@@ -31,6 +31,7 @@ class CreateIssueDto {
   @IsString()
   @IsNotEmpty()
   priority: string;
+  
 }
 
 export async function createIssueDto(
