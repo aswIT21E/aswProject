@@ -111,9 +111,13 @@ export class IssueController {
                         <div class="detail-title">
                             <h2 class="title">
                                 <div class="ref">#${issue.numberIssue}</div>
-                                <span  class="subject">${issue.subject}</span>
+                                <span class= "editableText" id="text-subject">${issue.subject}</span>
+                                <span class="edit-icon-wrapper-subject">
+                                  <i id="edit-icon-subject" class="fas fa-pencil-alt"></i>
+                                </span>
                             </h2>
                         </div>
+                        <button id="confirm-subject" class="save-button-subject" style="display:none">Confirmar</button>
                         <div class="detail-project">
                             <div class="section-name">PETICIÓN</div>
                         </div>
@@ -125,7 +129,7 @@ export class IssueController {
                                 24 mar. 2023 16:20
                             </div>
                         </div>
-                    </div>`;
+    </div>`;
     const path = `'http://localhost:8081/issue/${issue.id}/modifyIssue'`;
     const scriptNode2 = `
       <script>
@@ -142,57 +146,53 @@ export class IssueController {
           }),
           credentials: 'same-origin',
         })
-          .then(response => response.json())
-          .then(data => console.log(data))
           .catch(error => console.log(error));
       }
       </script>
-                <div class="side-wrap">
-                <div class="custom-select">
-                  <select name="status" id="dropdown" onchange="modifyIssue('status', this.value)">
-                    <option value="Nueva" ${issue.status === "Nueva" ? "selected" : ""}>Nueva</option>
-                    <option value="En curso" ${issue.status === "En curso" ? "selected" : ""}>En curso</option>
-                    <option value="Lista para testear" ${issue.status === "Lista para testear" ? "selected" : ""}>Lista para testear</option>
-                    <option value="Cerrada" ${issue.status === "Cerrada" ? "selected" : ""}>Cerrada</option>
-                    <option value="Necesita información" ${issue.status === "Necesita información" ? "selected" : ""}>Necesita información</option>
-                    <option value="Rechazada" ${issue.status === "Rechazada" ? "selected" : ""}>Rechazada</option>
-                    <option value="Pospuesta" ${issue.status === "Pospuesta" ? "selected" : ""}>Pospuesta</option>
+      <br/>
+      <br/>
+      <br>
+                  <select class="dropdown" name="status" id="dropdown" onchange="modifyIssue('status', this.value)">
+                    <option class="dropdown-option" value="Nueva" ${issue.status === "Nueva" ? "selected" : ""}>Nueva</option>
+                    <option class="dropdown-option" value="En curso" ${issue.status === "En curso" ? "selected" : ""}>En curso</option>
+                    <option class="dropdown-option" value="Lista para testear" ${issue.status === "Lista para testear" ? "selected" : ""}>Lista para testear</option>
+                    <option class="dropdown-option" value="Cerrada" ${issue.status === "Cerrada" ? "selected" : ""}>Cerrada</option>
+                    <option class="dropdown-option" value="Necesita información" ${issue.status === "Necesita información" ? "selected" : ""}>Necesita información</option>
+                    <option class="dropdown-option" value="Rechazada" ${issue.status === "Rechazada" ? "selected" : ""}>Rechazada</option>
+                    <option class="dropdown-option" value="Pospuesta" ${issue.status === "Pospuesta" ? "selected" : ""}>Pospuesta</option>
                   </select>
-                </div>
-              </div>
-  
               <div class="custom-params">
                 <div class="dropdown-cont">
-                  <label for="type" class="label">tipo</label>
-                  <div class="bola" id="${issue.type}"></div>
-      <select name="type" id="dropdown2" class="tipo" onchange="modifyIssue('type', this.value)">
-        <option value="Bug" ${issue.type === "Bug" ? "selected" : ""}>Bug</option>
-        <option value="Pregunta" ${issue.type === "Pregunta" ? "selected" : ""}>Pregunta</option>
-        <option value="Mejora" ${issue.type === "Mejora" ? "selected" : ""}>Mejora</option>
-                  </select>
+                    <label for="type" class="label">tipo</label>       
+                    <select name="type" id="dropdown2" class="tipo" onchange="modifyIssue('type', this.value)">
+                      <option value="Bug" ${issue.type === "Bug" ? "selected" : ""}>Bug</option>
+                      <option value="Pregunta" ${issue.type === "Pregunta" ? "selected" : ""}>Pregunta</option>
+                      <option value="Mejora" ${issue.type === "Mejora" ? "selected" : ""}>Mejora</option>
+                    </select>
+                    <div class="bola" id="${issue.type}"></div>
                 </div>
                 <div class="dropdown-cont">
                   <label for="severity" class="label">gravedad</label>
-                  <div class="bola" id="${issue.severity}"></div>
-      <select name="severity" id="dropdown2" class="tipo" onchange="modifyIssue('severity', this.value)">
-        <option value="Deseada" ${issue.severity === "Deseada" ? "selected" : ""}>Deseada</option>
-        <option value="Menor" ${issue.severity === "Menor" ? "selected" : ""}>Menor</option>
-        <option value="Normal" ${issue.severity === "Normal" ? "selected" : ""}>Normal</option>
-        <option value="Importante" ${issue.severity === "Importante" ? "selected" : ""}>Importante</option>
-        <option value="Crítica" ${issue.severity === "Crítica" ? "selected" : ""}>Crítica</option>
-                  </select>
-                </div>
+                    <select name="severity" id="dropdown2" class="tipo" onchange="modifyIssue('severity', this.value)">
+                      <option value="Deseada" ${issue.severity === "Deseada" ? "selected" : ""}>Deseada</option>
+                      <option value="Menor" ${issue.severity === "Menor" ? "selected" : ""}>Menor</option>
+                      <option value="Normal" ${issue.severity === "Normal" ? "selected" : ""}>Normal</option>
+                      <option value="Importante" ${issue.severity === "Importante" ? "selected" : ""}>Importante</option>
+                      <option value="Crítica" ${issue.severity === "Crítica" ? "selected" : ""}>Crítica</option>
+                    </select>
+                    <div class="bola" id="${issue.severity}"></div>
+                  </div>
                 <div class="dropdown-cont">
                   <label for="priority" class="label">prioridad</label>
+                  <select name="priority" id="dropdown2" class="tipo" onchange="modifyIssue('priority', this.value)">
+                    <option value="Baja" ${issue.priority === "Baja" ? "selected" : ""}>Baja</option>
+                    <option value="Media" ${issue.priority === "Media" ? "selected" : ""}>Media</option>
+                    <option value="Alta" ${issue.priority === "Alta" ? "selected" : ""}>Alta</option>
+                  </select>
                   <div class="bola" id="${issue.priority}"></div>
-      <select name="priority" id="dropdown2" class="tipo" onchange="modifyIssue('priority', this.value)">
-        <option value="Baja" ${issue.priority === "Baja" ? "selected" : ""}>Baja</option>
-        <option value="Media" ${issue.priority === "Media" ? "selected" : ""}>Media</option>
-        <option value="Alta" ${issue.priority === "Alta" ? "selected" : ""}>Alta</option>
-      </select>
-      </div>
-    </div>
-    `;
+                </div>
+        </div>
+        `;
     
     $('#detail-header').append(scriptNode);
     $('#sidebar').append(scriptNode2);
@@ -271,16 +271,13 @@ export class IssueController {
       const parameter: string = req.body.parameter;
       const newValue = req.body.newValue;
       console.log(newValue);
-      const modifiedIssue: IIssue = await IssueRepository.modifyParameterIssue(
+      await IssueRepository.modifyParameterIssue(
         numberIssue,
         parameter,
         newValue
       );
+      res.redirect(`/issue/${numberIssue}`);
       res.status(200);
-      res.json({
-        message: "issue modified",
-        issue: modifiedIssue,
-      });
     } catch (e) {
       res.status(500);
       res.json({

@@ -72,22 +72,37 @@
     document.addEventListener('DOMContentLoaded', function () {
       var textElement = document.getElementById('text');
       var editIcon = document.getElementById('edit-icon');
+      var textElementSubject = document.getElementById('text-subject');
+      var editIconSubject = document.getElementById('edit-icon-subject');
       var confirmButton = document.getElementById('confirm');
+      var confirmButtonSubject = document.getElementById('confirm-subject');
 
       // Al hacer clic en el icono de edición, habilitar la edición y mostrar el botón de confirmación
       editIcon.addEventListener('click', function () {
         textElement.contentEditable = true;
         confirmButton.style.display = 'block';
       });
+      editIconSubject.addEventListener('click', function () {
+        textElementSubject.contentEditable = true;
+        confirmButtonSubject.style.display = 'block';
+      });
 
       // Al hacer clic en el botón de confirmación, deshabilitar la edición y ocultar el botón de confirmación
       confirmButton.addEventListener('click', function () {
-        textElement.contentEditable = false;
-        confirmButton.style.display = 'none';
-        var newValue = textElement.innerText;
+        textElementSubject.contentEditable = false;
+        confirmButtonSubject.style.display = 'none';
+        var newValue = textElementSubject.innerText;
         modifyIssue('description', newValue);
       });
       confirmButton.style.display = 'none';
+
+      confirmButtonSubject.addEventListener('click', function () {
+        textElementSubject.contentEditable = false;
+        confirmButtonSubject.style.display = 'none';
+        var newValue = textElementSubject.innerText;
+        modifyIssue('subject', newValue);
+      });
+      confirmButtonSubject.style.display = 'none';
     });
     function modifyIssue(parameter, newValue) {
       fetch(`http://localhost:8081/issue/${issueId}/modifyIssue`, {
@@ -101,10 +116,7 @@
           newValue: newValue,
         }),
         credentials: 'same-origin',
-      })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.log(error));
+      }).catch(error => console.log(error));
     }
   </script>
 
