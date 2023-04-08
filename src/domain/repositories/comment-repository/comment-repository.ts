@@ -1,5 +1,5 @@
-import type { IComment } from "~/domain/entities/comment";
-import { CommentModel } from "~/domain/entities/comment";
+import type { IComment } from '~/domain/entities/comment';
+import { CommentModel } from '~/domain/entities/comment';
 
 export class CommentRepository {
   public static async addComment(

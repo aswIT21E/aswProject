@@ -1,7 +1,7 @@
-import express from "express";
+import express from 'express';
 
-import { userRouter } from "./user-routes";
-import { issueRouter } from "./issue-routes";
+import { issueRouter } from './issue-routes';
+import { userRouter } from './user-routes';
 
 export const routes = express.Router();
 

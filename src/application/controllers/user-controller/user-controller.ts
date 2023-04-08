@@ -1,7 +1,7 @@
-import type { Request, Response } from "express";
+import type { Request, Response } from 'express';
 
-import type { IUser } from "~/domain/entities/user";
-import { UserRepository } from "~/domain/repositories/user-repository/user-repository";
+import type { IUser } from '~/domain/entities/user';
+import { UserRepository } from '~/domain/repositories/user-repository/user-repository';
 
 export class UserController {
   public static async createUser(req: Request, res: Response): Promise<void> {
@@ -10,7 +10,7 @@ export class UserController {
       await UserRepository.addUser(user);
       res.status(200);
       res.json({
-        message: "user created",
+        message: 'user created',
       });
     } catch (e) {
       res.status(500);

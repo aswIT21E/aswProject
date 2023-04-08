@@ -1,4 +1,6 @@
-import { IComment } from '../comment';
+import type { IComment } from '../comment';
+import type { IUser } from '../user';
+
 import type { IIssue } from './issue.interface';
 
 export class Issue implements IIssue {
@@ -14,6 +16,7 @@ export class Issue implements IIssue {
   public date: string;
   public comments?: IComment[];
   public locked: boolean;
+  public watchers: IUser[];
 
   constructor(
     id: string,
@@ -26,6 +29,7 @@ export class Issue implements IIssue {
     severity: string,
     priority: string,
     comments: IComment[],
+    watchers?: IUser[],
   ) {
     this.id = id;
     this.numberIssue = numberIssue;
@@ -38,6 +42,7 @@ export class Issue implements IIssue {
     this.priority = priority;
     this.comments = comments;
     this.locked = false;
+    this.watchers = watchers;
   }
 
   public lockIssue(): void {
@@ -46,5 +51,14 @@ export class Issue implements IIssue {
 
   public unlockIssue(): void {
     this.locked = false;
+  }
+
+  public updateWatchers(watchers: IUser[]): void {
+    this.watchers = watchers;
+  }
+
+  public get watchersIds(): string[] {
+    const ids = this.watchers.map((watcher) => watcher.id);
+    return ids;
   }
 }
