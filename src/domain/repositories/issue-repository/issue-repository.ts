@@ -69,7 +69,7 @@ export class IssueRepository {
   }
 
   public static async updateIssue(newIssue: IIssue): Promise<IIssue> {
-    await IssueModel.updateOne(newIssue);
+    await IssueModel.findByIdAndUpdate(newIssue.id, newIssue);
     return newIssue;
   }
 }
