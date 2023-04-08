@@ -101,8 +101,10 @@ export class IssueController {
     }
 
     const scriptNode4 =`
-    <i id="edit-icon" class="fas fa-pencil-alt" style="padding-right: 0.5rem; color: #4c566a; font-size: 0.8rem;"></i>
-    <span id="text" contenteditable="false">${issue.description}</span>
+    <span class= "editableText" id="text" contenteditable="false" style="">${issue.description}</span>
+    <span class="edit-icon-wrapper">
+    <i id="edit-icon" class="fas fa-pencil-alt"></i>
+    </span>
     `;
     const scriptNode = `
                       <div class="detail-nom">
@@ -147,14 +149,14 @@ export class IssueController {
       </script>
                 <div class="side-wrap">
                 <div class="custom-select">
-                  <select name="status" id="dropdown" >
-                    <option value="Nueva">Nueva</option>
-                    <option value="En curso">En curso</option>
-                    <option value="Lista para testear">Lista para testear</option>
-                    <option value="Cerrada">Cerrada</option>
-                    <option value="Necesita información">Necesita información</option>
-                    <option value="Rechazada">Rechazada</option>
-                    <option value="Pospuesta">Pospuesta</option>
+                  <select name="status" id="dropdown" onchange="modifyIssue('status', this.value)">
+                    <option value="Nueva" ${issue.status === "Nueva" ? "selected" : ""}>Nueva</option>
+                    <option value="En curso" ${issue.status === "En curso" ? "selected" : ""}>En curso</option>
+                    <option value="Lista para testear" ${issue.status === "Lista para testear" ? "selected" : ""}>Lista para testear</option>
+                    <option value="Cerrada" ${issue.status === "Cerrada" ? "selected" : ""}>Cerrada</option>
+                    <option value="Necesita información" ${issue.status === "Necesita información" ? "selected" : ""}>Necesita información</option>
+                    <option value="Rechazada" ${issue.status === "Rechazada" ? "selected" : ""}>Rechazada</option>
+                    <option value="Pospuesta" ${issue.status === "Pospuesta" ? "selected" : ""}>Pospuesta</option>
                   </select>
                 </div>
               </div>
