@@ -19,6 +19,8 @@ issueRouter.post('/issue/:id/new-comment', IssueController.createComment);
 
 issueRouter.post('/issue/:id/editIssue', IssueController.modifyIssue);
 
+issueRouter.post('/issue/:id/modifyIssue', IssueController.modifyIssue);
+
 issueRouter.get('/issues', IssueController.getAllIssues);
 
 issueRouter.get('/issues/newIssue', IssueController.getNewIssuePage);

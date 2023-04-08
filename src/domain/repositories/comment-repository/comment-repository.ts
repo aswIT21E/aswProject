@@ -24,7 +24,11 @@ export class CommentRepository {
     };
     return comment;
   }
-  public static async getComment(message: string): Promise<IComment> {
+  public static async getComment(message: IComment): Promise<IComment> {
     return await CommentModel.findById(message);
+  }
+
+  public static async getAllComments(): Promise<IComment[]> {
+    return await CommentModel.find();
   }
 }
