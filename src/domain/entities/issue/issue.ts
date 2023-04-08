@@ -1,5 +1,5 @@
-import { IComment } from "../comment";
-import type { IIssue } from "./issue.interface";
+import { IComment } from '../comment';
+import type { IIssue } from './issue.interface';
 
 export class Issue implements IIssue {
   public id: string;
@@ -13,7 +13,8 @@ export class Issue implements IIssue {
   public priority: string;
   public date: string;
   public comments?: IComment[];
-  
+  public locked: boolean;
+
   constructor(
     id: string,
     numberIssue: number,
@@ -36,6 +37,6 @@ export class Issue implements IIssue {
     this.severity = severity;
     this.priority = priority;
     this.comments = comments;
+    this.locked = false;
   }
-  
 }

@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
-import type { IIssue } from "./issue.interface";
+import type { IIssue } from './issue.interface';
 
 const IssueSchema = new Schema({
   subject: { required: true, type: String },
@@ -13,8 +13,9 @@ const IssueSchema = new Schema({
   severity: { required: true, type: String },
   priority: { required: true, type: String },
   comments: [{ required: true, type: Schema.Types.ObjectId }],
+  locked: { required: true, type: Boolean, default: false },
 });
 
-const IssueModel = model<IIssue>("Issue", IssueSchema);
+const IssueModel = model<IIssue>('Issue', IssueSchema);
 
 export { IssueModel };

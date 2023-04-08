@@ -1,4 +1,4 @@
-import { IComment } from "../comment";
+import { IComment } from '../comment';
 
 export interface IIssue {
   id: string;
@@ -11,4 +11,5 @@ export interface IIssue {
   severity: string;
   priority: string;
   comments?: IComment[];
+  locked: boolean;
 }
