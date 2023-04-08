@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { load } from 'cheerio';
+import axios  from 'axios';
 import fs from 'fs';
 import type { IIssue } from '~/domain/entities/issue';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
@@ -120,7 +121,7 @@ export class IssueController {
     const scriptNode2 = `
     <div class="side-wrap">
     <div class="custom-select">
-      <select name="status" id="dropdown">
+      <select name="status" id="dropdown" >
         <option value="Nueva">Nueva</option>
         <option value="En curso">En curso</option>
         <option value="Lista para testear">Lista para testear</option>
@@ -136,7 +137,7 @@ export class IssueController {
     <div class="dropdown-cont">
       <label for="type" class="label">tipo</label>
       <div class="bola" id="${issue.type}"></div>
-      <select name="type" id="dropdown2" class="tipo">
+      <select name="type" id="dropdown2" class="tipo" onchange="sendModifiedIssue('type', this.value)">
         <option value="Bug" ${issue.type === "Bug" ? "selected" : ""}>Bug</option>
         <option value="Pregunta" ${issue.type === "Pregunta" ? "selected" : ""}>Pregunta</option>
         <option value="Mejora" ${issue.type === "Mejora" ? "selected" : ""}>Mejora</option>
@@ -145,7 +146,7 @@ export class IssueController {
     <div class="dropdown-cont">
       <label for="severity" class="label">gravedad</label>
       <div class="bola" id="${issue.severity}"></div>
-      <select name="severity" id="dropdown2" class="tipo">
+      <select name="severity" id="dropdown2" class="tipo" onchange="${IssueController.sendModifiedIssue('severity', 'deseada', issue.id)}">
         <option value="Deseada" ${issue.severity === "Deseada" ? "selected" : ""}>Deseada</option>
         <option value="Menor" ${issue.severity === "Menor" ? "selected" : ""}>Menor</option>
         <option value="Normal" ${issue.severity === "Normal" ? "selected" : ""}>Normal</option>
@@ -156,15 +157,13 @@ export class IssueController {
     <div class="dropdown-cont">
       <label for="priority" class="label">prioridad</label>
       <div class="bola" id="${issue.priority}"></div>
-      <select name="priority" id="dropdown2" class="tipo">
+      <select name="priority" id="dropdown2" class="tipo" onchange="sendModifiedIssue('priority', this.value)">
         <option value="Baja" ${issue.priority === "Baja" ? "selected" : ""}>Baja</option>
         <option value="Media" ${issue.priority === "Media" ? "selected" : ""}>Media</option>
         <option value="Alta" ${issue.priority === "Alta" ? "selected" : ""}>Alta</option>
       </select>
     </div>
-
   </div>
-  
     `;
 
 
@@ -213,6 +212,12 @@ export class IssueController {
         message: 'comment not created',
       });
     }
+  }
+ 
+  public static async sendModifiedIssue(parameter:string, newValue:string, issueId: string) {
+    const id = issueId;
+    const url = '/issue/' + id + '/editIssue';
+    await axios.post(url, {parameter, newValue});
   }
 
   public static async modifyIssue(req: Request, res: Response): Promise<void> {
