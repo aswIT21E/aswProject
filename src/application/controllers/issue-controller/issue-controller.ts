@@ -63,8 +63,10 @@ export class IssueController {
   }
 
   public static async getIssuePage(_req: Request, res: Response): Promise<void> {
-    
-    const issues: IIssue[] = await IssueRepository.getAllIssues();
+    try{
+    const filter: IFilter = _req.body;
+    console.log(filter);
+    const issues: IIssue[] = await IssueRepository.filterIssues(filter);
     
     const Indexhtml = fs.readFileSync('src/public/views/index.html');
     const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
@@ -75,9 +77,9 @@ export class IssueController {
 
       const scriptNode = `                           
               <div class="issue">
-              <abbr title = "${issue.type}"> <div class="bola" id="${issue.type}"></div></abbr>
-              <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"></div></abbr>
-              <abbr title = "${issue.priority}"><div class="bola" id="${issue.priority}"></div></abbr>
+              <abbr title = "${issue.type}"> <div class="bola" id="${issue.type}"> </div></abbr>
+              <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"> </div></abbr>
+              <abbr title = "${issue.priority}"><div class="bola" id="${issue.priority}"> </div></abbr>
               <div class="informacion">
                   <div class="numero-peticion" id="NumPeticion"> ${issue.numberIssue}</div>
                   <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8081/issue/${issue.id}">${issue.subject}</a> </div>
@@ -88,7 +90,14 @@ export class IssueController {
       $('body').append(scriptNode);
     }
     res.send($.html());
-
+  }
+  catch (e) {
+    res.status(500);
+    res.json({
+      error: e,
+      message: 'issues not found',
+    });
+  }
     }
 
   public static async getIssue(_req: Request, res: Response): Promise<void> {
@@ -234,25 +243,5 @@ export class IssueController {
         message: 'comment not created',
       });
     }
-  }
-//Les issues s’han de poder filtrar segons si tenen in determinat status, assignee, tags, priority, assign_to, created_by.
-  public static async filterIssues(req: Request, res: Response): Promise<void> {
-    try {
-      const filter: IFilter = req.body;
-      const issues: IIssue[] = await IssueRepository.filterIssues(filter);
-
-      res.status(200);
-      res.json({
-        message: 'issues filtered',
-        issues: issues,
-      });
-    } catch (e) {
-      res.status(500);
-      res.json({
-        error: e,
-        message: 'issues not filtered',
-      });
-    }
-
   }
 }

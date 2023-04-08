@@ -6,22 +6,22 @@ class FilterDTO{
   
   
   @IsString()
-  tipo: string[];
+  tipo?: string[];
      
   @IsString()
-  status: string[];
+  status?: string[];
 
   @IsString()
-  assignee: string;
+  assignee?: string;
 
   @IsString()
-  createdBy: string;
+  createdBy?: string;
+  
+
+  asignedTo?: string;
   
   @IsString()
-  asignedTo: string;
-  
-  @IsString()
-  priority: string[];
+  priority?: string[] | null;
 
 }
 

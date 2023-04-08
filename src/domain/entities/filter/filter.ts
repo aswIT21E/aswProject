@@ -1,20 +1,20 @@
 import type { IFilter } from "./filter.interface";
 
 export class Filter implements IFilter {
- public tipo: string[];
-  public gravedad: string[];
-  public estado: string[];
-  public crated_by: string[];
-  public asign_to: string[];
-  public tags: string[];
+ public tipo?: string[];
+  public gravedad?: string[];
+  public estado?: string[];
+  public crated_by?: string[];
+  public asign_to?: string[];
+  public tags?: string[];
 
   constructor(
-    tipo: string[],
-    gravedad: string[],
-    estado: string[],
-    crated_by: string[],
-    asign_to: string[],
-    tags: string[],
+    tipo?: string[],
+    gravedad?: string[],
+    estado?: string[],
+    crated_by?: string[],
+    asign_to?: string[],
+    tags?: string[],
   ) {
     this.tipo = tipo;
     this.gravedad = gravedad;

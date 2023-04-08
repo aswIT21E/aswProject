@@ -4,6 +4,7 @@ import express from 'express';
 
 import { IssueController } from '~/application';
 import { createIssueDto } from '~/infrastructure/dtos';
+import { filterDto } from '../dtos/filter-dto';
 
 export const issueRouter = express.Router();
 
@@ -28,6 +29,8 @@ issueRouter.get('/issues/stylesheets/addIssue.css',IssueController.getNewIssuePa
 issueRouter.get('/issue', IssueController.getIssuePage);
 
 issueRouter.get('/issue/:id', IssueController.getIssue);
+
+issueRouter.get('/issuefilter', filterDto, IssueController.getIssuePage);
 
 
 issueRouter.get('/stylesheets/searchIssue.css', IssueController.getSearchIssueCss,);
