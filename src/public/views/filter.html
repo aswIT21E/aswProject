@@ -1,0 +1,110 @@
+<style>
+    .filter label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+  
+    .filter label input[type="checkbox"] {
+      margin-left: 10px;
+    }
+  </style>
+  
+  <div class="filter" style="margin-top: 1em;">
+    <button type="button" class="filter-button" onclick="mostrarMenu()">Mostrarcfiltros</button>
+    <div id="menu" style="display: none; flex-direction: column; margin-top: 1em;">
+      <button type="button" class="typeDisplay" onclick="mostrarMenuTipus()">Tipos</button>
+      <div id="menuTipus" style="display: none;">
+        <label>
+          BUG
+          <input type="checkbox" name="button" value="Bug">
+        </label>
+  
+        <label>
+          PREGUNTA
+          <input type="checkbox" name="button" value="Pregunta">
+        </label>
+  
+        <label>
+          MEJORA
+          <input type="checkbox" name="button" value="Mejora">
+        </label>
+      </div>
+      <button type="button" class="typeDisplay" onclick="mostrarMenuGravedad()">Gravedad</button>
+      <div id="MenuGravedad" style="display: none;">
+        <label>
+          Menor
+          <input type="checkbox" name="button" value="Menor">
+        </label>
+  
+        <label>
+          Normal
+          <input type="checkbox" name="button" value="Normal">
+        </label>
+  
+        <label>
+          Importante
+          <input type="checkbox" name="button" value="Importante">
+        </label>
+  
+        <label>
+          Critica
+          <input type="checkbox" name="button" value="Critica">
+        </label>
+      </div>
+      <button type="button" class="typeDisplay" onclick="mostrarMenuPriority()">Prioridad</button>
+      <div id="menuPrioridad" style="display: none;">
+        <label>
+          Baja
+          <input type="checkbox" name="button" value="Baja">
+        </label>
+  
+        <label>
+          Media
+          <input type="checkbox" name="button" value="Media">
+        </label>
+  
+        <label>
+          Alta
+          <input type="checkbox" name="button" value="Alta">
+        </label>
+      </div>
+    </div>
+  </div>
+  
+         <script>
+        function mostrarMenu() {
+          var menu = document.getElementById("menu");
+          if (menu.style.display === "none") {
+            menu.style.display = "flex";
+          } else {
+            menu.style.display = "none";
+          }
+        }
+        function mostrarMenuTipus() {
+          var menu = document.getElementById("menuTipus");
+          if (menu.style.display === "none") {
+            menu.style.display = "block";
+          } else {
+            menu.style.display = "none";
+          }
+        }
+        function mostrarMenuGravedad() {
+          var menu = document.getElementById("MenuGravedad");
+          if (menu.style.display === "none") {
+            menu.style.display = "block";
+          } else {
+            menu.style.display = "none";
+          }
+        }
+        function mostrarMenuPriority() {
+          var menu = document.getElementById("menuPrioridad");
+          if (menu.style.display === "none") {
+            menu.style.display = "block";
+          } else {
+            menu.style.display = "none";
+          }
+        }
+        </script>
+        
+</div>   

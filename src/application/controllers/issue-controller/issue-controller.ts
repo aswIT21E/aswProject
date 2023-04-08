@@ -69,10 +69,12 @@ export class IssueController {
     const issues: IIssue[] = await IssueRepository.filterIssues(filter);
     
     const Indexhtml = fs.readFileSync('src/public/views/index.html');
+    const filterPage = fs.readFileSync('src/public/views/filter.html');
     const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
     const $ = load(Indexhtml);
     
     $('#searchbar').append(load(searchPage).html());
+    $('#Filters').append(load(filterPage).html());
     for (const issue of issues) {
 
       const scriptNode = `                           
