@@ -10,8 +10,8 @@
     }
   </style>
   
-  <div class="filter" style="margin-top: 1em;">
-    <button type="button" class="filter-button" onclick="mostrarMenu()">Mostrarcfiltros</button>
+  <div class="filter" style="margin-top: 1em; max-width: fit-content;">
+    <button type="button" class="filter-button"  style="margin-top: 1em;" onclick="mostrarMenu()">Mostrarcfiltros</button>
     <div id="menu" style="display: none; flex-direction: column; margin-top: 1em;">
       <button type="button" class="typeDisplay" onclick="mostrarMenuTipus()">Tipos</button>
       <div id="menuTipus" style="display: none;">
@@ -30,7 +30,7 @@
           <input type="checkbox" name="button" value="Mejora">
         </label>
       </div>
-      <button type="button" class="typeDisplay" onclick="mostrarMenuGravedad()">Gravedad</button>
+      <button type="button" class="typeDisplay" style="margin-top: 1em;" onclick="mostrarMenuGravedad()">Gravedad</button>
       <div id="MenuGravedad" style="display: none;">
         <label>
           Menor
@@ -52,7 +52,7 @@
           <input type="checkbox" name="button" value="Critica">
         </label>
       </div>
-      <button type="button" class="typeDisplay" onclick="mostrarMenuPriority()">Prioridad</button>
+      <button type="button" class="typeDisplay" style="margin-top: 1em;" onclick="mostrarMenuPriority()">Prioridad</button>
       <div id="menuPrioridad" style="display: none;">
         <label>
           Baja
