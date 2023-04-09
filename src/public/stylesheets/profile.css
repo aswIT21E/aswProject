@@ -134,6 +134,7 @@
     text-transform: uppercase;
     white-space: nowrap;
     height: 40px;
+    cursor: pointer;
 }
 .editar-bio span {
     color: #2e3440;
