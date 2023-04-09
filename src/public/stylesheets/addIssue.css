@@ -174,16 +174,17 @@ button {
 .dropdown-cont {
     display: flex;
     padding-top: 3px;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-right: 10px;
     margin-top: 20px;
     background-color: #f9f9fb;
 }
 
+
 #dropdown2 {
     border-radius: 3px;
     background: #f9f9fb;
-    font-size: 2;
+    font-size: large;
     color: #000;
     cursor: pointer;
     height: 100%;

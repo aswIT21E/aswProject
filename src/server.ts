@@ -2,6 +2,7 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import { connect } from 'mongoose';
+
 import { routes } from '~/infrastructure';
 dotenv.config();
 
@@ -13,7 +14,9 @@ app.use(
     extended: true,
   }),
 );
+app.use(express.json());
 app.use(express.static('public'));
+app.use(express.json());
 app.use('/', routes);
 
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME } = process.env;
