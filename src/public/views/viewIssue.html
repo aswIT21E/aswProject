@@ -116,7 +116,8 @@
           newValue: newValue,
         }),
         credentials: 'same-origin',
-      }).catch(error => console.log(error));
+      }).then(location.reload())
+      .catch(error => console.log(error));
     }
   </script>
 
