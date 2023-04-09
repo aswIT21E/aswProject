@@ -1,3 +1,3 @@
-export * from "./comment";
-export * from "./comment.interface";
-export * from "./comment.schema";
+export * from './comment';
+export * from './comment.interface';
+export * from './comment.schema';

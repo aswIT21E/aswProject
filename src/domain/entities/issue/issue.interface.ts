@@ -1,4 +1,4 @@
-import { IComment } from "../comment";
+import type { IComment, IUser } from '~/domain/entities';
 
 export interface IIssue {
   id: string;
@@ -11,4 +11,11 @@ export interface IIssue {
   severity: string;
   priority: string;
   comments?: IComment[];
+  locked: boolean;
+  watchers: IUser[];
+
+  lockIssue: () => void;
+  unlockIssue: () => void;
+  updateWatchers: (watchers: IUser[]) => void;
+  readonly watchersIds: string[];
 }
