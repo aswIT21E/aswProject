@@ -89,7 +89,7 @@ export class IssueController {
               <div class="estado" >${issue.status}</div>
               <div class="fecha-creacion" id = "FechaPeticion">${issue.creator}</div>
               </div>`;
-      $('body').append(scriptNode);
+      $('#issues').append(scriptNode);
     }
     res.send($.html());
   }
