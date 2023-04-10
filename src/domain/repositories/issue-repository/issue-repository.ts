@@ -6,12 +6,9 @@ import { IssueModel } from '~/domain/entities/issue';
 export class IssueRepository {
   public static async addIssue(
     issue: IIssue,
+    date: string,
     lastNumberIssue: number,
   ): Promise<IIssue> {
-    const date = new Date().toLocaleString('es-ES', {
-      timeZone: 'Europe/Madrid',
-    });
-
     const newIssue = await IssueModel.create({
       ...issue,
       date,
@@ -22,7 +19,19 @@ export class IssueRepository {
   }
 
   public static async getAllIssues(): Promise<IIssue[]> {
-    return await IssueModel.find();
+    const issueDocument = (
+      await IssueModel.find().populate({
+        path: 'creator',
+        model: 'User',
+      })
+    );
+    return issueDocument;
+
+  }
+
+
+  public static async deleteIssue(numberIssue: string): Promise<void> {
+    await IssueModel.findByIdAndDelete(numberIssue);
   }
 
   public static async getIssueById(issueID: string): Promise<IIssue> {
@@ -32,7 +41,6 @@ export class IssueRepository {
         model: 'User',
       })
     ).populate({ path: 'watchers', model: 'User' });
-
     const issue = new Issue(
       issueDocument.id,
       issueDocument.numberIssue,
@@ -40,8 +48,9 @@ export class IssueRepository {
       issueDocument.description,
       issueDocument.creator,
       issueDocument.status,
-      issueDocument.type,
       issueDocument.severity,
+      issueDocument.type,
+      issueDocument.date,
       issueDocument.priority,
       issueDocument.comments,
       issueDocument.watchers,

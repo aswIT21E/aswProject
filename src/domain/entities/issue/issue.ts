@@ -10,10 +10,10 @@ export class Issue implements IIssue {
   public description: string;
   public creator: IUser;
   public status: string;
-  public type: string;
   public severity: string;
-  public priority: string;
+  public type: string;
   public date: string;
+  public priority: string;
   public comments?: IComment[];
   public locked: boolean;
   public watchers: IUser[];
@@ -25,8 +25,9 @@ export class Issue implements IIssue {
     description: string,
     creator: IUser,
     status: string,
-    type: string,
     severity: string,
+    type: string,
+    date: string,
     priority: string,
     comments: IComment[],
     watchers?: IUser[],
@@ -37,8 +38,9 @@ export class Issue implements IIssue {
     this.description = description;
     this.creator = creator;
     this.status = status;
-    this.type = type;
     this.severity = severity;
+    this.type = type;
+    this.date = date;
     this.priority = priority;
     this.comments = comments;
     this.locked = false;
