@@ -382,7 +382,8 @@ export class IssueController {
         numberIssue,
       );
       res.status(200);
-      res.json({ message: 'issue deleted' });
+      res.end();
+
     } catch (e) {
       res.status(500);
       res.json({
