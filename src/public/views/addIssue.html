@@ -115,24 +115,49 @@
         </div>
       </div>
     </form>
+
+  <script>
+    const form = document.querySelector('#issueForm');
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const token = localStorage.getItem('token');
+  const headers = new Headers();
+  headers.append('Authorization', `Bearer ${token}`);
+  headers.append('Content-Type', 'application/json');
+
+  const formData = new FormData(event.target);
+
+  const issue = {
+    subject: formData.get('subject'),
+    description: formData.get('description'),
+    status: formData.get('status'),
+    type: formData.get('type'),
+    severity: formData.get('severity'),
+    priority: formData.get('priority'),
+  };
+
+  try {
+    const response = await fetch('http://localhost:8081/issues/create', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(issue),
+    });
+
+    if (response.ok) {
+      window.location.href = 'http://localhost:8081/issue';
+    } else {
+      const error = await response.json();
+      console.error(error);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+  </script>
   </body>
 
-  <!--<script>
-    const issueForm = document.getElementById('issueForm');
-
-
-    issueForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        let input = document.getElementById("inp");
-        let description = document.getElementById("descp");
-        let me = 'me';
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://13.39.86.38:80/issues/create', true);
-        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onload = function () {
-            console.log(this.responseText);
-        };
-        xhr.send('subject=input&description=description&creator=me');
-    });
-</script>-->
+  
+    
 </html>
