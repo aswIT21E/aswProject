@@ -47,7 +47,7 @@ export class IssueRepository {
       issueDocument.severity,
       issueDocument.priority,
       issueDocument.comments,
-      issueDocument.watchers,
+     
     );
 
     return issue;
