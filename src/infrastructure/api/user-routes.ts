@@ -10,3 +10,17 @@ userRouter.post('/users/signup', createUserDto, signUp);
 userRouter.post('/users/login', loginDto, logIn);
 
 userRouter.get('/users', UserController.getAllUsers);
+
+userRouter.get('/signup', UserController.getSignUpPage);
+
+userRouter.get('/login', UserController.getLoginPage);
+
+userRouter.get(
+    '/stylesheets/signUp.css',
+    UserController.getSignUpPageCss,
+  );
+
+userRouter.get(
+    '/stylesheets/login.css',
+    UserController.getLoginPageCss,
+  );
