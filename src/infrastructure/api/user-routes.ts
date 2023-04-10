@@ -1,10 +1,26 @@
 import express from 'express';
 
-import { UserController } from '~/application';
-import { createUserDto } from '~/infrastructure/dtos';
+import { logIn, signUp, UserController } from '~/application';
+import { createUserDto, loginDto } from '~/infrastructure/dtos';
 
 export const userRouter = express.Router();
 
-userRouter.post('/users/create', createUserDto, UserController.createUser);
+userRouter.post('/users/signup', createUserDto, signUp);
+
+userRouter.post('/users/login', loginDto, logIn);
 
 userRouter.get('/users', UserController.getAllUsers);
+
+userRouter.get('/signup', UserController.getSignUpPage);
+
+userRouter.get('/login', UserController.getLoginPage);
+
+userRouter.get(
+    '/stylesheets/signUp.css',
+    UserController.getSignUpPageCss,
+  );
+
+userRouter.get(
+    '/stylesheets/login.css',
+    UserController.getLoginPageCss,
+  );

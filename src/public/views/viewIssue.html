@@ -49,7 +49,6 @@
           </form>
           <div id="comments-section">
             <ul id="comments-list">
-
             </ul>
           </div>
         </section>
@@ -116,7 +115,8 @@
           newValue: newValue,
         }),
         credentials: 'same-origin',
-      }).catch(error => console.log(error));
+      }).then(location.reload())
+      .catch(error => console.log(error));
     }
   </script>
 

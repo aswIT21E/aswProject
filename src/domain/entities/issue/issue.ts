@@ -8,7 +8,7 @@ export class Issue implements IIssue {
   public numberIssue: number;
   public subject: string;
   public description: string;
-  public creator: string; // FK a IUser
+  public creator: IUser;
   public status: string;
   public type: string;
   public severity: string;
@@ -25,7 +25,7 @@ export class Issue implements IIssue {
     numberIssue: number,
     subject: string,
     description: string,
-    creator: string,
+    creator: IUser,
     status: string,
     type: string,
     severity: string,

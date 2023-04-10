@@ -2,20 +2,41 @@ import fs from 'fs';
 
 import { load } from 'cheerio';
 import type { Request, Response } from 'express';
+import type { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 import type { IComment } from '~/domain/entities/comment';
 import type { IFilter } from '~/domain/entities/filter';
 import type { IIssue } from '~/domain/entities/issue';
+import { UserRepository } from '~/domain/repositories';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
 
 export class IssueController {
   public static async createIssue(req: Request, res: Response): Promise<void> {
     try {
-      const issue: IIssue = req.body;
+      const auth = req.headers.authorization;
+      const token = auth.split(' ')[1];
+      const decodedToken: JwtPayload = jwt.decode(token, {
+        complete: true,
+        json: true,
+      });
+      const username = decodedToken.payload.username;
+      const creator = await UserRepository.getUserByUsername(username);
+
+      if (!creator) {
+        res.status(400).json({ message: 'User creator not found' });
+      }
+
+      const issue: IIssue = {
+        ...req.body,
+        creator: creator.id,
+      };
+
       const lastNumberIssue = await IssueRepository.getLastIssue();
       await IssueRepository.addIssue(issue, lastNumberIssue);
       res.status(200);
+      // res.json({ issue });
       res.redirect('http://localhost:8081/issue');
     } catch (e) {
       res.status(500);
@@ -118,9 +139,25 @@ export class IssueController {
 
     for (const comment of comments) {
       const commentt = await CommentRepository.getComment(comment);
-      const scriptNode3 = `
-          <li>${commentt.content}</li>
-          `;
+
+        const scriptNode3 = `
+          <li>
+            <div class="comment-wrapper">
+              <img class="comment-img" src="https://picsum.photos/50">
+              <div class="comment-info">
+                <div class="comment-data">
+                  <span class="comment-creator">${commentt.author}</span>
+                  <span class="comment-date">${commentt.date}</span>
+                </div>
+                <div class="comment-content">
+                  <span class="comment">${commentt.content}</span>
+                </div>
+              </div>
+            </div>
+          
+          </li>`;
+
+
       $('#comments-list').append(scriptNode3);
     }
 
@@ -269,7 +306,7 @@ export class IssueController {
   }
 
   public static async getViewIssuePageCss(
-    req: Request,
+    _req: Request,
     res: Response,
   ): Promise<void> {
     res.sendFile('public/stylesheets/viewIssue.css', { root: 'src' });
@@ -284,7 +321,7 @@ export class IssueController {
 
   public static async getIndividualIssuePage(
     req: Request,
-    res: Response,
+    _res: Response,
   ): Promise<void> {
     await IssueRepository.getIssueById(req.params.id);
   }
@@ -329,7 +366,6 @@ export class IssueController {
       const numberIssue: string = req.params.id;
       const parameter: string = req.body.parameter;
       const newValue = req.body.newValue;
-      console.log(newValue);
       await IssueRepository.modifyParameterIssue(
         numberIssue,
         parameter,

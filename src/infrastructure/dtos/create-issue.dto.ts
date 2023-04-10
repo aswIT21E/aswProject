@@ -13,10 +13,6 @@ class CreateIssueDto {
 
   @IsString()
   @IsNotEmpty()
-  creator: string; // FK a IUser
-
-  @IsString()
-  @IsNotEmpty()
   status: string;
 
   @IsString()
@@ -30,7 +26,6 @@ class CreateIssueDto {
   @IsString()
   @IsNotEmpty()
   priority: string;
-  
 }
 
 export async function createIssueDto(
@@ -41,7 +36,6 @@ export async function createIssueDto(
   const DTO = new CreateIssueDto();
   DTO.subject = req.body.subject;
   DTO.description = req.body.description;
-  DTO.creator = req.body.creator;
   DTO.status = req.body.status;
   DTO.type = req.body.type;
   DTO.severity = req.body.severity;

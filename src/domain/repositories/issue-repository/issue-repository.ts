@@ -14,13 +14,13 @@ export class IssueRepository {
     const date = new Date().toLocaleString('es-ES', {
       timeZone: 'Europe/Madrid',
     });
-    const newIssue = new IssueModel({
+
+    const newIssue = await IssueModel.create({
       ...issue,
-      numberIssue: lastNumberIssue + 1,
-      date: date,
+      date,
       comments: [],
+      numberIssue: lastNumberIssue + 1,
     });
-    await newIssue.save();
     return newIssue;
   }
 
@@ -29,10 +29,12 @@ export class IssueRepository {
   }
 
   public static async getIssueById(issueID: string): Promise<IIssue> {
-    const issueDocument = await IssueModel.findById(issueID).populate({
-      path: 'watchers',
-      model: 'User',
-    });
+    const issueDocument = await (
+      await IssueModel.findById(issueID).populate({
+        path: 'creator',
+        model: 'User',
+      })
+    ).populate({ path: 'watchers', model: 'User' });
 
     const issue = new Issue(
       issueDocument.id,
