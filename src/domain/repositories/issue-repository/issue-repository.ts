@@ -19,7 +19,14 @@ export class IssueRepository {
   }
 
   public static async getAllIssues(): Promise<IIssue[]> {
-    return await IssueModel.find();
+    const issueDocument = (
+      await IssueModel.find().populate({
+        path: 'creator',
+        model: 'User',
+      })
+    );
+    return issueDocument;
+
   }
 
 
@@ -34,7 +41,6 @@ export class IssueRepository {
         model: 'User',
       })
     ).populate({ path: 'watchers', model: 'User' });
-
     const issue = new Issue(
       issueDocument.id,
       issueDocument.numberIssue,

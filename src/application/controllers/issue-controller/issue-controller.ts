@@ -11,7 +11,6 @@ import { UserRepository } from '~/domain/repositories';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
 
-
 export class IssueController {
   public static async createIssue(req: Request, res: Response): Promise<void> {
     try {
@@ -113,7 +112,7 @@ export class IssueController {
                   <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8081/issue/${issue.id}">${issue.subject}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>
-              <div class="fecha-creacion" id = "FechaPeticion">${issue.creator}</div>
+              <div class="fecha-creacion" id = "FechaPeticion">${issue.creator == null ? 'undefined' : issue.creator.username}</div>
               </div>`;
       $('body').append(scriptNode);
     }
@@ -382,8 +381,8 @@ export class IssueController {
       await IssueRepository.deleteIssue(
         numberIssue,
       );
-      res.redirect('http://localhost:8081/issue');
-      res.end();
+      res.status(200);
+      res.json({ message: 'issue deleted' });
     } catch (e) {
       res.status(500);
       res.json({
