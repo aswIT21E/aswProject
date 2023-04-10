@@ -143,7 +143,7 @@ export class IssueController {
               </div>
             </div>
           
-          </li>
+          </li>`;
 
 
       $('#comments-list').append(scriptNode3);
