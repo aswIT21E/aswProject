@@ -174,11 +174,12 @@ button {
 .dropdown-cont {
     display: flex;
     padding-top: 3px;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-right: 10px;
     margin-top: 20px;
     background-color: #f9f9fb;
 }
+
 
 #dropdown2 {
     border-radius: 3px;
