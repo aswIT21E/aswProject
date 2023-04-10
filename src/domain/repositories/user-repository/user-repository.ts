@@ -6,7 +6,9 @@ export class UserRepository {
   public static async addUser(user: IUser): Promise<void> {
     await UserModel.create(user);
   }
-
+  public static async editarUser(oldUser: IUser, newUser: IUser): Promise<void> {
+    await UserModel.replaceOne(oldUser, newUser);
+  }
   public static async getAllUsers(): Promise<IUser[]> {
     return await UserModel.find();
   }

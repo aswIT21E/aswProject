@@ -49,6 +49,29 @@ export class UserController {
     res.sendFile('public/views/login.html', { root: 'src' });
   }
 
+  public static async editUser(req: Request, res: Response): Promise<void> {
+    try{
+      const oldUser = await UserRepository.getUserById(req.body.id);
+      if (!oldUser) {
+        res.status(404).json({message: 'Usuario no encontrado'});
+        return;
+        }
+      const newEvent: IUser = {
+        id: oldUser.id,
+        email: oldUser.email,
+        username: oldUser.username,
+        password: oldUser.password,
+      };
+      await UserRepository.editarUser(oldUser, newEvent);
+       res.status(500).json({message: 'Usuario editado correctamente'});  
+      }
+    catch (e) {
+        res.status(500);
+        res.json({
+          error: e,
+        });
+      }
+   }
 
   public static async getSignUpPageCss(
     _req: Request,
