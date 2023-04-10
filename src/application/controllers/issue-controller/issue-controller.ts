@@ -276,6 +276,10 @@ export class IssueController {
                   </select>
                   <div class="bola" id="${issue.priority}"></div>
                 </div>
+                <br/>
+                <button class="boton-papelera" id="borrar">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
         </div>
         `;
 
@@ -366,6 +370,23 @@ export class IssueController {
       res.json({
         error: e,
         message: 'comment not created',
+      });
+    }
+  }
+
+  public static async removeIssue(req: Request, res: Response): Promise<void> {
+    try {
+      const numberIssue: string = req.params.id;
+      await IssueRepository.deleteIssue(
+        numberIssue,
+      );
+      res.redirect('http://localhost:8081/issue');
+      res.end();
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+        message: 'issue was not deleted',
       });
     }
   }

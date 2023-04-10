@@ -75,11 +75,15 @@
       var editIconSubject = document.getElementById('edit-icon-subject');
       var confirmButton = document.getElementById('confirm');
       var confirmButtonSubject = document.getElementById('confirm-subject');
-
+      var deleteButton = document.getElementById('borrar');
       // Al hacer clic en el icono de edición, habilitar la edición y mostrar el botón de confirmación
       editIcon.addEventListener('click', function () {
         textElement.contentEditable = true;
         confirmButton.style.display = 'block';
+      });
+      deleteButton.addEventListener('click', function () {
+        console.log("entro");
+        deleteIssue();
       });
       editIconSubject.addEventListener('click', function () {
         textElementSubject.contentEditable = true;
@@ -103,6 +107,17 @@
       });
       confirmButtonSubject.style.display = 'none';
     });
+    function deleteIssue(){
+      fetch(`http://localhost:8081/issue/${issueId}/remove`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        credentials: 'same-origin',
+      })
+      .catch(error => console.log(error));
+    }
     function modifyIssue(parameter, newValue) {
       fetch(`http://localhost:8081/issue/${issueId}/modifyIssue`, {
         method: 'POST',

@@ -25,6 +25,11 @@ export class IssueRepository {
     return await IssueModel.find();
   }
 
+
+  public static async deleteIssue(numberIssue: string): Promise<void> {
+    await IssueModel.findByIdAndDelete(numberIssue);
+  }
+
   public static async getIssueById(issueID: string): Promise<IIssue> {
     const issueDocument = await (
       await IssueModel.findById(issueID).populate({
