@@ -6,7 +6,7 @@ const IssueSchema = new Schema({
   subject: { required: true, type: String },
   numberIssue: { required: true, type: Number },
   description: { required: true, type: String },
-  creator: { required: true, type: String }, // FK a IUser
+  creator: { required: true, type: Schema.Types.ObjectId, model: 'User' }, // FK a IUser
   status: { required: true, type: String },
   type: { required: true, type: String },
   date: { required: false, type: String },
