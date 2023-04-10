@@ -1,11 +1,13 @@
-import type { Request, Response } from 'express';
-import { load } from 'cheerio';
 import fs from 'fs';
-import type { IIssue } from '~/domain/entities/issue';
+
+import { load } from 'cheerio';
+import type { Request, Response } from 'express';
+
+import type { IComment } from '~/domain/entities/comment';
 import type { IFilter } from '~/domain/entities/filter';
-import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
+import type { IIssue } from '~/domain/entities/issue';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
-import { IComment } from '~/domain/entities/comment';
+import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
 
 export class IssueController {
   public static async createIssue(req: Request, res: Response): Promise<void> {

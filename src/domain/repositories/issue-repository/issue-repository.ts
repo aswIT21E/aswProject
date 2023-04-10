@@ -1,6 +1,6 @@
 
 import type { IComment } from '~/domain/entities/comment';
-import { IFilter } from "~/domain/entities/filter";
+import type { IFilter } from '~/domain/entities/filter';
 import type { IIssue } from '~/domain/entities/issue';
 import { Issue } from '~/domain/entities/issue';
 import { IssueModel } from '~/domain/entities/issue';

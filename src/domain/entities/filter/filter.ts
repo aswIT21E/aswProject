@@ -1,4 +1,4 @@
-import type { IFilter } from "./filter.interface";
+import type { IFilter } from './filter.interface';
 
 export class Filter implements IFilter {
  public tipo?: string[];

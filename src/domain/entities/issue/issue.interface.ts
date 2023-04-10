@@ -13,11 +13,11 @@ export interface IIssue {
   comments?: IComment[];
   locked: boolean;
   watchers: IUser[];
-
+  asignedTo?: string;
   lockIssue: () => void;
   unlockIssue: () => void;
   updateWatchers: (watchers: IUser[]) => void;
   readonly watchersIds: string[];
-  asignedTo?: string;
+  
   
 }

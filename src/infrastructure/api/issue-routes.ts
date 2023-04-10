@@ -8,8 +8,8 @@ import {
   removeWatchers,
 } from '~/application';
 import { addWatchersDto, createIssueDto } from '~/infrastructure/dtos';
-import { filterDto } from '../dtos/filter-dto';
 
+import { filterDto } from '../dtos/filter-dto';
 import { removeWatchersDto } from '../dtos/remove-watchers.dto';
 
 export const issueRouter = express.Router();

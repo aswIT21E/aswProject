@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
-import type { IFilter } from "./filter.interface";
+import type { IFilter } from './filter.interface';
 
 const FilterSchema = new Schema({
   tipo: { required: false, type: [String] },
@@ -12,6 +12,6 @@ const FilterSchema = new Schema({
 });
 
 
-const FilterModel = model<IFilter>("Filter", FilterSchema);
+const FilterModel = model<IFilter>('Filter', FilterSchema);
 
 export { FilterModel };

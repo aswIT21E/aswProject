@@ -1,6 +1,6 @@
-import { IsString,  } from "class-validator";
-import { validate } from "class-validator";
-import type { NextFunction, Request, Response } from "express";
+import { IsString,  } from 'class-validator';
+import { validate } from 'class-validator';
+import type { NextFunction, Request, Response } from 'express';
 
 class FilterDTO{
   
@@ -36,7 +36,7 @@ export async function filterDto(
   DTO.asignedTo = req.body.asign_to;
   DTO.assignee = req.body.assignee;
   DTO.createdBy = req.body.createdBy;
-  DTO.priority = req.body.priority
+  DTO.priority = req.body.priority;
 
   const errors = await validate(DTO);
   if (errors.length) {
