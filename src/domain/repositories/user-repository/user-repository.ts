@@ -21,6 +21,22 @@ export class UserRepository {
       userDocument.id,
       userDocument.email,
       userDocument.username,
+      userDocument.password,
+    );
+
+    return user;
+  }
+
+  public static async getUserByUsername(userName: string): Promise<IUser> {
+    const userDocument = await UserModel.findOne({ username: userName });
+
+    if (!userDocument) return null;
+
+    const user = new User(
+      userDocument.id,
+      userDocument.email,
+      userDocument.username,
+      userDocument.password,
     );
 
     return user;

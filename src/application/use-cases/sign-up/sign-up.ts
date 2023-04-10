@@ -1,7 +1,8 @@
-import type { Request, Response } from 'express';
-import { IUser } from '~/domain/entities';
-import { UserRepository } from '~/domain/repositories';
 import bcrypt from 'bcrypt';
+import type { Request, Response } from 'express';
+
+import type { IUser } from '~/domain/entities';
+import { UserRepository } from '~/domain/repositories';
 
 export async function signUp(req: Request, res: Response) {
   try {

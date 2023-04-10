@@ -10,10 +10,16 @@ import {
 import { addWatchersDto, createIssueDto } from '~/infrastructure/dtos';
 
 import { removeWatchersDto } from '../dtos/remove-watchers.dto';
+import { authMiddleware } from '../middlewares';
 
 export const issueRouter = express.Router();
 
-issueRouter.post('/issues/create', createIssueDto, IssueController.createIssue);
+issueRouter.post(
+  '/issues/create',
+  authMiddleware,
+  createIssueDto,
+  IssueController.createIssue,
+);
 
 issueRouter.post('/issue/:id/new-comment', IssueController.createComment);
 
