@@ -56,13 +56,13 @@ export class UserController {
         res.status(404).json({message: 'Usuario no encontrado'});
         return;
         }
-      const newEvent: IUser = {
+      const newUser: IUser = {
         id: oldUser.id,
-        email: oldUser.email,
-        username: oldUser.username,
-        password: oldUser.password,
+        email: req.body.email || oldUser.email,
+        username: req.body.username || oldUser.username,
+        password: req.body.password || oldUser.password,
       };
-      await UserRepository.editarUser(oldUser, newEvent);
+      await UserRepository.editarUser(oldUser, newUser);
        res.status(500).json({message: 'Usuario editado correctamente'});  
       }
     catch (e) {
