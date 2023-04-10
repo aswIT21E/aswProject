@@ -380,7 +380,8 @@ export class IssueController {
       await IssueRepository.deleteIssue(
         numberIssue,
       );
-      res.redirect('http://localhost:8081/issue');
+      res.status(200);
+      res.end();
     } catch (e) {
       res.status(500);
       res.json({

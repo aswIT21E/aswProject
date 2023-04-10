@@ -115,7 +115,9 @@
           'Accept': 'application/json',
         },
         credentials: 'same-origin',
-      })
+      }).then(() => {
+    window.location.replace("http://localhost:8081/issue");
+  })
       .catch(error => console.log(error));
     }
     function modifyIssue(parameter, newValue) {
