@@ -14,8 +14,9 @@ export async function unlockIssue(req: Request, res: Response): Promise<void> {
       issue.description,
       issue.creator,
       issue.status,
-      issue.type,
       issue.severity,
+      issue.type,
+      issue.date,
       issue.priority,
       issue.comments,
     );

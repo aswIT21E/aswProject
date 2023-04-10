@@ -8,9 +8,8 @@ export async function signUp(req: Request, res: Response) {
   try {
     const user: IUser = req.body;
     user.password = await bcrypt.hash(req.body.password, 10);
-    const userCreated = await UserRepository.addUser(user);
+    await UserRepository.addUser(user);
     res.status(200);
-    console.log(userCreated);
     res.redirect('http://localhost:8081/login');
   } catch (e) {
     res.status(500);

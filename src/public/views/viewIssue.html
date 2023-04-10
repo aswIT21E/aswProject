@@ -82,7 +82,6 @@
         confirmButton.style.display = 'block';
       });
       deleteButton.addEventListener('click', function () {
-        console.log("entro");
         deleteIssue();
       });
       editIconSubject.addEventListener('click', function () {
@@ -132,8 +131,7 @@
           newValue: newValue,
         }),
         credentials: 'same-origin',
-      }).then(location.reload())
-      .catch(error => console.log(error));
+      }).catch(error => console.log(error));
     }
   </script>
 

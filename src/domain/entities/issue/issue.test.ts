@@ -15,6 +15,7 @@ describe('Issue Entity', function () {
       new User('test-id', 'test-email', 'test-username', 'test-password'),
       'done',
       'bug',
+      '2/2/2002',
       'high',
       'high',
       [],
