@@ -1,6 +1,8 @@
-import { MongoId } from '~/types/types';
-import { IUser } from '../user';
-import { IActivity } from './activity.interface';
+import type { MongoId } from '~/types/types';
+
+import type { IUser } from '../user';
+
+import type { IActivity } from './activity.interface';
 
 export class Activity implements IActivity {
   public actor: IUser;

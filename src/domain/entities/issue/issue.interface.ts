@@ -1,10 +1,13 @@
 import type { IComment, IUser } from '~/domain/entities';
 
+import type { Activity } from '../activity';
+
 export interface IIssue {
   id: string;
   numberIssue: number;
   subject: string;
   description: string;
+  activity: Activity[];
   creator: IUser; // FK a IUser
   status: string;
   type: string;
