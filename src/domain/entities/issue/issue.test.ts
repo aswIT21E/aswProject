@@ -22,4 +22,16 @@ describe('Issue Entity', function () {
   it('can be created', function () {
     expect(instance).toMatchSnapshot();
   });
+
+  it('locksIssue sets locked property as true', function () {
+    instance.lockIssue();
+
+    expect(instance.locked).toBeTruthy();
+  });
+
+  it('unlocksIssue sets locked property as false', function () {
+    instance.unlockIssue();
+
+    expect(instance.locked).toBeFalsy();
+  });
 });

@@ -1,5 +1,7 @@
-import { IComment } from "../comment";
-import type { IIssue } from "./issue.interface";
+import type { IComment } from '../comment';
+import type { IUser } from '../user';
+
+import type { IIssue } from './issue.interface';
 
 export class Issue implements IIssue {
   public id: string;
@@ -15,7 +17,9 @@ export class Issue implements IIssue {
   public comments?: IComment[];
   public asigned_to?: string;
   public tags?: string[];
-  
+  public locked: boolean;
+  public watchers: IUser[];
+
   constructor(
     id: string,
     numberIssue: number,
@@ -29,6 +33,7 @@ export class Issue implements IIssue {
     comments: IComment[],
     asigned_to?: string,
     tags?: string[],
+    watchers?: IUser[],
   ) {
     this.id = id;
     this.numberIssue = numberIssue;
@@ -42,7 +47,24 @@ export class Issue implements IIssue {
     this.comments = comments;
     this.asigned_to = asigned_to;
     this.tags = tags;
+    this.locked = false;
+    this.watchers = watchers;
   }
 
-  
+  public lockIssue(): void {
+    this.locked = true;
+  }
+
+  public unlockIssue(): void {
+    this.locked = false;
+  }
+
+  public updateWatchers(watchers: IUser[]): void {
+    this.watchers = watchers;
+  }
+
+  public get watchersIds(): string[] {
+    const ids = this.watchers.map((watcher) => watcher.id);
+    return ids;
+  }
 }

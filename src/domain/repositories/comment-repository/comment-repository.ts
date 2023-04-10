@@ -1,5 +1,5 @@
-import type { IComment } from "~/domain/entities/comment";
-import { CommentModel } from "~/domain/entities/comment";
+import type { IComment } from '~/domain/entities/comment';
+import { CommentModel } from '~/domain/entities/comment';
 
 export class CommentRepository {
   public static async addComment(
@@ -24,7 +24,11 @@ export class CommentRepository {
     };
     return comment;
   }
-  public static async getComment(message: string): Promise<IComment> {
+  public static async getComment(message: IComment): Promise<IComment> {
     return await CommentModel.findById(message);
+  }
+
+  public static async getAllComments(): Promise<IComment[]> {
+    return await CommentModel.find();
   }
 }
