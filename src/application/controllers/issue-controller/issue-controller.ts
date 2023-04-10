@@ -35,8 +35,8 @@ export class IssueController {
       const lastNumberIssue = await IssueRepository.getLastIssue();
       await IssueRepository.addIssue(issue, lastNumberIssue);
       res.status(200);
-      res.json({ issue });
-      // res.redirect('http://localhost:8081/issue');
+      // res.json({ issue });
+      res.redirect('http://localhost:8081/issue');
     } catch (e) {
       res.status(500);
       res.json({
@@ -278,7 +278,7 @@ export class IssueController {
   }
 
   public static async getViewIssuePageCss(
-    req: Request,
+    _req: Request,
     res: Response,
   ): Promise<void> {
     res.sendFile('public/stylesheets/viewIssue.css', { root: 'src' });
