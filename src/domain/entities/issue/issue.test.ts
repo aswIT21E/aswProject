@@ -1,3 +1,5 @@
+import { User } from '../user';
+
 import { Issue } from './issue';
 import type { IIssue } from './issue.interface';
 
@@ -10,7 +12,7 @@ describe('Issue Entity', function () {
       1234,
       'test-subject',
       'test-description',
-      'test-creator',
+      new User('test-id', 'test-email', 'test-username', 'test-password'),
       'done',
       'bug',
       'high',
