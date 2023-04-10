@@ -6,12 +6,9 @@ import { IssueModel } from '~/domain/entities/issue';
 export class IssueRepository {
   public static async addIssue(
     issue: IIssue,
+    date: string,
     lastNumberIssue: number,
   ): Promise<IIssue> {
-    const date = new Date().toLocaleString('es-ES', {
-      timeZone: 'Europe/Madrid',
-    });
-
     const newIssue = await IssueModel.create({
       ...issue,
       date,
@@ -45,8 +42,9 @@ export class IssueRepository {
       issueDocument.description,
       issueDocument.creator,
       issueDocument.status,
-      issueDocument.type,
       issueDocument.severity,
+      issueDocument.type,
+      issueDocument.date,
       issueDocument.priority,
       issueDocument.comments,
       issueDocument.watchers,

@@ -11,6 +11,7 @@ import { UserRepository } from '~/domain/repositories';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
 
+
 export class IssueController {
   public static async createIssue(req: Request, res: Response): Promise<void> {
     try {
@@ -26,16 +27,17 @@ export class IssueController {
       if (!creator) {
         res.status(400).json({ message: 'User creator not found' });
       }
-
+      const date = new Date().toLocaleString('es-ES', {
+        timeZone: 'Europe/Madrid',
+      });
       const issue: IIssue = {
         ...req.body,
+        date,
         creator: creator.id,
       };
-
       const lastNumberIssue = await IssueRepository.getLastIssue();
-      await IssueRepository.addIssue(issue, lastNumberIssue);
+      await IssueRepository.addIssue(issue, date, lastNumberIssue);
       res.status(200);
-      // res.json({ issue });
       res.redirect('http://localhost:8081/issue');
     } catch (e) {
       res.status(500);
@@ -173,9 +175,9 @@ export class IssueController {
                     </div>
                     <div class="subheader">
                         <div class="created-by">
-                            <a href="" class="created-title">Creado por ${issue.creator}</a>
+                            <a href="" class="created-title">Creado por ${issue.creator.username}</a>
                             <div class="created-date">
-                                24 mar. 2023 16:20
+                            ${issue.date}
                             </div>
                         </div>
     </div>`;
