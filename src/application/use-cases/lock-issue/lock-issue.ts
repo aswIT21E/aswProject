@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 
 import { IssueRepository } from '~/domain/repositories/issue-repository';
+import { addActivity } from '../add-activity';
 
 export async function lockIssue(req: Request, res: Response): Promise<void> {
   const issueID = req.params.id;
@@ -8,6 +9,7 @@ export async function lockIssue(req: Request, res: Response): Promise<void> {
     const issue = await IssueRepository.getIssueById(issueID);
     if (issue) {
       issue.lockIssue();
+      await addActivity(req, issue, 'lockIssue');
       await IssueRepository.updateIssue(issue);
       res.status(200).json({
         message: 'Issue locked successfully',
