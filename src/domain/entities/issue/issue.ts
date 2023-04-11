@@ -1,4 +1,5 @@
-import { MongoId } from '~/types/types';
+import type { MongoId } from '~/types/types';
+
 import type { IActivity } from '../activity/activity.interface';
 import type { IComment } from '../comment';
 import type { IUser } from '../user';

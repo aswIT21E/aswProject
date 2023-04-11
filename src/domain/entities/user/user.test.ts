@@ -1,4 +1,5 @@
 import { Types } from 'mongoose';
+
 import { User } from './user';
 import type { IUser } from './user.interface';
 

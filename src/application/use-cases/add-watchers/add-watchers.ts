@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express';
-import { IUser } from '~/domain/entities';
-import { Activity, ActivityModel } from '~/domain/entities/activity';
 
+import type { IUser } from '~/domain/entities';
+import { Activity, ActivityModel } from '~/domain/entities/activity';
 import { UserRepository } from '~/domain/repositories';
 import { IssueRepository } from '~/domain/repositories/issue-repository';
 import { getActor } from '~/utils';

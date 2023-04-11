@@ -1,4 +1,4 @@
-import { IActivity } from '~/domain/entities/activity';
+import type { IActivity } from '~/domain/entities/activity';
 import type { IComment } from '~/domain/entities/comment';
 import type { IIssue } from '~/domain/entities/issue';
 import { Issue } from '~/domain/entities/issue';
@@ -113,8 +113,6 @@ export class IssueRepository {
   public static async updateIssue(newIssue: IIssue): Promise<IIssue> {
     const activity = newIssue.activitiesIds;
     const watchers = newIssue.watchersIds;
-
-    console.log(activity);
 
     await IssueModel.findByIdAndUpdate(newIssue.id, {
       ...newIssue,

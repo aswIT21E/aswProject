@@ -1,7 +1,8 @@
 import type { Request } from 'express';
 import type { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
-import { IUser } from '~/domain/entities';
+
+import type { IUser } from '~/domain/entities';
 import { UserRepository } from '~/domain/repositories';
 
 export async function getActor(req: Request): Promise<IUser> {

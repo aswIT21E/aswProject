@@ -13,7 +13,6 @@ export async function removeWatchers(
     const issue = await IssueRepository.getIssueById(issueID);
 
     const newWatchers = issue.watchers;
-    console.log('CURRENT WATCHERS', issue.watchers);
 
     if (issue) {
       for (const userId of userIds) {

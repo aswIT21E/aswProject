@@ -1,5 +1,5 @@
 import type { IComment, IUser } from '~/domain/entities';
-import { MongoId } from '~/types/types';
+import type { MongoId } from '~/types/types';
 
 import type { Activity, IActivity } from '../activity';
 

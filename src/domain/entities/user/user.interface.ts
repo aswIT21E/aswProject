@@ -1,4 +1,4 @@
-import { MongoId } from '~/types/types';
+import type { MongoId } from '~/types/types';
 
 export interface IUser {
   id: MongoId;

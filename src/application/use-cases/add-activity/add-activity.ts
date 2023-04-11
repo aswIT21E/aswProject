@@ -1,4 +1,4 @@
-import { IIssue, IUser } from '~/domain/entities';
+import type { IIssue, IUser } from '~/domain/entities';
 import { Activity, ActivityModel } from '~/domain/entities/activity';
 import { IssueRepository } from '~/domain/repositories';
 
