@@ -209,51 +209,52 @@ checkboxes.forEach((checkbox) => {
           actualizarFiltro();
         });
       });
+
+
       function actualizarFiltro() {
-        const checkboxes = document.querySelectorAll('input[type=checkbox]');
+  const checkboxes = document.querySelectorAll('input[type=checkbox]');
 
-        const tipo = [];
-        const gravedad = [];
-        const prioridad = [];
-        const estado = [];
-        const asignedTo = [];
-        const createdBy = [];
-        const responsable = [];
+  var tipo = [];
+  var gravedad = [];
+  var prioridad = [];
+  var estado = [];
+  var asign_to = [];
+  var crated_by = [];
+  var responsable = [];
 
-        checkboxes.forEach((checkbox) => {
-          if (checkbox.checked && checkbox.tagName == "tipo") {
-            tipo.push(checkbox.value);
-          }
-          if (checkbox.checked && checkbox.tagName == "estado") {
-            estado.push(checkbox.value);
-          }
-          if (checkbox.checked && checkbox.tagName == "gravedad") {
-            gravedad.push(checkbox.value);
-          }
-          if (checkbox.checked && checkbox.tagName == "prioridad") {
-            prioridad.push(checkbox.value);
-          }
-          if (checkbox.checked && checkbox.tagName == "createdBy") {
-            createdBy.push(checkbox.value);
-          }
-          if (checkbox.checked && checkbox.tagName == "asignedTo") {
-            asignedTo.push(checkbox.value);
-          }
-          if (checkbox.checked && checkbox.tagName == "Responsable") {
-            responsable.push(checkbox.value);
-          }
-        });
+  checkboxes.forEach((checkbox) => {
+    if (heckbox.tagName == "tipo") {
+        if(checkbox.checked) tipo.push(checkbox.value);
+        else tipo.splice(tipo.indexOf(checkbox.value));
+    }
+    if (checkbox.tagName == "estado") {
+        if(checkbox.checked) estado.push(checkbox.value);
+        else estado.slice(estado.indexOf(checkbox.value));
+    }
+    if (checkbox.tagName == "gravedad") {
+        if(checkbox.checked) gravedad.push(checkbox.value);
+        else  gravedad.slice(gravedad.indexOf(checkbox.value));
+    }
+  });
 
-        // Enviar petición a tu backend de Node.js
-        fetch('/issuefilter', {
-          method: 'GET',
-          body: { tipo: tipo, estado: estado, gravedad: gravedad, priority: prioridad, asign_to: asignedTo, createdBy: createdBy, assignee: responsable },
-          
-        })
-          .then((response) => response.json())
-          .then((data) => console.log(data))
-          .catch((error) => console.error(error));
-      }
+  var issues = document.getElementsByClassName('issue');  
+  // Recorrer los elementos y comparar los valores del checkbox con los valores en el atributo data-valores
+  for (let i = 0; i < issues.length; i++) {
+    const contenidoIssue  = issue[i];
+    const valores = contenido.contenidoIssue('data-valores'); // Separar los valores por guiones
+    if (valores.includes(event.target.value)) {
+      // Si el valor del checkbox coincide con alguna palabra en el atributo data-valores, mostrar el contenido
+      contenido.style.display = 'block';
+    } else {
+      // De lo contrario, ocultar el contenido
+      contenido.style.display = 'none';
+    }
+  }
+}
+
+  
+
+
 
       </script>
       

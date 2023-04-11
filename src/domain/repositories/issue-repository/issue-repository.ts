@@ -1,6 +1,5 @@
 
 import type { IComment } from '~/domain/entities/comment';
-import type { IFilter } from '~/domain/entities/filter';
 import type { IIssue } from '~/domain/entities/issue';
 import { Issue } from '~/domain/entities/issue';
 import { IssueModel } from '~/domain/entities/issue';
@@ -47,7 +46,7 @@ export class IssueRepository {
       issueDocument.severity,
       issueDocument.priority,
       issueDocument.comments,
-     
+      //issueDocument.watchers,
     );
 
     return issue;
@@ -93,18 +92,7 @@ export class IssueRepository {
     return modifiedIssue;
   }
 
-  public static async filterIssues(filter: IFilter):  Promise<IIssue[]> {
-    const query = {
-      ...(filter.tipo && { type: { $in: filter.tipo } }),
-      ...(filter.estado && { status: filter.estado }),
-      ...(filter.gravedad && { severity: filter.gravedad }),
-      ...(filter.crated_by && { creator: filter.crated_by }),
-      ...(filter.asign_to && { assignedTo: filter.asign_to }),
-      ...(filter.tags && { tag: filter.tags })
-    };
-    return await IssueModel.find(query);
-
-  }
+ 
 
   public static async updateIssue(newIssue: IIssue): Promise<IIssue> {
     await IssueModel.findByIdAndUpdate(newIssue.id, newIssue);

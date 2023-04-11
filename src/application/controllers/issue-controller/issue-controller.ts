@@ -6,7 +6,6 @@ import type { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 
 import type { IComment } from '~/domain/entities/comment';
-import type { IFilter } from '~/domain/entities/filter';
 import type { IIssue } from '~/domain/entities/issue';
 import { UserRepository } from '~/domain/repositories';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
@@ -93,10 +92,8 @@ export class IssueController {
  
   public static async getIssuePage(_req: Request, res: Response): Promise<void> {
     try{
-    const filter: IFilter = _req.body;
-    console.log(filter);
-    const issues: IIssue[] = await IssueRepository.filterIssues(filter);
     
+    const issues: IIssue[] = await IssueRepository.getAllIssues();
     const Indexhtml = fs.readFileSync('src/public/views/index.html');
     const filterPage = fs.readFileSync('src/public/views/filter.html');
     const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
@@ -105,8 +102,9 @@ export class IssueController {
     $('#searchbar').append(load(searchPage).html());
     $('#Filters').append(load(filterPage).html());
     for (const issue of issues) {
+  {
       const scriptNode = `                           
-              <div class="issue">
+              <div class="issue" data-tipo="${issue.type}" data-gravedad="${issue.severity}" data-priority="${issue.priority}" data-status="${issue.status}" data-creador="${issue.creator}" data-asignedTo="${issue.asignedTo}" >
               <abbr title = "${issue.type}"> <div class="bola" id="${issue.type}"> </div></abbr>
               <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"> </div></abbr>
               <abbr title = "${issue.priority}"><div class="bola" id="${issue.priority}"> </div></abbr>
@@ -118,7 +116,7 @@ export class IssueController {
               <div class="fecha-creacion" id = "FechaPeticion">${issue.creator}</div>
               </div>`;
       $('#issues').append(scriptNode);
-    }
+    }}
     res.send($.html());
   }
   catch (e) {

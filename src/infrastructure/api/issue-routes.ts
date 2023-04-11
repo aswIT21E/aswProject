@@ -43,7 +43,7 @@ issueRouter.get('/issue/:id', IssueController.getIssue);
 
 issueRouter.get('/issuefilter', filterDto, IssueController.getIssuePage);
 
-issueRouter.get('/issuefilter', filterDto, IssueController.getIssuePage);
+issueRouter.post('/issuefilter', filterDto, IssueController.getIssuePage);
 
 issueRouter.get('/info/:id', IssueController.getIssueInfo);
 
