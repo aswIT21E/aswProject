@@ -1,9 +1,10 @@
 import type { IComment, IUser } from '~/domain/entities';
+import { MongoId } from '~/types/types';
 
-import type { Activity } from '../activity';
+import type { Activity, IActivity } from '../activity';
 
 export interface IIssue {
-  id: string;
+  id: MongoId;
   numberIssue: number;
   subject: string;
   description: string;
@@ -20,5 +21,7 @@ export interface IIssue {
   lockIssue: () => void;
   unlockIssue: () => void;
   updateWatchers: (watchers: IUser[]) => void;
-  readonly watchersIds: string[];
+  addActivity: (activity: IActivity) => void;
+  readonly watchersIds: MongoId[];
+  readonly activitiesIds: MongoId[];
 }

@@ -13,6 +13,7 @@ export async function removeWatchers(
     const issue = await IssueRepository.getIssueById(issueID);
 
     const newWatchers = issue.watchers;
+    console.log('CURRENT WATCHERS', issue.watchers);
 
     if (issue) {
       for (const userId of userIds) {
@@ -24,12 +25,11 @@ export async function removeWatchers(
           });
           return;
         }
-
         const index = newWatchers.findIndex((watcher) => watcher.id === userId);
 
         if (index === -1) {
           res.status(400).json({
-            message: `User ${userId} is is not a watcher`,
+            message: `User ${userId} is not a watcher`,
           });
           return;
         }

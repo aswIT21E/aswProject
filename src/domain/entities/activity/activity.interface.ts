@@ -1,5 +1,4 @@
-import type { MongoId } from '~/types/types';
-
+import { MongoId } from '~/types/types';
 import type { IUser } from '../user';
 
 export interface IActivity {
