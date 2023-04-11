@@ -1,10 +1,9 @@
 import type { Request, Response } from 'express';
 
 import type { IUser } from '~/domain/entities';
-import { Activity, ActivityModel } from '~/domain/entities/activity';
 import { UserRepository } from '~/domain/repositories';
 import { IssueRepository } from '~/domain/repositories/issue-repository';
-import { getActor } from '~/utils';
+import { addActivity } from '../add-activity';
 
 export async function addWatchers(req: Request, res: Response): Promise<void> {
   const issueID = req.params.id;
@@ -34,16 +33,9 @@ export async function addWatchers(req: Request, res: Response): Promise<void> {
         newWatchers.push(userInstance);
       }
 
-      const creator = await getActor(req);
-      const message = `${creator.username} has added ${newWatchers} as watchers`;
-      const activityDocument = await ActivityModel.create({
-        actor: creator.id,
-        message,
-      });
-      const newActivity = new Activity(activityDocument._id, creator, message);
+      await addActivity(req, issue, 'addWatchers');
 
       issue.updateWatchers([...oldWatchers, ...newWatchers]);
-      issue.addActivity(newActivity);
 
       await IssueRepository.updateIssue(issue);
 

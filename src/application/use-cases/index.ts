@@ -4,3 +4,4 @@ export * from './add-watchers';
 export * from './unlock-issue';
 export * from './remove-watchers';
 export * from './sign-up';
+export * from './add-activity';
