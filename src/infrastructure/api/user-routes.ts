@@ -17,6 +17,9 @@ userRouter.get('/login', UserController.getLoginPage);
 
 userRouter.get('/profile', UserController.getProfilePage);
 
+userRouter.get('/myProfile', UserController.getMyProfilePage);
+
+
 userRouter.get('/profile/edit', UserController.getEditProfilePage);
 
 userRouter.get(
