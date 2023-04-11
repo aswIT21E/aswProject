@@ -1,3 +1,5 @@
+import type { Activity } from '../activity';
+import type { IActivity } from '../activity/activity.interface';
 import type { IComment } from '../comment';
 import type { IUser } from '../user';
 
@@ -17,6 +19,7 @@ export class Issue implements IIssue {
   public comments?: IComment[];
   public locked: boolean;
   public watchers: IUser[];
+  public activity: Activity[];
 
   constructor(
     id: string,
@@ -31,6 +34,7 @@ export class Issue implements IIssue {
     priority: string,
     comments: IComment[],
     watchers?: IUser[],
+    activity?: IActivity[],
   ) {
     this.id = id;
     this.numberIssue = numberIssue;
@@ -45,6 +49,7 @@ export class Issue implements IIssue {
     this.comments = comments;
     this.locked = false;
     this.watchers = watchers;
+    this.activity = activity;
   }
 
   public lockIssue(): void {
