@@ -9,24 +9,26 @@ describe('Issue Entity', function () {
   let instance: IIssue;
 
   beforeEach(function () {
-    instance = new Issue(
-      new Types.ObjectId(),
-      1234,
-      'test-subject',
-      'test-description',
-      new User(
+    instance = new Issue({
+      id: new Types.ObjectId(),
+      numberIssue: 1234,
+      subject: 'test-subject',
+      description: 'test-description',
+      creator: new User(
         new Types.ObjectId(),
         'test-email',
         'test-username',
         'test-password',
       ),
-      'done',
-      'bug',
-      '2/2/2002',
-      'high',
-      'high',
-      [],
-    );
+      status: 'done',
+      type: 'bug',
+      date: '2/2/2002',
+      priority: 'high',
+      severity: 'high',
+      activity: [],
+      locked: false,
+      watchers: [],
+    });
   });
 
   it('can be created', function () {
