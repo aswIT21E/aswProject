@@ -51,22 +51,7 @@ export class IssueRepository {
       })
       .populate({ path: 'watchers', model: 'User' })
       .populate({ path: 'activity', model: 'Activity' });
-
-    const issue = new Issue(
-      issueDocument.id,
-      issueDocument.numberIssue,
-      issueDocument.subject,
-      issueDocument.description,
-      issueDocument.creator,
-      issueDocument.status,
-      issueDocument.severity,
-      issueDocument.type,
-      issueDocument.date,
-      issueDocument.priority,
-      issueDocument.comments,
-      issueDocument.watchers,
-      issueDocument.activity,
-    );
+    const issue = new Issue(issueDocument);
     return issue;
   }
   public static async getIssueByType(issueType: string) {
