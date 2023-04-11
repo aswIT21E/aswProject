@@ -285,7 +285,7 @@ export class IssueController {
         `;
 
     $('#detail-header').append(scriptNode);
-    $('#sidebar').append(scriptNode2);
+    $('#atributos').append(scriptNode2);
     $('#description').append(scriptNode4);
 
     res.send($.html());
