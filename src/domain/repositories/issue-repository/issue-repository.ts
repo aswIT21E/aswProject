@@ -1,3 +1,4 @@
+import type { IActivity } from '~/domain/entities/activity';
 import type { IComment } from '~/domain/entities/comment';
 import type { IIssue } from '~/domain/entities/issue';
 import { Issue } from '~/domain/entities/issue';
@@ -18,29 +19,39 @@ export class IssueRepository {
     return newIssue;
   }
 
-  public static async getAllIssues(): Promise<IIssue[]> {
-    const issueDocument = (
-      await IssueModel.find().populate({
-        path: 'creator',
-        model: 'User',
-      })
-    );
-    return issueDocument;
-
+  public static async addActivity(
+    issue: IIssue,
+    activity: IActivity,
+  ): Promise<void> {
+    const newActivity = issue.activity;
+    newActivity.push(activity);
+    await IssueModel.findByIdAndUpdate(issue.id, {
+      ...issue,
+      activity: newActivity,
+    });
   }
 
+  public static async getAllIssues(): Promise<IIssue[]> {
+    const issueDocument = await IssueModel.find().populate({
+      path: 'creator',
+      model: 'User',
+    });
+    return issueDocument;
+  }
 
   public static async deleteIssue(numberIssue: string): Promise<void> {
     await IssueModel.findByIdAndDelete(numberIssue);
   }
 
   public static async getIssueById(issueID: string): Promise<IIssue> {
-    const issueDocument = await (
-      await IssueModel.findById(issueID).populate({
+    const issueDocument = await IssueModel.findById(issueID)
+      .populate({
         path: 'creator',
         model: 'User',
       })
-    ).populate({ path: 'watchers', model: 'User' });
+      .populate({ path: 'watchers', model: 'User' })
+      .populate({ path: 'activity', model: 'Activity' });
+
     const issue = new Issue(
       issueDocument.id,
       issueDocument.numberIssue,
@@ -54,8 +65,8 @@ export class IssueRepository {
       issueDocument.priority,
       issueDocument.comments,
       issueDocument.watchers,
+      issueDocument.activity,
     );
-
     return issue;
   }
   public static async getIssueByType(issueType: string) {
@@ -100,7 +111,15 @@ export class IssueRepository {
   }
 
   public static async updateIssue(newIssue: IIssue): Promise<IIssue> {
-    await IssueModel.findByIdAndUpdate(newIssue.id, newIssue);
+    const activity = newIssue.activitiesIds;
+    const watchers = newIssue.watchersIds;
+
+    await IssueModel.findByIdAndUpdate(newIssue.id, {
+      ...newIssue,
+      watchers,
+      activity,
+    });
+
     return newIssue;
   }
 }

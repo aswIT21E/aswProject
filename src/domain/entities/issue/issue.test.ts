@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 import { User } from '../user';
 
 import { Issue } from './issue';
@@ -8,11 +10,16 @@ describe('Issue Entity', function () {
 
   beforeEach(function () {
     instance = new Issue(
-      'test-id',
+      new Types.ObjectId(),
       1234,
       'test-subject',
       'test-description',
-      new User('test-id', 'test-email', 'test-username', 'test-password'),
+      new User(
+        new Types.ObjectId(),
+        'test-email',
+        'test-username',
+        'test-password',
+      ),
       'done',
       'bug',
       '2/2/2002',

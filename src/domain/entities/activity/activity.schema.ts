@@ -7,6 +7,6 @@ const ActivitySchema = new Schema({
   actor: { required: true, type: Schema.Types.ObjectId, model: 'User' },
 });
 
-const ActivityModel = model<IActivity>('Issue', ActivitySchema);
+const ActivityModel = model<IActivity>('Activity', ActivitySchema);
 
 export { ActivityModel };

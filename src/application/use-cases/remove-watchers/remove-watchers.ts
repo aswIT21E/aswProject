@@ -24,12 +24,11 @@ export async function removeWatchers(
           });
           return;
         }
-
         const index = newWatchers.findIndex((watcher) => watcher.id === userId);
 
         if (index === -1) {
           res.status(400).json({
-            message: `User ${userId} is is not a watcher`,
+            message: `User ${userId} is not a watcher`,
           });
           return;
         }
