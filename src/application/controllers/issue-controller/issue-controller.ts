@@ -26,16 +26,17 @@ export class IssueController {
       if (!creator) {
         res.status(400).json({ message: 'User creator not found' });
       }
-
+      const date = new Date().toLocaleString('es-ES', {
+        timeZone: 'Europe/Madrid',
+      });
       const issue: IIssue = {
         ...req.body,
+        date,
         creator: creator.id,
       };
-
       const lastNumberIssue = await IssueRepository.getLastIssue();
-      await IssueRepository.addIssue(issue, lastNumberIssue);
+      await IssueRepository.addIssue(issue, date, lastNumberIssue);
       res.status(200);
-      // res.json({ issue });
       res.redirect('http://localhost:8081/issue');
     } catch (e) {
       res.status(500);
@@ -111,7 +112,7 @@ export class IssueController {
                   <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8081/issue/${issue.id}">${issue.subject}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>
-              <div class="fecha-creacion" id = "FechaPeticion">${issue.creator}</div>
+              <div class="fecha-creacion" id = "FechaPeticion">${issue.creator == null ? 'undefined' : issue.creator.username}</div>
               </div>`;
       $('body').append(scriptNode);
     }
@@ -127,9 +128,25 @@ export class IssueController {
 
     for (const comment of comments) {
       const commentt = await CommentRepository.getComment(comment);
-      const scriptNode3 = `
-          <li>${commentt.content}</li>
-          `;
+
+        const scriptNode3 = `
+          <li>
+            <div class="comment-wrapper">
+              <img class="comment-img" src="https://picsum.photos/50">
+              <div class="comment-info">
+                <div class="comment-data">
+                  <span class="comment-creator">${commentt.author}</span>
+                  <span class="comment-date">${commentt.date}</span>
+                </div>
+                <div class="comment-content">
+                  <span class="comment">${commentt.content}</span>
+                </div>
+              </div>
+            </div>
+          
+          </li>`;
+
+
       $('#comments-list').append(scriptNode3);
     }
 
@@ -157,9 +174,9 @@ export class IssueController {
                     </div>
                     <div class="subheader">
                         <div class="created-by">
-                            <a href="" class="created-title">Creado por ${issue.creator}</a>
+                            <a href="" class="created-title">Creado por ${issue.creator.username}</a>
                             <div class="created-date">
-                                24 mar. 2023 16:20
+                            ${issue.date}
                             </div>
                         </div>
     </div>`;
@@ -260,6 +277,10 @@ export class IssueController {
                   </select>
                   <div class="bola" id="${issue.priority}"></div>
                 </div>
+                <br/>
+                <button class="boton-papelera" id="borrar">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
         </div>
         `;
 
@@ -350,6 +371,24 @@ export class IssueController {
       res.json({
         error: e,
         message: 'comment not created',
+      });
+    }
+  }
+
+  public static async removeIssue(req: Request, res: Response): Promise<void> {
+    try {
+      const numberIssue: string = req.params.id;
+      await IssueRepository.deleteIssue(
+        numberIssue,
+      );
+      res.status(200);
+      res.end();
+
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+        message: 'issue was not deleted',
       });
     }
   }

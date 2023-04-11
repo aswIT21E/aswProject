@@ -21,6 +21,7 @@ describe('Issue Entity', function () {
       ),
       'done',
       'bug',
+      '2/2/2002',
       'high',
       'high',
       [],

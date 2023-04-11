@@ -1,0 +1,109 @@
+* {
+    box-sizing: border-box;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+}
+
+body {
+    width: 500px;
+    margin: 0 auto; 
+}
+
+.user-profile {
+    width: 100%;
+}
+
+.user-profile h1 {
+    font-weight: 500;
+    font-size: 1.4rem;
+    color: #008aa8;
+    margin-block-end: 1rem;
+}
+
+.image-avatar {
+    margin-right: 2rem;
+    width: 180px;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.hidden {
+    display: none!important;
+}
+
+.btn {
+    width: 100%;
+    background-color: #d8dee9;
+    color: #4c566a;
+    transition: all .3s linear;
+    padding: 0.45rem 1rem;
+    font-size: .875rem;
+    align-items: center;
+    border: 0;
+    border-radius: 4px;
+    display: inline-flex;
+    justify-content: center;
+    line-height: initial;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+
+.image-container {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.form-data {
+    margin-top: 10px;
+    max-width: 500px;
+}
+
+.user-profile fieldset {
+    margin-bottom: 1rem;
+}
+
+.user-profile label {
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+input[type=text], input[type=email], textarea {
+    background: #fff;
+    border: 2px solid #d8dee9;
+    border-radius: 3px;
+    color: #4c566a;
+    margin: 0;
+    padding: 0.3rem 1rem 0.3rem 0.95rem;
+    width: 100%;
+}
+input {
+    line-height: normal;
+}
+
+textarea {
+    min-height: 10rem;
+    resize: vertical;
+}
+
+.btn-small {
+    background-color: #83eede;
+    color: #2e3440;
+    transition: all .3s linear;
+    padding: 0.45rem 1rem;
+    font-size: .875rem;
+    align-items: center;
+    border: 0;
+    border-radius: 4px;
+    display: inline-flex;
+    justify-content: center;
+    line-height: initial;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+}

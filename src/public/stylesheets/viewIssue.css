@@ -353,12 +353,12 @@ body {
 }
 
 .dropdown-cont {
-    display: flex;
-    padding-top: 3px;
-    justify-content: space-around;
-    margin-right: 10px;
-    margin-top: 20px;
-    background-color: #f9f9fb;
+  display: flex;
+  padding-top: 3px;
+  align-items: center;
+  margin-top: 20px;
+  background-color: #f9f9fb;
+  justify-content: space-between;
 }
 
 #dropdown2 {
@@ -406,9 +406,70 @@ body {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  margin-left: auto; /* Agregar margen automático a la izquierda para empujar las bolas a la derecha */
-}
+  align-content: end;
+} 
 
+
+  li {
+    list-style: none;
+  }
+
+  .comment-wrapper {
+    align-items: flex-start;
+    border-bottom: 1px solid #e2e3e9;
+    display: flex;
+    padding: 2rem 0;
+  }
+
+  .comment-img{
+    flex-shrink: 0;
+    margin-right: 1.5rem;
+    width: 60px;
+  }
+
+  .comment-info {
+    width: 100%;
+  }
+
+  .comment-data {
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+  }
+
+  .comment-creator {
+    color: #008aa8;
+    margin-right: 0.5rem;
+  }
+
+  .comment-date {
+    font-size: .875rem;
+    color: #70728f;
+  }
+  .boton-papelera {
+    font-size: .875rem;
+    align-items: center;
+    background-color: #83eede;
+    border: 0;
+    border-radius: 4px;
+    color: #2e3440;
+    display: inline-flex;
+    justify-content: center;
+    line-height: initial;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0.5rem 1rem; 
+    cursor: pointer;
+  }
+  .boton-papelera:hover{
+    background-color: #41726b;
+  }
+  
+  .boton-papelera i {
+    margin-right: auto;
+  }
 /* Estilos para tipos de  Issue */
 #Bug{
   background-color: red;
@@ -453,6 +514,7 @@ body {
 #Alta {
   background-color: red;
 }
+
 
 
   

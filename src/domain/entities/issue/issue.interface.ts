@@ -11,8 +11,9 @@ export interface IIssue {
   activity: Activity[];
   creator: IUser; // FK a IUser
   status: string;
-  type: string;
   severity: string;
+  type: string;
+  date: string;
   priority: string;
   comments?: IComment[];
   locked: boolean;

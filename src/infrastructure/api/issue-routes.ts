@@ -40,6 +40,7 @@ issueRouter.get('/issue', IssueController.getIssuePage);
 
 issueRouter.get('/issue/:id', IssueController.getIssue);
 
+
 issueRouter.get('/info/:id', IssueController.getIssueInfo);
 
 issueRouter.get(
@@ -62,6 +63,7 @@ issueRouter.put('/issues/:id/lock-issue', lockIssue);
 issueRouter.put('/issues/:id/unlock-issue', unlockIssue);
 
 issueRouter.post('/issues/:id/add-watchers', addWatchersDto, addWatchers);
+issueRouter.post('/issue/:id/remove', IssueController.removeIssue);
 
 issueRouter.post(
   '/issues/:id/delete-watchers',
