@@ -19,25 +19,15 @@ userRouter.get('/profile', UserController.getProfilePage);
 
 userRouter.get('/myProfile/:token', UserController.getMyProfilePage);
 
-
 userRouter.get('/myProfile/:token/edit', UserController.getEditProfilePage);
 
-userRouter.get(
-    '/stylesheets/signUp.css',
-    UserController.getSignUpPageCss,
-  );
+userRouter.get('/stylesheets/signUp.css', UserController.getSignUpPageCss);
+
+userRouter.get('/stylesheets/login.css', UserController.getLoginPageCss);
+
+userRouter.get('/stylesheets/profile.css', UserController.getProfilePageCss);
 
 userRouter.get(
-    '/stylesheets/login.css',
-    UserController.getLoginPageCss,
-  );
-
-  userRouter.get(
-    '/stylesheets/profile.css',
-    UserController.getProfilePageCss,
-  );
-
-  userRouter.get(
-    '/stylesheets/editProfile.css',
-    UserController.getEditProfilePageCss,
-  );
+  '/stylesheets/editProfile.css',
+  UserController.getEditProfilePageCss,
+);
