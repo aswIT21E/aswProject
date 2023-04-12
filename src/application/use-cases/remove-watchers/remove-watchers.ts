@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 
 import { UserRepository } from '~/domain/repositories';
 import { IssueRepository } from '~/domain/repositories/issue-repository';
+import { addActivity } from '../add-activity';
 
 export async function removeWatchers(
   req: Request,
@@ -24,12 +25,11 @@ export async function removeWatchers(
           });
           return;
         }
-
         const index = newWatchers.findIndex((watcher) => watcher.id === userId);
 
         if (index === -1) {
           res.status(400).json({
-            message: `User ${userId} is is not a watcher`,
+            message: `User ${userId} is not a watcher`,
           });
           return;
         }
@@ -38,6 +38,7 @@ export async function removeWatchers(
       }
 
       issue.updateWatchers(newWatchers);
+      await addActivity(req, issue, 'removeWatchers');
       await IssueRepository.updateIssue(issue);
 
       res.status(200).json({

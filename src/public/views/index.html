@@ -15,6 +15,9 @@
     />
     <title>ASW</title>
   </head>
+  <div class="button">
+    <button id="verPerfil">Ir al perfil</button>
+  </div>
   <div id = "searchbar"></div>  
   <body>
     <div class=" titulos" style="display: flex;
@@ -36,6 +39,17 @@
       <div style = "margin-left: 4em;"> Creador</div>
     </span>
     </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var profileElem = document.getElementById('verPerfil');
+        profileElem.addEventListener('click', function () {
+          viewProfile();
+        });
+        function viewProfile(){
+          const auth = localStorage.getItem('token');
+          window.location.href = `http://localhost:8081/myProfile/${auth}`;
+        }
+     });
+    </script>
   </body>
-  
 </html>

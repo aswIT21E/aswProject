@@ -102,7 +102,7 @@ export class IssueController {
 
     $('#searchbar').append(load(searchPage).html());
     for (const issue of issues) {
-      const scriptNode = `                           
+      const scriptNode = `                          
               <div class="issue">
               <abbr title = "${issue.type}"> <div class="bola" id="${issue.type}"></div></abbr>
               <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"></div></abbr>
@@ -145,8 +145,6 @@ export class IssueController {
             </div>
           
           </li>`;
-
-
       $('#comments-list').append(scriptNode3);
     }
 
@@ -285,7 +283,7 @@ export class IssueController {
         `;
 
     $('#detail-header').append(scriptNode);
-    $('#sidebar').append(scriptNode2);
+    $('#atributos').append(scriptNode2);
     $('#description').append(scriptNode4);
 
     res.send($.html());
@@ -382,7 +380,8 @@ export class IssueController {
         numberIssue,
       );
       res.status(200);
-      res.json({ message: 'issue deleted' });
+      res.end();
+
     } catch (e) {
       res.status(500);
       res.json({

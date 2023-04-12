@@ -6,6 +6,9 @@ const IssueSchema = new Schema({
   subject: { required: true, type: String },
   numberIssue: { required: true, type: Number },
   description: { required: true, type: String },
+  activity: [
+    { required: true, type: Schema.Types.ObjectId, model: 'Activity' },
+  ],
   creator: { required: true, type: Schema.Types.ObjectId, model: 'User' }, // FK a IUser
   status: { required: true, type: String },
   severity: { required: true, type: String },

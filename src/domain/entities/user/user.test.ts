@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 import { User } from './user';
 import type { IUser } from './user.interface';
 
@@ -6,10 +8,12 @@ describe('User Entity', function () {
 
   beforeEach(function () {
     instance = new User(
-      'test-id',
+      new Types.ObjectId(),
       'test-email',
+      'test-name',
       'test-username',
       'test-password',
+      'test-bio',
     );
   });
 

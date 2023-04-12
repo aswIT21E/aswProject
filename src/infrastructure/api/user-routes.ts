@@ -1,5 +1,6 @@
 import express from 'express';
 
+// eslint-disable-next-line import/named
 import { logIn, signUp, UserController } from '~/application';
 import { createUserDto, loginDto } from '~/infrastructure/dtos';
 
@@ -16,6 +17,14 @@ userRouter.get('/signup', UserController.getSignUpPage);
 
 userRouter.get('/login', UserController.getLoginPage);
 
+userRouter.get('/profile', UserController.getProfilePage);
+
+userRouter.get('/myProfile/:token', UserController.getMyProfilePage);
+
+userRouter.post('/myProfile/:token/edit/submit', UserController.editUser);
+
+userRouter.get('/myProfile/:token/edit', UserController.getEditProfilePage);
+
 userRouter.get(
     '/stylesheets/signUp.css',
     UserController.getSignUpPageCss,
@@ -24,4 +33,14 @@ userRouter.get(
 userRouter.get(
     '/stylesheets/login.css',
     UserController.getLoginPageCss,
+  );
+
+  userRouter.get(
+    '/stylesheets/profile.css',
+    UserController.getProfilePageCss,
+  );
+
+  userRouter.get(
+    '/stylesheets/editProfile.css',
+    UserController.getEditProfilePageCss,
   );
