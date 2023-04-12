@@ -31,33 +31,52 @@
     margin-right: 4em;
   }
  
+ .send-button{
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.send-button:hover {
+  background-color: #0080b3;
+}
+ 
 </style>
 
 <div class="filter" style="margin-top: 1em; max-width: fit-content;">
-  <button type="button" class="filter-button"  style="margin-top: 1em;" onclick="mostrarMenu()">FILTRAR</button>
-  <div id="menu" style="display: none; flex-direction: column; margin-top: 1em; min-width: -webkit-fill-available;">
+  <button type="button" class="filter-button"  style="margin-top: 1em;" >FILTRAR</button>
+  <button type="button" class="send-button"  style="margin-top: 1em;" onclick="actualizarFiltro()">enviar</button>
+  <div id="menu" style="display: flex; flex-direction: column; margin-top: 1em; min-width: -webkit-fill-available;">
     <button type="button" class="typeDisplay" onclick="mostrarMenuTipus()">Tipos</button>
     <div id="menuTipus" style="display: none; margin-top:2em;">
       <label>
         Bug <div class="bola" id="Bug"></div>
-        <input type="checkbox" name="tipo" value="Bug" onchange = "actualizarFiltro()">
+        <input type="checkbox" name="tipo" value="Bug" >
       </label>
 
       <label>
         Pregunta  <div class="bola" id="Pregunta"></div>
-        <input type="checkbox" name="tipo" value="Pregunta">
+        <input type="checkbox" name="tipo" value="Pregunta" >
       </label>
 
       <label>
         Mejora  <div class="bola" id="Mejora"></div> 
-        <input type="checkbox" name="tipo" value="Mejora">
+        <input type="checkbox" name="tipo" value="Mejora" >
       </label>
     </div>
     <button type="button" class="typeDisplay" style="margin-top: 1em;" onclick="mostrarMenuGravedad()">Gravedad</button>
     <div id="MenuGravedad" style="display: none;margin-top:2em;">
       <label>
+        Deseada <div class="bola" id="Deseada"></div>
+        <input type="checkbox" name="gravedad" value="Deseada" >
+      </label>
+
+      <label>
         Menor <div class="bola" id="Menor"></div>
-        <input type="checkbox" name="gravedad" value="Menor">
+        <input type="checkbox" name="gravedad" value="Menor" >
       </label>
 
       <label>
@@ -129,9 +148,6 @@
     <button type="button" class="typeDisplay" style="margin-top: 1em;" onclick="mostrarMenuAssignedTo()">Asignado a</button>
     <div id="menuAssignedTo" style="display: none; margin-top:2em;">
     </div>
-    <button type="button" class="typeDisplay" style="margin-top: 1em;" onclick="mostrarMenuResponsable()">Responsable</button>
-    <div id="menuResponsable" style="display: none; margin-top:2em;">
-    </div>
     <button type="button" class="typeDisplay" style="margin-top: 1em;" onclick="mostrarMenuCreador()">Creador</button>
     <div id="menuCreador" style="display: none; margin-top:2em;">
     </div>
@@ -140,6 +156,7 @@
 </div>
 
        <script>
+        {
       function mostrarMenu() {
         var menu = document.getElementById("menu");
         if (menu.style.display === "none") {
@@ -204,12 +221,7 @@
           menu.style.display = "none";
         }
       }
-checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener('change', () => {
-          actualizarFiltro();
-        });
-      });
-
+    }
 
       function actualizarFiltro() {
   const checkboxes = document.querySelectorAll('input[type=checkbox]');
@@ -222,40 +234,71 @@ checkboxes.forEach((checkbox) => {
   var crated_by = [];
   var responsable = [];
 
-  checkboxes.forEach((checkbox) => {
-    if (heckbox.tagName == "tipo") {
-        if(checkbox.checked) tipo.push(checkbox.value);
-        else tipo.splice(tipo.indexOf(checkbox.value));
-    }
-    if (checkbox.tagName == "estado") {
-        if(checkbox.checked) estado.push(checkbox.value);
-        else estado.slice(estado.indexOf(checkbox.value));
-    }
-    if (checkbox.tagName == "gravedad") {
-        if(checkbox.checked) gravedad.push(checkbox.value);
-        else  gravedad.slice(gravedad.indexOf(checkbox.value));
-    }
-  });
-
-  var issues = document.getElementsByClassName('issue');  
-  // Recorrer los elementos y comparar los valores del checkbox con los valores en el atributo data-valores
-  for (let i = 0; i < issues.length; i++) {
-    const contenidoIssue  = issue[i];
-    const valores = contenido.contenidoIssue('data-valores'); // Separar los valores por guiones
-    if (valores.includes(event.target.value)) {
-      // Si el valor del checkbox coincide con alguna palabra en el atributo data-valores, mostrar el contenido
-      contenido.style.display = 'block';
-    } else {
-      // De lo contrario, ocultar el contenido
-      contenido.style.display = 'none';
-    }
-  }
-}
-
+  // Obtener todos los checkboxes con el nombre 'tipo'
+  const checkboxesTipo = document.getElementsByName('tipo');
+  checkboxesTipo.forEach(checkbox => {
+      if (checkbox.checked) {
+      tipo.push(checkbox.value);
+      }
+    });
   
+  // Obtener todos los checkboxes con el nombre 'gravedad'
+  const checkboxesGravedad = document.getElementsByName('gravedad');
+  checkboxesGravedad.forEach(checkbox => {
+      if (checkbox.checked) {
+      gravedad.push(checkbox.value);
+      }
+    });
 
+  // Obtener todos los checkboxes con el nombre 'prioridad'
+  const checkboxesPrioridad = document.getElementsByName('Prioridad');
+  checkboxesPrioridad.forEach(checkbox => {
+      if (checkbox.checked) {
+      prioridad.push(checkbox.value);
+      }
+    });
 
+  // Obtener todos los checkboxes con el nombre 'estado'
+  const checkboxesEstado = document.getElementsByName('Estado');
+  checkboxesEstado.forEach(checkbox => {
+      if (checkbox.checked) {
+      estado.push(checkbox.value);
+      }
+    });
 
+  // Obtener todos los checkboxes con el nombre 'asign_to'
+  const checkboxesAsignTo = document.getElementsByName('asign_to');
+  checkboxesAsignTo.forEach(checkbox => {
+      if (checkbox.checked) {
+      asign_to.push(checkbox.value);
+      }
+    });
+
+  // Obtener todos los checkboxes con el nombre 'crated_by'
+  const checkboxesCratedBy = document.getElementsByName('crated_by');
+  checkboxesCratedBy.forEach(checkbox => {
+      if (checkbox.checked) {
+      crated_by.push(checkbox.value);
+      }
+    });
+    
+    // Crear la URL base de la petición GET
+    let url = "http://localhost:8081/issue?";
+
+    // Agregar los parámetros en forma de arrays de strings a la URL
+    if (tipo.length > 0) url += "&tipo=" + tipo.join(",");
+    if (gravedad.length > 0) url += "&gravedad=" + gravedad.join(",");
+    if (prioridad.length > 0) url += "&prioridad=" + prioridad.join(",");
+    if (estado.length > 0) url += "&estado=" + estado.join(",");
+    if (asign_to.length > 0) url += "&asign_to=" + asign_to.join(",");
+    if (crated_by.length > 0) url += "&crated_by=" + crated_by.join(",");
+    if (responsable.length > 0) url += "&responsable=" + responsable.join(",");
+
+    window.location.href = url;
+   
+    // Realizar la petición GET al servidor
+   
+    }
       </script>
       
      

@@ -7,21 +7,27 @@ class FilterDTO{
   
   @IsString()
   tipo?: string[];
-     
+ 
+  @IsString()
+  gravedad?: string[];
+
+  @IsString()
+  priority?: string[];
+
   @IsString()
   status?: string[];
 
-  @IsString()
-  assignee?: string;
 
   @IsString()
-  createdBy?: string;
-  
+  assignee?: string[];
 
-  asignedTo?: string;
+  @IsString()
+  createdBy?: string[];
   
   @IsString()
-  priority?: string[] | null;
+  asignedTo?: string[];
+  
+  
 
 }
 
