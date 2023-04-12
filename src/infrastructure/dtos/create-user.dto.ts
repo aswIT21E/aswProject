@@ -10,6 +10,10 @@ class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   username: string;
+
+  @IsString()
+  @IsNotEmpty()
+  name: string;
 }
 
 export async function createUserDto(
@@ -19,6 +23,7 @@ export async function createUserDto(
 ) {
   const DTO = new CreateUserDto();
   DTO.email = req.body.email;
+  DTO.name = req.body.name;
   DTO.username = req.body.username;
 
   const errors = await validate(DTO);

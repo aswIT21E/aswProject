@@ -46,20 +46,10 @@
           viewProfile();
         });
         function viewProfile(){
-          fetch('http://localhost:8081/myProfile', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            },
-          }).then(response => response.text())
-            .then(html => {
-              // Actualizar la página con la respuesta recibida
-              document.documentElement.innerHTML = html;
-            }).catch(error => console.log(error));
-            }
-      });
+          const auth = localStorage.getItem('token');
+          window.location.href = `http://localhost:8081/myProfile/${auth}`;
+        }
+     });
     </script>
   </body>
 </html>

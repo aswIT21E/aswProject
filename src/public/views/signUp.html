@@ -11,10 +11,12 @@
   <body>
     <div class="signup-container">
       <h1>Bienvenido a tu Issue Tracker</h1>
-      <form method="post" action="http://localhost:8081/users/signup" >
+      <form method="post" action="http://localhost:8081/users/signup">
         <input type="email" id="email" name="email" placeholder="Correo" required>
-        <input type="text" id="username" name="username" placeholder="Nombre de usuario"required>
+        <input type="text" id="name" name="name" placeholder="Nombre completo" required>
+        <input type="text" id="username" name="username" placeholder="Nombre de usuario" required>
         <input type="password" id="password" name="password" placeholder="Contraseña" required>
+        <input type="text" id="bio" name="bio" placeholder="Descripcion" required>
         <button class="submit-btn" type="submit">Registrar</button>
       </form>
     </div>
