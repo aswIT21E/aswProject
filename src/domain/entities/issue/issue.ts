@@ -21,6 +21,7 @@ export type IssueProps = {
   watchers: IUser[];
   activity: IActivity[];
   comments?: IComment[];
+  assignedTo?: IUser;
 };
 
 export class Issue implements IIssue {
@@ -35,7 +36,7 @@ export class Issue implements IIssue {
   public date: string;
   public priority: string;
   public comments?: IComment[];
-  public asigned_to?: string;
+  public assignedTo?: IUser;
   public tags?: string[];
   public locked: boolean;
   public watchers: IUser[];
@@ -57,7 +58,7 @@ export class Issue implements IIssue {
       locked,
       watchers,
       activity,
-     
+      assignedTo,
     } = props;
 
     this.id = id;
@@ -70,11 +71,11 @@ export class Issue implements IIssue {
     this.type = type;
     this.date = date;
     this.priority = priority;
-    this.comments = comments,
-    this.locked = false;
+    (this.comments = comments), (this.locked = false);
     this.watchers = watchers;
     this.activity = activity;
     this.locked = locked;
+    this.assignedTo = assignedTo;
   }
 
   public lockIssue(): void {
@@ -83,6 +84,10 @@ export class Issue implements IIssue {
 
   public unlockIssue(): void {
     this.locked = false;
+  }
+
+  public assignUser(user: IUser): void {
+    this.assignedTo = user;
   }
 
   public updateWatchers(watchers: IUser[]): void {

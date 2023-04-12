@@ -7,7 +7,12 @@ import {
   unlockIssue,
   removeWatchers,
 } from '~/application';
-import { addWatchersDto, createIssueDto } from '~/infrastructure/dtos';
+import { assignUserToIssue } from '~/application/use-cases/assign-user-to-issue';
+import {
+  addWatchersDto,
+  createIssueDto,
+  assignIssueDto,
+} from '~/infrastructure/dtos';
 
 import { filterDto } from '../dtos/filter-dto';
 import { removeWatchersDto } from '../dtos/remove-watchers.dto';
@@ -87,4 +92,12 @@ issueRouter.post(
   removeWatchersDto,
   checkBlockedIssue,
   removeWatchers,
+);
+
+issueRouter.post(
+  '/issues/:id/assign',
+  authMiddleware,
+  assignIssueDto,
+  checkBlockedIssue,
+  assignUserToIssue,
 );

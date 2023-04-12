@@ -6,7 +6,6 @@ import { Issue } from '~/domain/entities/issue';
 import { IssueModel } from '~/domain/entities/issue';
 
 export class IssueRepository {
- 
   public static async addIssue(
     issue: IIssue,
     date: string,
@@ -52,7 +51,8 @@ export class IssueRepository {
         model: 'User',
       })
       .populate({ path: 'watchers', model: 'User' })
-      .populate({ path: 'activity', model: 'Activity' });
+      .populate({ path: 'activity', model: 'Activity' })
+      .populate({ path: 'assignedTo', model: 'User' });
     const issue = new Issue(issueDocument);
     return issue;
   }
@@ -97,32 +97,30 @@ export class IssueRepository {
     return modifiedIssue;
   }
 
- 
-
   public static async updateIssue(newIssue: IIssue): Promise<IIssue> {
     const activity = newIssue.activitiesIds;
     const watchers = newIssue.watchersIds;
+    const assignedTo = newIssue.assignedTo.id;
 
     await IssueModel.findByIdAndUpdate(newIssue.id, {
       ...newIssue,
       watchers,
       activity,
+      assignedTo,
     });
 
     return newIssue;
   }
 
-
   public static async getIssueByFilter(filter: IFilter): Promise<IIssue[]> {
     const query = {
-    ...(filter.tipo && { type: { $in: filter.tipo } }),
-    ...(filter.prioridad && { priority: { $in: filter.prioridad } }),
-    ...(filter.estado && { status: { $in: filter.estado } }),
-    ...(filter.gravedad && { severity: { $in: filter.gravedad } }),
-    ...(filter.crated_by && { creator: { $in: filter.crated_by } }),
-    ...(filter.asign_to && { assignedTo: { $in: filter.asign_to } })
+      ...(filter.tipo && { type: { $in: filter.tipo } }),
+      ...(filter.prioridad && { priority: { $in: filter.prioridad } }),
+      ...(filter.estado && { status: { $in: filter.estado } }),
+      ...(filter.gravedad && { severity: { $in: filter.gravedad } }),
+      ...(filter.crated_by && { creator: { $in: filter.crated_by } }),
+      ...(filter.asign_to && { assignedTo: { $in: filter.asign_to } }),
     };
     return await IssueModel.find(query);
   }
 }
-
