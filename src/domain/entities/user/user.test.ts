@@ -10,8 +10,10 @@ describe('User Entity', function () {
     instance = new User(
       new Types.ObjectId(),
       'test-email',
+      'test-name',
       'test-username',
       'test-password',
+      'test-bio',
     );
   });
 

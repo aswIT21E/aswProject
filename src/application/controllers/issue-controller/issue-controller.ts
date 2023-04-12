@@ -183,8 +183,6 @@ export class IssueController {
             </div>
           
           </li>`;
-
-
       $('#comments-list').append(scriptNode3);
     }
 
