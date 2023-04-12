@@ -6,11 +6,11 @@ import type { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 
 import type { IComment } from '~/domain/entities/comment';
+import type { IFilter } from '~/domain/entities/filter';
 import type { IIssue } from '~/domain/entities/issue';
 import { UserRepository } from '~/domain/repositories';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
-import { IFilter } from '~/domain/entities/filter';
 
 export class IssueController {
   public static async createIssue(req: Request, res: Response): Promise<void> {
@@ -93,7 +93,7 @@ export class IssueController {
  
   public static async getIssuePage(_req: Request, res: Response): Promise<void> {
     try{
-  var filtro: IFilter = {};
+  const filtro: IFilter = {};
   const { tipo, gravedad, prioridad, estado, created_by, asign_to, asignee } = _req.query;
   if(tipo) filtro.tipo = tipo.toString().split(',');
   if(gravedad) filtro.gravedad = gravedad.toString().split(',');
@@ -102,10 +102,9 @@ export class IssueController {
   if(created_by) filtro.crated_by = created_by.toString().split(',');
   if(asign_to) filtro.asign_to = asign_to.toString().split(',');
   if(asignee) filtro.asignee = asignee.toString().split(',');
-  console.log(filtro.tipo);
-  console.log(filtro.gravedad);
+ 
 
-  var issues: IIssue[] = await IssueRepository.getIssueByFilter(filtro);
+  const issues: IIssue[] = await IssueRepository.getIssueByFilter(filtro);
     const Indexhtml = fs.readFileSync('src/public/views/index.html');
     const filterPage = fs.readFileSync('src/public/views/filter.html');
     const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
@@ -130,8 +129,8 @@ export class IssueController {
       $('#issues').append(scriptNode);
     }}
 
-    var useranmes: String[] = await  UserRepository.getUserUsernames();
-    useranmes.push("maci");
+    const useranmes: String[] = await  UserRepository.getUserUsernames();
+    useranmes.push('maci');
        for(const name of useranmes){
       const scriptUsersAsignee = `
         <label>

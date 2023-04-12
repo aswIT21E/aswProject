@@ -22,7 +22,7 @@ export class Filter implements IFilter {
   ) {
     this.tipo = tipo;
     this.gravedad = gravedad;
-    this.prioridad = prioridad
+    this.prioridad = prioridad;
     this.estado = estado;
     this.crated_by = crated_by;
     this.asign_to = asign_to;
