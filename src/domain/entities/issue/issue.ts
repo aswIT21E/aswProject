@@ -35,6 +35,8 @@ export class Issue implements IIssue {
   public date: string;
   public priority: string;
   public comments?: IComment[];
+  public asigned_to?: string;
+  public tags?: string[];
   public locked: boolean;
   public watchers: IUser[];
   public activity: IActivity[];
@@ -55,6 +57,7 @@ export class Issue implements IIssue {
       locked,
       watchers,
       activity,
+     
     } = props;
 
     this.id = id;
@@ -67,7 +70,7 @@ export class Issue implements IIssue {
     this.type = type;
     this.date = date;
     this.priority = priority;
-    this.comments = comments;
+    this.comments = comments,
     this.locked = false;
     this.watchers = watchers;
     this.activity = activity;

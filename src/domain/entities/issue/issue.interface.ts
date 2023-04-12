@@ -18,11 +18,13 @@ export interface IIssue {
   comments?: IComment[];
   locked: boolean;
   watchers: IUser[];
-
+  asignedTo?: string;
   lockIssue: () => void;
   unlockIssue: () => void;
   updateWatchers: (watchers: IUser[]) => void;
   addActivity: (activity: IActivity) => void;
   readonly watchersIds: MongoId[];
   readonly activitiesIds: MongoId[];
+  
+  
 }

@@ -9,6 +9,7 @@ import {
 } from '~/application';
 import { addWatchersDto, createIssueDto } from '~/infrastructure/dtos';
 
+import { filterDto } from '../dtos/filter-dto';
 import { removeWatchersDto } from '../dtos/remove-watchers.dto';
 import { authMiddleware, checkBlockedIssue } from '../middlewares';
 
@@ -51,6 +52,10 @@ issueRouter.get(
 issueRouter.get('/issue', IssueController.getIssuePage);
 
 issueRouter.get('/issue/:id', IssueController.getIssue);
+
+issueRouter.get('/issuefilter', filterDto, IssueController.getIssuePage);
+
+issueRouter.post('/issuefilter', filterDto, IssueController.getIssuePage);
 
 issueRouter.get('/info/:id', IssueController.getIssueInfo);
 

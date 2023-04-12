@@ -1,0 +1,305 @@
+<style>
+  .filter label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .filter label input[type="checkbox"] {
+    margin-left: 5px;
+    display: flex;
+    align-items: right;
+  }
+  
+  .filter .bola{
+    margin-right: 0%;
+  }
+
+  .filter #menu button{
+    background-color: #008aa8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: 1em;
+    min-width: fit-content;
+  }
+
+  .filter{
+    margin-right: 4em;
+  }
+ 
+ .send-button{
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.send-button:hover {
+  background-color: #0080b3;
+}
+ 
+</style>
+
+<div class="filter" style="margin-top: 1em; max-width: fit-content;">
+  <button type="button" class="filter-button"  style="margin-top: 1em;" >FILTRAR</button>
+  <button type="button" class="send-button"  style="margin-top: 1em;" onclick="actualizarFiltro()">enviar</button>
+  <div id="menu" style="display: flex; flex-direction: column; margin-top: 1em; min-width: -webkit-fill-available;">
+    <button type="button" class="typeDisplay" onclick="mostrarMenuTipus()">Tipos</button>
+    <div id="menuTipus" style="display: none; margin-top:2em;">
+      <label>
+        Bug <div class="bola" id="Bug"></div>
+        <input type="checkbox" name="tipo" value="Bug" >
+      </label>
+
+      <label>
+        Pregunta  <div class="bola" id="Pregunta"></div>
+        <input type="checkbox" name="tipo" value="Pregunta" >
+      </label>
+
+      <label>
+        Mejora  <div class="bola" id="Mejora"></div> 
+        <input type="checkbox" name="tipo" value="Mejora" >
+      </label>
+    </div>
+    <button type="button" class="typeDisplay" style="margin-top: 1em;" onclick="mostrarMenuGravedad()">Gravedad</button>
+    <div id="MenuGravedad" style="display: none;margin-top:2em;">
+      <label>
+        Deseada <div class="bola" id="Deseada"></div>
+        <input type="checkbox" name="gravedad" value="Deseada" >
+      </label>
+
+      <label>
+        Menor <div class="bola" id="Menor"></div>
+        <input type="checkbox" name="gravedad" value="Menor" >
+      </label>
+
+      <label>
+        Normal  <div class="bola" id="Normal"></div>
+        <input type="checkbox" name="gravedad" value="Normal">
+      </label>
+
+      <label>
+        Importante  <div class="bola" id="Importante"></div>
+        <input type="checkbox" name="gravedad" value="Importante">
+      </label>
+
+      <label>
+        Critica <div class="bola" id="Crítica"></div>
+        <input type="checkbox" name="gravedad" value="Crítica">
+      </label>
+    </div>
+    <button type="button" class="typeDisplay" style="margin-top: 1em;" onclick="mostrarMenuPriority()">Prioridad</button>
+    <div id="menuPrioridad" style="display: none; margin-top:2em;">
+      <label>
+        Baja <div class="bola" id="Baja"></div>
+        <input type="checkbox" name="Prioridad" value="Baja">
+      </label>
+
+      <label>
+        Media <div class="bola" id="Media"></div>
+        <input type="checkbox" name="Prioridad" value="Media">
+      </label>
+
+      <label>
+        Alta <div class="bola" id="Alta"></div>
+        <input type="checkbox" name="Prioridad" value="Alta">
+      </label>
+    </div>
+    <button type="button" class="typeDisplay" style="margin-top: 1em;" onclick="mostrarMenuEstado()">Estado</button>
+    <div id="menuEstado" style="display: none; margin-top:2em;">
+      <label>
+        Nueva 
+        <input type="checkbox" name="Estado" value="Nueva">
+      </label>
+
+      <label>
+       En curso
+        <input type="checkbox" name="Estado" value="En curso">
+      </label>
+
+      <label>
+        Lista para test
+        <input type="checkbox" name="Estado" value="Lista para testear">
+      </label>
+      <label>
+        Cerrada
+        <input type="checkbox" name="Estado" value="Cerrada">
+      </label>
+      <label>
+        Necesita 
+        Informacion
+        <input type="checkbox" name="Estado" value="Necesita información" >
+      </label>
+      <label>
+        Rechazada
+        <input type="checkbox" name="Estado" value="Rechazada">
+      </label>
+      <label>
+        Propuesta
+        <input type="checkbox" name="Estado" value="Propuesta">
+      </label>
+    </div>
+    <button type="button" class="typeDisplay" style="margin-top: 1em;" onclick="mostrarMenuAssignedTo()">Asignado a</button>
+    <div id="menuAssignedTo" style="display: none; margin-top:2em;">
+    </div>
+    <button type="button" class="typeDisplay" style="margin-top: 1em;" onclick="mostrarMenuCreador()">Creador</button>
+    <div id="menuCreador" style="display: none; margin-top:2em;">
+    </div>
+  </div>
+  
+</div>
+
+       <script>
+        {
+      function mostrarMenu() {
+        var menu = document.getElementById("menu");
+        if (menu.style.display === "none") {
+          menu.style.display = "flex";
+        } else {
+          menu.style.display = "none";
+        }
+      }
+      function mostrarMenuTipus() {
+        var menu = document.getElementById("menuTipus");
+        if (menu.style.display === "none") {
+          menu.style.display = "block";
+        } else {
+          menu.style.display = "none";
+        }
+      }
+      function mostrarMenuGravedad() {
+        var menu = document.getElementById("MenuGravedad");
+        if (menu.style.display === "none") {
+          menu.style.display = "block";
+        } else {
+          menu.style.display = "none";
+        }
+      }
+      function mostrarMenuEstado() {
+        var menu = document.getElementById("menuEstado");
+        if (menu.style.display === "none") {
+          menu.style.display = "block";
+        } else {
+          menu.style.display = "none";
+        }
+      }
+      function mostrarMenuPriority() {
+        var menu = document.getElementById("menuPrioridad");
+        if (menu.style.display === "none") {
+          menu.style.display = "block";
+        } else {
+          menu.style.display = "none";
+        }
+      } 
+      function mostrarMenuAssignedTo() {
+        var menu = document.getElementById("menuAssignedTo");
+        if (menu.style.display === "none") {
+          menu.style.display = "block";
+        } else {
+          menu.style.display = "none";
+        }
+      }
+      function mostrarMenuCreador() {
+        var menu = document.getElementById("menuCreador");
+        if (menu.style.display === "none") {
+          menu.style.display = "block";
+        } else {
+          menu.style.display = "none";
+        }
+      }
+      function mostrarMenuResponsable() {
+        var menu = document.getElementById("menuResponsable");
+        if (menu.style.display === "none") {
+          menu.style.display = "block";
+        } else {
+          menu.style.display = "none";
+        }
+      }
+    }
+
+      function actualizarFiltro() {
+  const checkboxes = document.querySelectorAll('input[type=checkbox]');
+
+  var tipo = [];
+  var gravedad = [];
+  var prioridad = [];
+  var estado = [];
+  var asign_to = [];
+  var crated_by = [];
+  var responsable = [];
+
+  // Obtener todos los checkboxes con el nombre 'tipo'
+  const checkboxesTipo = document.getElementsByName('tipo');
+  checkboxesTipo.forEach(checkbox => {
+      if (checkbox.checked) {
+      tipo.push(checkbox.value);
+      }
+    });
+  
+  // Obtener todos los checkboxes con el nombre 'gravedad'
+  const checkboxesGravedad = document.getElementsByName('gravedad');
+  checkboxesGravedad.forEach(checkbox => {
+      if (checkbox.checked) {
+      gravedad.push(checkbox.value);
+      }
+    });
+
+  // Obtener todos los checkboxes con el nombre 'prioridad'
+  const checkboxesPrioridad = document.getElementsByName('Prioridad');
+  checkboxesPrioridad.forEach(checkbox => {
+      if (checkbox.checked) {
+      prioridad.push(checkbox.value);
+      }
+    });
+
+  // Obtener todos los checkboxes con el nombre 'estado'
+  const checkboxesEstado = document.getElementsByName('Estado');
+  checkboxesEstado.forEach(checkbox => {
+      if (checkbox.checked) {
+      estado.push(checkbox.value);
+      }
+    });
+
+  // Obtener todos los checkboxes con el nombre 'asign_to'
+  const checkboxesAsignTo = document.getElementsByName('asign_to');
+  checkboxesAsignTo.forEach(checkbox => {
+      if (checkbox.checked) {
+      asign_to.push(checkbox.value);
+      }
+    });
+
+  // Obtener todos los checkboxes con el nombre 'crated_by'
+  const checkboxesCratedBy = document.getElementsByName('crated_by');
+  checkboxesCratedBy.forEach(checkbox => {
+      if (checkbox.checked) {
+      crated_by.push(checkbox.value);
+      }
+    });
+    
+    // Crear la URL base de la petición GET
+    let url = "http://localhost:8081/issue?";
+
+    // Agregar los parámetros en forma de arrays de strings a la URL
+    if (tipo.length > 0) url += "&tipo=" + tipo.join(",");
+    if (gravedad.length > 0) url += "&gravedad=" + gravedad.join(",");
+    if (prioridad.length > 0) url += "&prioridad=" + prioridad.join(",");
+    if (estado.length > 0) url += "&estado=" + estado.join(",");
+    if (asign_to.length > 0) url += "&asign_to=" + asign_to.join(",");
+    if (crated_by.length > 0) url += "&crated_by=" + crated_by.join(",");
+    if (responsable.length > 0) url += "&responsable=" + responsable.join(",");
+
+    window.location.href = url;
+   
+    // Realizar la petición GET al servidor
+   
+    }
+      </script>
+      
+     
+</div>

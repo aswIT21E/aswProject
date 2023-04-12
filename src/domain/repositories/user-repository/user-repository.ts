@@ -45,4 +45,18 @@ export class UserRepository {
 
     return user;
   }
+
+  public static async getUserUsernames(): Promise<string[]> {
+    const users: IUser[] = await UserModel.find();
+    const uniqueUsernames: string[] = [];
+    
+    users.forEach(user => {
+      if (!uniqueUsernames.includes(user.username)) {
+        uniqueUsernames.push(user.username);
+      }
+    });
+  
+    return uniqueUsernames;
+  }
+  
 }

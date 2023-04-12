@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 
 import { IssueRepository } from '~/domain/repositories/issue-repository';
+
 import { addActivity } from '../add-activity';
 
 export async function unlockIssue(req: Request, res: Response): Promise<void> {
