@@ -102,7 +102,7 @@ export class IssueController {
 
     $('#searchbar').append(load(searchPage).html());
     for (const issue of issues) {
-      const scriptNode = `                           
+      const scriptNode = `                          
               <div class="issue">
               <abbr title = "${issue.type}"> <div class="bola" id="${issue.type}"></div></abbr>
               <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"></div></abbr>
@@ -145,8 +145,6 @@ export class IssueController {
             </div>
           
           </li>`;
-
-
       $('#comments-list').append(scriptNode3);
     }
 

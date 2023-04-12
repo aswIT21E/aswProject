@@ -12,41 +12,26 @@
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
         <title>Profile</title>
-      </head>
-<body>
-    <div class="profile">
-        <section class="profile-bar">
-            <img src="https://picsum.photos/200" alt="" class="profile-image">
-            <div class="profile-data">
-                <h1>Rubén Torrente</h1>
-                <div class="username">@rubitor5</div>
-                <h2>Diseñador, Product Owner</h2>
-            </div>
-        </section>
-        <div class="main">
-            <div class="timeline-wrapper">
-                <nav class="profile-content-tabs">
-                    <a href="" class="tab active">
-                        <ion-icon class="icon" name="reorder-four-outline"></ion-icon>
-                        <span>Timeline</span>
-                    </a>
-                    <a href="" class="tab">
-                        <ion-icon class="icon" name="eye-outline"></ion-icon>
-                        <span>Observado</span>
-                    </a>
-                </nav>
-            </div>
-            <aside class="profile-sidebar">
-                <div class="editar-bio">
-                    <h4>Tu perfil</h4>
-                    <p>La gente puede ver todo lo que haces y en qué estás trabajando. Añade una buena bio para que puedan ver la mejor versión de tu perfil.</p>
-                    <button class="edit-profile">
-                        <a href="http://localhost:8081/profile/edit"><span>EDITAR BIO</span></a>
-                    </button>
-                </div>
-            </aside>
+    </head>
+    <body>
+          <div class="button">
+        <button id="editPerfil">Editar Perfil</button>
+      </div>
+        <div class="profile" id="myProfile">
         </div>
-    </div>
-    
-</body>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+            var editElem = document.getElementById('editPerfil');
+            editElem.addEventListener('click', function () {
+                console.log("entro");
+                viewProfile();
+            });
+            console.log(editElem);
+            function viewProfile(){
+                const auth = localStorage.getItem('token');
+                window.location.href = `http://localhost:8081/myProfile/${auth}/edit`;
+            };
+        });
+      </script>
+    </body>
 </html>
