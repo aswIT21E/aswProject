@@ -1,4 +1,5 @@
-import { Request } from 'express';
+import type { Request } from 'express';
+
 import type { IIssue } from '~/domain/entities';
 import { Activity, ActivityModel } from '~/domain/entities/activity';
 import { getActor } from '~/utils';
@@ -53,4 +54,5 @@ export async function addActivity(
 
   const newActivity = new Activity(activityDocument.id, actor, message);
   issue.addActivity(newActivity);
+  
 }

@@ -6,6 +6,7 @@ import type { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 
 import type { IComment } from '~/domain/entities/comment';
+import type { IFilter } from '~/domain/entities/filter';
 import type { IIssue } from '~/domain/entities/issue';
 import { UserRepository } from '~/domain/repositories';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
@@ -90,23 +91,35 @@ export class IssueController {
     }
   }
 
-  public static async getIssuePage(
-    _req: Request,
-    res: Response,
-  ): Promise<void> {
-    const issues: IIssue[] = await IssueRepository.getAllIssues();
+ 
+  public static async getIssuePage(_req: Request, res: Response): Promise<void> {
+    try{
+  const filtro: IFilter = {};
+  const { tipo, gravedad, prioridad, estado, created_by, asign_to, asignee } = _req.query;
+  if(tipo) filtro.tipo = tipo.toString().split(',');
+  if(gravedad) filtro.gravedad = gravedad.toString().split(',');
+  if(prioridad) filtro.prioridad = prioridad.toString().split(',');
+  if(estado) filtro.estado = estado.toString().split(',');
+  if(created_by) filtro.crated_by = created_by.toString().split(',');
+  if(asign_to) filtro.asign_to = asign_to.toString().split(',');
+  if(asignee) filtro.asignee = asignee.toString().split(',');
+ 
 
+  const issues: IIssue[] = await IssueRepository.getIssueByFilter(filtro);
     const Indexhtml = fs.readFileSync('src/public/views/index.html');
+    const filterPage = fs.readFileSync('src/public/views/filter.html');
     const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
     const $ = load(Indexhtml);
 
     $('#searchbar').append(load(searchPage).html());
+    $('#Filters').append(load(filterPage).html());
     for (const issue of issues) {
-      const scriptNode = `                          
-              <div class="issue">
-              <abbr title = "${issue.type}"> <div class="bola" id="${issue.type}"></div></abbr>
-              <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"></div></abbr>
-              <abbr title = "${issue.priority}"><div class="bola" id="${issue.priority}"></div></abbr>
+  {
+      const scriptNode = `                           
+              <div class="issue" data-tipo="${issue.type}" data-gravedad="${issue.severity}" data-priority="${issue.priority}" data-status="${issue.status}" data-creador="${issue.creator}" data-asignedTo="${issue.asignedTo}" >
+              <abbr title = "${issue.type}"> <div class="bola" id="${issue.type}"> </div></abbr>
+              <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"> </div></abbr>
+              <abbr title = "${issue.priority}"><div class="bola" id="${issue.priority}"> </div></abbr>
               <div class="informacion">
                   <div class="numero-peticion" id="NumPeticion">#${issue.numberIssue}</div>
                   <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8081/issue/${issue.id}">${issue.subject}</a> </div>
@@ -114,10 +127,35 @@ export class IssueController {
               <div class="estado" >${issue.status}</div>
               <div class="fecha-creacion" id = "FechaPeticion">${issue.creator == null ? 'undefined' : issue.creator.username}</div>
               </div>`;
-      $('body').append(scriptNode);
-    }
+      $('#issues').append(scriptNode);
+    }}
+
+    const useranmes: String[] = await  UserRepository.getUserUsernames();
+    useranmes.push('maci');
+       for(const name of useranmes){
+      const scriptUsersAsignee = `
+        <label>
+        ${name} 
+          <input type="checkbox" name="asign_to" value="${name} " >
+        </label>`;
+      const scriptUserCreator = `
+        <label>
+          ${name}  
+          <input type="checkbox" name="crated_by" value="${name}" >
+        </label>`;
+        $('#menuAssignedTo').append(scriptUsersAsignee);
+        $('#menuCreador').append(scriptUserCreator);
+      }
     res.send($.html());
   }
+  catch (e) {
+    res.status(500);
+    res.json({
+      error: e,
+      message: 'issues not found',
+    });
+  }
+    }
 
   public static async getIssue(_req: Request, res: Response): Promise<void> {
     const id = _req.params.id;
@@ -281,6 +319,7 @@ export class IssueController {
                 </button>
         </div>
         `;
+    
 
     $('#detail-header').append(scriptNode);
     $('#atributos').append(scriptNode2);

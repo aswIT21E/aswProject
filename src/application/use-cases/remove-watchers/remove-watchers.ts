@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 
 import { UserRepository } from '~/domain/repositories';
 import { IssueRepository } from '~/domain/repositories/issue-repository';
+
 import { addActivity } from '../add-activity';
 
 export async function removeWatchers(

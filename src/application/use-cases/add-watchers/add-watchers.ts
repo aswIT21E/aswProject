@@ -3,6 +3,7 @@ import type { Request, Response } from 'express';
 import type { IUser } from '~/domain/entities';
 import { UserRepository } from '~/domain/repositories';
 import { IssueRepository } from '~/domain/repositories/issue-repository';
+
 import { addActivity } from '../add-activity';
 
 export async function addWatchers(req: Request, res: Response): Promise<void> {
