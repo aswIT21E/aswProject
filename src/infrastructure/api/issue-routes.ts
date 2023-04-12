@@ -78,12 +78,8 @@ issueRouter.put('/issues/:id/lock-issue', lockIssue);
 
 issueRouter.put('/issues/:id/unlock-issue', unlockIssue);
 
-issueRouter.post(
-  '/issues/:id/add-watchers',
-  addWatchersDto,
-  checkBlockedIssue,
-  addWatchers,
-);
+
+issueRouter.post('/issues/:id/add-watchers', addWatchersDto, addWatchers);
 issueRouter.post('/issue/:id/remove', IssueController.removeIssue);
 
 issueRouter.post(
