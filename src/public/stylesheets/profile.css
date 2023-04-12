@@ -1,0 +1,141 @@
+* {
+    box-sizing: border-box;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+}
+
+.profile {
+    display: flex;
+    min-height: calc(100vh - 48px);
+    padding: 2rem 0;
+    margin: 1rem auto;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.profile-bar {
+    margin-right: 1rem;
+    width: 200px;
+    display: block;
+}
+
+.profile-image {
+    height: 200px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.profile-data {
+    position: relative;
+}
+
+.profile-bar h1 {
+    font-size: 1.7rem;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+    text-transform: none;
+    word-wrap: break-word;  
+    color: #008aa8;
+    font-weight: 500;
+}
+
+.username {
+    font-size: 1.1rem;
+    color: #70728f;
+    margin-bottom: 1rem;
+}
+
+.profile-bar h2 {
+    font-size: 1.4rem;
+    color: #5a5b72;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.main {
+    display: flex;
+    padding: 0;
+    flex: 1;
+    min-width: 0;
+}
+
+.timeline-wrapper {
+    opacity: 1;
+    padding-top: 0;
+    position: relative;
+    transition: all .3s cubic-bezier(.09,.43,.35,.95);
+    margin-right: 3.5rem;
+    width: 768px;
+}
+
+.profile-content-tabs {
+    border-top: 1px solid #e2e3e9;
+    display: flex;
+}
+
+.tab {
+    color: #70728f;
+    display: flex;
+    padding: 1rem;
+    text-decoration: none;
+}
+
+.tab.active {
+    background: #fff;
+    border-left: 1px solid #e2e3e9;
+    border-right: 1px solid #e2e3e9;
+    position: relative;
+    top: 1px;
+    transition: color .2s linear;
+}
+.icon {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    fill: #434456;
+    height: 1.2rem;
+    margin-right: 0.5rem;
+    stroke: #434456;
+    transition: fill .2s linear;
+}
+
+.profile-sidebar {
+    flex-basis: 150px;
+    flex-shrink: 0;
+    width: 150px;
+}
+
+.editar-bio h4 {
+    align-items: center;
+    background: #f1f1f4;
+    color: #5a5b72;
+    display: flex;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+}
+
+.editar-bio p {
+    font-size: .875rem;
+    color: #70728f;
+}
+
+.edit-profile {
+    width: 100%;
+    font-size: .875rem;
+    align-items: center;
+    background-color: #83eede;
+    border: 0;
+    border-radius: 4px;
+    color: #2e3440;
+    display: inline-flex;
+    justify-content: center;
+    line-height: initial;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    height: 40px;
+    cursor: pointer;
+}
+.editar-bio span {
+    color: #2e3440;
+}

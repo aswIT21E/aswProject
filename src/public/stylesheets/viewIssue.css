@@ -334,7 +334,9 @@ body {
 }
 
 .sidebar {
-  margin-left: 20px }
+  margin-left: 20px;
+  width: 400px;
+}
   
 
 .dropdown option {
@@ -348,16 +350,23 @@ body {
 }
 
 .custom-params {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .dropdown-cont {
-    display: flex;
-    padding-top: 3px;
-    justify-content: space-around;
-    margin-right: 10px;
-    margin-top: 20px;
-    background-color: #f9f9fb;
+  display: flex;
+  padding-top: 3px;
+  align-items: center;
+  margin: 20px auto;
+  background-color: #f9f9fb;
+  justify-content: space-between;
+  width: 70%;
+}
+
+#atributos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #dropdown2 {
@@ -405,8 +414,8 @@ body {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  margin-left: auto; /* Agregar margen automático a la izquierda para empujar las bolas a la derecha */
-}
+  align-content: end;
+} 
 
 
   li {
@@ -446,8 +455,30 @@ body {
     font-size: .875rem;
     color: #70728f;
   }
-
-=======
+  .boton-papelera {
+    font-size: .875rem;
+    align-items: center;
+    background-color: #83eede;
+    border: 0;
+    border-radius: 4px;
+    color: #2e3440;
+    display: inline-flex;
+    justify-content: center;
+    line-height: initial;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0.5rem 1rem; 
+    cursor: pointer;
+    float: right;
+  }
+  .boton-papelera:hover{
+    background-color: #41726b;
+  }
+  
+  .boton-papelera i {
+    margin-right: auto;
+  }
 /* Estilos para tipos de  Issue */
 #Bug{
   background-color: red;
@@ -492,6 +523,162 @@ body {
 #Alta {
   background-color: red;
 }
+
+.assign {
+  border-bottom: 1px solid #a9aabc;
+  border-top: 1px solid #a9aabc;
+  padding: 1.2rem 0;
+  width: 100%;
+  margin-top: 1.2rem;
+}
+
+.label-ticket {
+  font-size: .7rem;
+    font-family: Ubuntu-Medium,Arial,Helvetica,sans-serif;
+    color: #2e3440;
+    display: block;
+    margin-block-end: 0.25rem;
+    text-transform: uppercase;
+}
+
+.assign-list {
+  position: relative;
+}
+
+.ticket-user-actions {
+  display: flex;
+  margin: 0.5rem -0.25rem 0;
+}
+
+
+.ticket-actions-link {
+  background: #fff;
+    color: #5a5b72;
+    cursor: pointer;
+    display: flex;
+    flex-grow: 1;
+    font-size: .9rem;
+    justify-content: center;
+    line-height: 2rem;
+    margin: 0 0.25rem;
+    text-align: center;
+}
+
+.icon-add {
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+a { 
+  text-decoration: none;
+}
+
+.ticket-user-list {
+  margin: 0.25rem 0 0;
+}
+
+.assignUser {
+  align-content: center;
+  align-items: center;
+  display: flex;
+  padding: 0.25rem 0;
+  width: 100%;
+}
+
+.img-avatar {
+  flex-basis: 3rem;
+    margin-right: 0.25rem;
+    max-height: 3rem;
+    max-width: 3rem;
+}
+
+.avatar-img {
+  width: 100%;
+}
+
+.user-list-name {
+  flex-grow: 1;
+  margin-left: 0.5rem;
+}
+
+.watchers {
+  border-bottom: 1px solid #a9aabc;
+  padding: 1.2rem 0;
+  width: 100%;
+  margin-top: 1.2rem;
+}
+
+.label-ticket {
+  font-size: .7rem;
+    font-family: Ubuntu-Medium,Arial,Helvetica,sans-serif;
+    color: #2e3440;
+    display: block;
+    margin-block-end: 0.25rem;
+    text-transform: uppercase;
+}
+
+.watchers-list {
+  position: relative;
+}
+
+.ticket-user-actions {
+  display: flex;
+  margin: 0.5rem -0.25rem 0;
+}
+
+
+.ticket-actions-link {
+  background: #fff;
+    color: #5a5b72;
+    cursor: pointer;
+    display: flex;
+    flex-grow: 1;
+    font-size: .9rem;
+    justify-content: center;
+    line-height: 2rem;
+    margin: 0 0.25rem;
+    text-align: center;
+}
+
+.icon-nowatch {
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.ticket-watchers-list {
+  margin: 0.25rem 0 0;
+}
+
+.watchUser {
+  align-content: center;
+  align-items: center;
+  display: flex;
+  padding: 0.25rem 0;
+  width: 100%;
+}
+
+.img-avatar {
+  flex-basis: 3rem;
+    margin-right: 0.25rem;
+    max-height: 3rem;
+    max-width: 3rem;
+}
+
+.avatar-img {
+  width: 100%;
+}
+
+.watcher-list-name {
+  flex-grow: 1;
+  margin-left: 0.5rem;
+}
+
 
 
 

@@ -49,6 +49,20 @@ export class UserController {
     res.sendFile('public/views/login.html', { root: 'src' });
   }
 
+  public static async getProfilePage(
+    _req: Request,
+    res: Response,
+  ): Promise<void> {
+    res.sendFile('public/views/profile.html', { root: 'src' });
+  }
+
+  public static async getEditProfilePage(
+    _req: Request,
+    res: Response,
+  ): Promise<void> {
+    res.sendFile('public/views/editProfile.html', { root: 'src' });
+  }
+
 
   public static async getSignUpPageCss(
     _req: Request,
@@ -62,6 +76,20 @@ export class UserController {
     res: Response,
   ): Promise<void> {
     res.sendFile('public/stylesheets/login.css', { root: 'src' });
+  }
+
+  public static async getProfilePageCss(
+    _req: Request,
+    res: Response,
+  ): Promise<void> {
+    res.sendFile('public/stylesheets/profile.css', { root: 'src' });
+  }
+
+  public static async getEditProfilePageCss(
+    _req: Request,
+    res: Response,
+  ): Promise<void> {
+    res.sendFile('public/stylesheets/editProfile.css', { root: 'src' });
   }
 
 }
