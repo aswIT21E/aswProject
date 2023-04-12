@@ -37,7 +37,8 @@ export class IssueRepository {
     const issueDocument = await IssueModel.find().populate({
       path: 'creator',
       model: 'User',
-    });
+    }).populate({ path: 'watchers', model: 'User' })
+    .populate({ path: 'activity', model: 'Activity' });
     return issueDocument;
   }
 
@@ -102,7 +103,6 @@ export class IssueRepository {
   public static async updateIssue(newIssue: IIssue): Promise<IIssue> {
     const activity = newIssue.activitiesIds;
     const watchers = newIssue.watchersIds;
-
     await IssueModel.findByIdAndUpdate(newIssue.id, {
       ...newIssue,
       watchers,
