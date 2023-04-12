@@ -57,26 +57,9 @@ export class Issue implements IIssue {
       locked,
       watchers,
       activity,
+     
     } = props;
 
-<<<<<<< HEAD
-  constructor(
-    id: string,
-    numberIssue: number,
-    subject: string,
-    description: string,
-    creator: IUser,
-    status: string,
-    type: string,
-    severity: string,
-    priority: string,
-    comments: IComment[],
-    asigned_to?: string,
-    tags?: string[],
-    watchers?: IUser[],
-  ) {
-=======
->>>>>>> main
     this.id = id;
     this.numberIssue = numberIssue;
     this.subject = subject;
@@ -87,9 +70,7 @@ export class Issue implements IIssue {
     this.type = type;
     this.date = date;
     this.priority = priority;
-    this.comments = comments;
-    this.asigned_to = asigned_to;
-    this.tags = tags;
+    this.comments = comments,
     this.locked = false;
     this.watchers = watchers;
     this.activity = activity;
