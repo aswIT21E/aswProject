@@ -392,7 +392,23 @@ export class IssueController {
                 </button>
         </div>
         `;
+    
+        let scriptLockUnlockButton;
+     if(issue.locked) {              
+     scriptLockUnlockButton = `
+    <button id="botonLock" data-lock="true" class="botonLock" onclick="LockUnlock()" style="background-color: #a52d47 ;">
+      <i class="fas fa-lock"></i> 
+    </button>`;}
+    else{
+       scriptLockUnlockButton = `
+    <button id="botonLock" data-lock="false" class="botonLock" onclick="LockUnlock()" style="background-color: #2dd486;">
+      <i class="fas fa-unlock"></i> 
+    </button>`;
+    }
 
+
+
+    $('#butonLockUnlock').append(scriptLockUnlockButton);
     $('#detail-header').append(scriptNode);
     $('#atributos').append(scriptNode2);
     $('#description').append(scriptNode4);

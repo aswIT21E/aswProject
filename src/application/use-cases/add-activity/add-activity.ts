@@ -13,6 +13,8 @@ export type Action =
   | 'addAttachment'
   | 'lockIssue'
   | 'removeAttachment'
+  | 'removeDeadline'
+  | 'updateDeadline'
   | 'unlockIssue';
 
 type ActionMessageMapType = {

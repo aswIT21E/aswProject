@@ -4,16 +4,20 @@ import { IssueRepository } from '~/domain/repositories/issue-repository';
 
 import { addActivity } from '../add-activity';
 
-export async function lockIssue(req: Request, res: Response): Promise<void> {
+export async function updateDeadline(
+  req: Request,
+  res: Response,
+): Promise<void> {
   const issueID = req.params.id;
+  const deadline = req.body.deadline;
   try {
     const issue = await IssueRepository.getIssueById(issueID);
     if (issue) {
-      issue.lockIssue();
-        await addActivity(req, issue, 'lockIssue');
+      issue.updateDeadline(deadline);
+      await addActivity(req, issue, 'updateDeadline');
       await IssueRepository.updateIssue(issue);
       res.status(200).json({
-        message: 'Issue locked successfully',
+        message: 'Deadline added successfully',
         issue,
       });
     } else {

@@ -20,6 +20,8 @@ export interface IIssue {
   watchers?: IUser[];
   assignedTo?: IUser;
   attachments?: string[];
+  deadline?: Date;
+
   lockIssue: () => void;
   unlockIssue: () => void;
   updateWatchers: (watchers: IUser[]) => void;
@@ -27,6 +29,9 @@ export interface IIssue {
   addAttachment: (attachment: string) => void;
   assignUser: (user: IUser) => void;
   removeAttachment: (index: number) => void;
+  updateDeadline: (deadline: Date) => void;
+  removeDeadline: () => void;
+
   readonly watchersIds: MongoId[];
   readonly activitiesIds: MongoId[];
 }

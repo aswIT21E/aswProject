@@ -6,7 +6,7 @@ import { addActivity } from '../add-activity';
 
 export async function unlockIssue(req: Request, res: Response): Promise<void> {
   const issueID = req.params.id;
-  try {
+    try {
     const issue = await IssueRepository.getIssueById(issueID);
     if (issue) {
       issue.unlockIssue();
