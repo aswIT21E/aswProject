@@ -190,7 +190,7 @@ export class UserController {
       console.log(user.username);console.log(activity.message);
       if(user.username === username){
     const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
-    console.log(scriptActivities);
+   
     $('#timeline').append(scriptActivities);
   }
 

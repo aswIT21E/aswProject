@@ -41,18 +41,32 @@
           <ul class="attachment-list"></ul>
         </section>
         <section class="comment-section">
-          <h2 class="comment-h2"><span id="comment-count">0</span> Comentarios</h2>
-          <form action="issues/:id/new-comment" method="POST">
-            <div class="form-group">
-              <input type="hidden" name="id">
-              <textarea id="comment" name="comment" placeholder="Escribe un nuevo comentario aquí" required></textarea>
-            </div>
-            <button type="submit">Comentar</button>
-          </form>
-          <div id="comments-section">
-            <ul id="comments-list">
-            </ul>
+        <div id ="Comentarios" style ="display: block;">
+            <h2 class="comment-h2">
+              <span id="comment-count"></span><button class ="botoncomments" id ="commentB" >Comentarios</button>
+              <span id="activity-count"></span><button class ="botoncomments" id ="activityB" onclick="mostrarAcividades()">Actividades</button>
+            </h2>
+              <form action="issues/:id/new-comment" method="POST">
+                  <div class="form-group">
+                    <input type="hidden" name="id">
+                    <textarea id="comment" name="comment" placeholder="Escribe un nuevo comentario aquí" required></textarea>
+                  </div>
+                <button type="submit">Comentar</button>
+              </form>
+              <div id="comments-section">
+                <ul id="comments-list">
+                </ul>
+                </div>
+        </div>
+        <div id ="Activities" style="display: none">
+          <h2 class="comment-h2">
+            <span id="comment-count2"></span><button class ="botoncomments" id ="commentB" onclick="mostrarComentarios()">Comentarios</button>
+            <span id="activity-count2"></span><button class ="botoncomments" id ="activityB" >Actividades</button>
+          </h2>
+          <div class = "activitieslist" id=" activitylist">
+
           </div>
+        </div>
         </section>
       </div>
     </div>
@@ -64,7 +78,8 @@
         </div>
         <div class="assign-list">
           <div id="ticket-user-list" class="ticket-user-list">
-            <div class="assignUser">
+            <div class="assign2 Comentarios
+            User">
               <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
               <div class="user-list-name"><span>Rubén Torrente</span></div>
             </div>
@@ -210,18 +225,47 @@
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
   <script>
-    const commentCount = document.getElementById('comment-count');
-    const commentsList = document.getElementById('comments-list');
+  
 
-    const updateCommentCount = () => {
-      const commentListItems = commentsList.getElementsByTagName('li');
-      const count = commentListItems.length;
-      commentCount.innerHTML = count;
-    };
-
-    updateCommentCount();
   </script>
+  <script>
+    // Función para mostrar comentarios
+function mostrarComentarios() {
 
+
+  var comentarios = document.getElementById('Comentarios');
+  var actividades = document.getElementById('Activities');
+    comentarios.style.display = 'block';
+    actividades.style.display = 'none';
+    const com = document.getElementById('comments-list');
+   const act = document.getElementById('activitylist');
+   // Obtén el número de elementos hijos dentro del div
+   const numC = com.childElementCount;
+    const numA = act.childElementCount;
+    const commentCount = document.getElementById('comment-count');
+  const activityCount = document.getElementById('activity-count');
+  commentCount.innerHTML = numC;
+  activityCount.innerHTML = numA;
+}
+
+// Función para mostrar actividades
+function mostrarAcividades() {
+  var comentarios = document.getElementById('Comentarios');
+  var actividades = document.getElementById('Activities');
+  comentarios.style.display = 'none';
+  actividades.style.display = 'block';
+  const com = document.getElementById('comments-list');
+  const act = document.getElementById('activitylist');
+  // Obtén el número de elementos hijos dentro del div
+  const numC = com.childElementCount;
+  const numA = act.childElementCount;
+  const commentCount = document.getElementById('comment-count2');
+  const activityCount = document.getElementById('activity-count2');
+  commentCount.innerHTML = numC;
+  activityCount.innerHTML = numA;
+}
+
+  </script>
 </body>
 
 </html>

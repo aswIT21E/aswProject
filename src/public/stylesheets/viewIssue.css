@@ -46,7 +46,7 @@ body {
 }
 
 .main {
-    background: #f1f1f4;
+    /*background: #f1f1f4;*/
     padding: 0;
     width: 70%;
 
@@ -704,3 +704,42 @@ a {
 
 
 
+.botoncomments {
+  background-color: transparent; /* Establece el fondo como transparente */
+  border: none; /* Elimina los bordes */
+  cursor: pointer; /* Cambia el cursor al puntero al pasar por encima */
+  /* Otros estilos opcionales */
+  padding: 10px 20px; /* Agrega relleno (padding) para dar espacio al contenido del botón */
+  font-family: Ubuntu, Arial, Helvetica, sans-serif;
+}
+/* Estilo para el contenedor timeline */
+.activitieslist {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilo para las filas timeline-item */
+.activityIssue {
+  margin-top: 10px; /* Espacio entre filas */
+  padding: 10px; /* Espaciado interno */
+  background-color: #dfe0ed; /* Color de fondo */
+  border-radius: 5px; /* Borde redondeado */
+  border-color: #2e3440;
+}
+
+/* Estilo para el enlace en las filas timeline-item */
+.activityIssue {
+  color: #0066cc; /* Color del enlace */
+  text-decoration: none; /* Sin subrayado */
+}
+
+/* Estilo para el número de issue en el enlace */
+.activityIssue a::before {
+  content: "#"; /* Añadir el símbolo "#" antes del número de issue */
+  margin-right: 5px; /* Espacio entre "#" y el número de issue */
+}
+
+/* Estilo para el título del issue en el enlace */
+.activityIssue a::after {
+  content: ""; /* No hay contenido después del título del issue */
+}
