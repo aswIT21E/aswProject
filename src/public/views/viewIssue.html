@@ -8,8 +8,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" type="text/css" href="/stylesheets/viewIssue.css" />
+  <link rel="stylesheet" type="text/css" href="../stylesheets/viewIssue.css" />
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
   <title>View Issue</title>
 </head>
@@ -62,11 +64,14 @@
         </div>
         <div class="assign-list">
           <div id="ticket-user-list" class="ticket-user-list">
-            
+            <div class="assignUser">
+              <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
+              <div class="user-list-name"><span>Rubén Torrente</span></div>
+            </div>
           </div>
           <div class="ticket-user-actions">
             <div class="icon-add"><ion-icon name="add-outline" class="plus-icon"></ion-icon></div>
-           <div id="link1"></div>
+            <a href="http://localhost:8081/issue/${issueId}/AssignUser" class="ticket-actions-link"><span>Añadir asignación</span></a>
           </div>
         </div>
       </section>
@@ -76,18 +81,54 @@
         </div>
         <div class="watchers-list">
           <div id="ticket-watchers-list" class="ticket-watchers-list">
-            
+            <div class="watchUser">
+              <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
+              <div class="watcher-list-name"><span>Rubén Torrente</span></div>
+            </div>
           </div>
           <div class="ticket-user-actions">
             <div class="icon-add"><ion-icon name="add-outline" class="plus-icon"></ion-icon></div>
-            <div id="link2"></div>
+            <a href="" class="ticket-actions-link"><span>Añadir observadores</span></a>
             <div class="icon-nowatch"><ion-icon name="eye-off-outline"></ion-icon></div>
-            <div id="link3"></div>
+            <a href="" class="ticket-actions-link"><span>No observar</span></a>
           </div>
         </div>
       </section>
+      <div id = "butonLockUnlock">
+
+      </div>
+      <div id = "butonEditDeadline">
+
+      </div>
     </aside>
   </div>
+  <script>
+    async function LockUnlock() {
+      const token = localStorage.getItem('token');
+      const opciones = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      };
+
+      var butonlock = document.getElementById("botonLock");
+      if (butonlock.dataset.lock == "true") {
+        butonlock.innerHTML = "<i class=\"fas fa-unlock\"></i>";
+          await fetch(`http://localhost:8081/issues/${issueId}/unlock-issue`, opciones);
+      } 
+      else {
+        butonlock.innerHTML = "<i class=\"fas fa-lock\"></i>";
+        await fetch(`http://localhost:8081/issues/${issueId}/lock-issue`,opciones);
+      }
+      window.location.reload();
+      
+
+
+
+    }
+  </script>
   <script>
     // Obtener la ID de la issue de la URL actual
     const url = window.location.href;
