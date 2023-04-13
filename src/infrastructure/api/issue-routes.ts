@@ -21,6 +21,8 @@ import { authMiddleware, checkBlockedIssue } from '../middlewares';
 
 export const issueRouter = express.Router();
 
+issueRouter.post('/test-upload', IssueController.testUpload);
+
 issueRouter.post(
   '/issues/create',
   authMiddleware,
