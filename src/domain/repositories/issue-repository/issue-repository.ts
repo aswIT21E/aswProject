@@ -30,7 +30,8 @@ export class IssueRepository {
     const issueDocument = await IssueModel.find().populate({
       path: 'creator',
       model: 'User',
-    });
+    }).populate({ path: 'watchers', model: 'User' })
+    .populate({ path: 'activity', model: 'Activity' });
     return issueDocument;
   }
 
