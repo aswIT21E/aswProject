@@ -96,7 +96,7 @@ export class IssueRepository {
     const watchers = newIssue.watchersIds;
     const assignedTo = newIssue.assignedTo?.id;
 
-    const res = await IssueModel.findByIdAndUpdate(newIssue.id, {
+    await IssueModel.findByIdAndUpdate(newIssue.id, {
       ...newIssue,
       watchers,
       activity,
