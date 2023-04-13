@@ -6,20 +6,13 @@ import {
   addWatchers,
   unlockIssue,
   removeWatchers,
-  addAttachment,
-  assignUserToIssue,
-  removeAttachment,
-  updateDeadline,
-  removeDeadline,
 } from '~/application';
+import { assignUserToIssue } from '~/application/use-cases/assign-user-to-issue';
 import {
   addWatchersDto,
   createIssueDto,
   assignIssueDto,
   bulkIssuesDto,
-  addAttachmentDto,
-  removeAttachmentDto,
-  updateDeadlineDto,
 } from '~/infrastructure/dtos';
 
 import { filterDto } from '../dtos/filter-dto';
@@ -27,20 +20,6 @@ import { removeWatchersDto } from '../dtos/remove-watchers.dto';
 import { authMiddleware, checkBlockedIssue } from '../middlewares';
 
 export const issueRouter = express.Router();
-
-issueRouter.post(
-  '/issues/:id/addAttachment',
-  authMiddleware,
-  addAttachmentDto,
-  addAttachment,
-);
-
-issueRouter.post(
-  '/issues/:id/removeAttachment',
-  authMiddleware,
-  removeAttachmentDto,
-  removeAttachment,
-);
 
 issueRouter.post(
   '/issues/create',
@@ -73,6 +52,10 @@ issueRouter.post(
   checkBlockedIssue,
   IssueController.modifyIssue,
 );
+
+issueRouter.get('/issue/:id/assign', IssueController.getUserInfoAssign);
+
+issueRouter.get('/issue/:id/watchers', IssueController.getUserInfoWatchers);
 
 issueRouter.get('/issues', IssueController.getAllIssues);
 
@@ -108,6 +91,16 @@ issueRouter.get(
   IssueController.getViewIssuePageCss,
 );
 
+issueRouter.get(
+  '/stylesheets/assign.css',
+  IssueController.getAssignPageCss,
+);
+
+issueRouter.get(
+  '/stylesheets/watchers.css',
+  IssueController.getWatchersPageCss,
+);
+
 issueRouter.put('/issues/:id/lock-issue', lockIssue);
 
 issueRouter.put('/issues/:id/unlock-issue', unlockIssue);
@@ -128,19 +121,4 @@ issueRouter.post(
   assignIssueDto,
   checkBlockedIssue,
   assignUserToIssue,
-);
-
-issueRouter.post(
-  '/issues/:id/updateDeadline',
-  authMiddleware,
-  updateDeadlineDto,
-  checkBlockedIssue,
-  updateDeadline,
-);
-
-issueRouter.post(
-  '/issues/:id/removeDeadline',
-  authMiddleware,
-  checkBlockedIssue,
-  removeDeadline,
 );

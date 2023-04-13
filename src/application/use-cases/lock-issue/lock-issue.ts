@@ -10,7 +10,7 @@ export async function lockIssue(req: Request, res: Response): Promise<void> {
     const issue = await IssueRepository.getIssueById(issueID);
     if (issue) {
       issue.lockIssue();
-        await addActivity(req, issue, 'lockIssue');
+      await addActivity(req, issue, 'lockIssue');
       await IssueRepository.updateIssue(issue);
       res.status(200).json({
         message: 'Issue locked successfully',
