@@ -9,6 +9,8 @@ import {
   addAttachment,
   assignUserToIssue,
   removeAttachment,
+  updateDeadline,
+  removeDeadline,
 } from '~/application';
 import {
   addWatchersDto,
@@ -17,6 +19,7 @@ import {
   bulkIssuesDto,
   addAttachmentDto,
   removeAttachmentDto,
+  updateDeadlineDto,
 } from '~/infrastructure/dtos';
 
 import { filterDto } from '../dtos/filter-dto';
@@ -109,10 +112,7 @@ issueRouter.get(
   IssueController.getViewIssuePageCss,
 );
 
-issueRouter.get(
-  '/stylesheets/assign.css',
-  IssueController.getAssignPageCss,
-);
+issueRouter.get('/stylesheets/assign.css', IssueController.getAssignPageCss);
 
 issueRouter.get(
   '/stylesheets/watchers.css',
@@ -139,4 +139,19 @@ issueRouter.post(
   assignIssueDto,
   checkBlockedIssue,
   assignUserToIssue,
+);
+
+issueRouter.post(
+  '/issues/:id/updateDeadline',
+  authMiddleware,
+  updateDeadlineDto,
+  checkBlockedIssue,
+  updateDeadline,
+);
+
+issueRouter.post(
+  '/issues/:id/removeDeadline',
+  authMiddleware,
+  checkBlockedIssue,
+  removeDeadline,
 );

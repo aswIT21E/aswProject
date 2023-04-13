@@ -13,6 +13,8 @@ export type Action =
   | 'addAttachment'
   | 'lockIssue'
   | 'removeAttachment'
+  | 'removeDeadline'
+  | 'updateDeadline'
   | 'unlockIssue';
 
 type ActionMessageMapType = {
@@ -38,6 +40,10 @@ const actionMessagesMap: ActionMessageMapType = {
     `${username} has unlocked issue ${issueId}`,
   removeAttachment: (username: string, issueId: string) =>
     `${username} removed an attachment from issue ${issueId}`,
+  removeDeadline: (username: string, issueId: string) =>
+    `${username} removed the deadline from issue ${issueId}`,
+  updateDeadline: (username: string, issueId: string) =>
+    `${username} update the deadline for issue ${issueId}`,
 };
 
 export async function addActivity(
