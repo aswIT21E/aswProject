@@ -27,6 +27,10 @@ issueRouter.post('/issue/:id/editIssue', IssueController.modifyIssue);
 
 issueRouter.post('/issue/:id/modifyIssue', IssueController.modifyIssue);
 
+issueRouter.get('/issue/:id/assign', IssueController.getUserInfoAssign);
+
+issueRouter.get('/issue/:id/watchers', IssueController.getUserInfoWatchers);
+
 issueRouter.get('/issues', IssueController.getAllIssues);
 
 issueRouter.get('/issues/newIssue', IssueController.getNewIssuePage);
@@ -56,6 +60,16 @@ issueRouter.get(
 issueRouter.get(
   '/stylesheets/viewIssue.css',
   IssueController.getViewIssuePageCss,
+);
+
+issueRouter.get(
+  '/stylesheets/assign.css',
+  IssueController.getAssignPageCss,
+);
+
+issueRouter.get(
+  '/stylesheets/watchers.css',
+  IssueController.getWatchersPageCss,
 );
 
 issueRouter.put('/issues/:id/lock-issue', lockIssue);

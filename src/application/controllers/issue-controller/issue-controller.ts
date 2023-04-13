@@ -7,7 +7,8 @@ import jwt from 'jsonwebtoken';
 
 import type { IComment } from '~/domain/entities/comment';
 import type { IIssue } from '~/domain/entities/issue';
-import { UserRepository } from '~/domain/repositories';
+import type { IUser } from '~/domain/entities/user';
+import { UserRepository } from '~/domain/repositories/user-repository/user-repository';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
 
@@ -89,7 +90,42 @@ export class IssueController {
       res.status(404).json({ message: 'not found' });
     }
   }
+  public static async getUserInfoAssign(req: Request, res: Response) : Promise<void> {
+    const users: IUser[] = await UserRepository.getAllUsers();
+    const assignHtml = fs.readFileSync('src/public/views/assign.html');
+    const $ = load(assignHtml);
+    for (const user of users) {
+      const scriptNode = `
+    <div class="item">
+      <div class="user-list-avatar">
+          <img src="https://picsum.photos/48" alt="" class="img-avatar">
+      </div>
+      <div class="user-list-name">${user.username}</div>
+    </div>
+    `;
+      $('#user-list').append(scriptNode);
+    } 
+    res.send($.html());
+    
+  }
 
+  public static async getUserInfoWatchers(req: Request, res: Response) : Promise<void> {
+    const users: IUser[] = await UserRepository.getAllUsers();
+    const watcherHtml = fs.readFileSync('src/public/views/watchers.html');
+    const $ = load(watcherHtml);
+    for (const user of users) {
+      const scriptNode = `
+    <div class="item">
+      <div class="watcher-list-avatar">
+          <img src="https://picsum.photos/48" alt="" class="img-avatar">
+      </div>
+      <div class="watcher-list-name">${user.username}</div>
+    </div>
+    `;
+      $('#watcher-list').append(scriptNode);
+    } 
+    res.send($.html());
+  }
   public static async getIssuePage(
     _req: Request,
     res: Response,
@@ -149,6 +185,14 @@ export class IssueController {
 
       $('#comments-list').append(scriptNode3);
     }
+
+    const scriptNode5 = `
+    <a href="http://localhost:8081/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
+    `;
+
+    const scriptNode6 = `
+    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Añadir observadores</span></a>
+    `;
 
     const scriptNode4 = `
     <span class= "editableText" id="text" contenteditable="false" style="">${issue.description}</span>
@@ -287,6 +331,9 @@ export class IssueController {
     $('#detail-header').append(scriptNode);
     $('#atributos').append(scriptNode2);
     $('#description').append(scriptNode4);
+    $('#link1').append(scriptNode5);
+    $('#link2').append(scriptNode6);
+
 
     res.send($.html());
   }
@@ -324,6 +371,22 @@ export class IssueController {
     res: Response,
   ): Promise<void> {
     res.sendFile('public/sytlesheets/viewIssue.css', { root: 'src' });
+  }
+
+
+
+  public static async getAssignPageCss(
+    req: Request,
+    res: Response,
+  ): Promise<void> {
+    res.sendFile('public/sytlesheets/assign.css', { root: 'src' });
+  }
+
+  public static async getWatchersPageCss(
+    req: Request,
+    res: Response,
+  ): Promise<void> {
+    res.sendFile('public/sytlesheets/watchers.css', { root: 'src' });
   }
 
   public static async createComment(
