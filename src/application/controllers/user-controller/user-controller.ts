@@ -55,6 +55,37 @@ export class UserController {
     res.sendFile('public/views/login.html', { root: 'src' });
   }
 
+  public static async editUser(req: Request, res: Response): Promise<void> {
+    try{
+      const token = req.params.token;
+      const decodedToken: JwtPayload = jwt.decode(token, {
+        complete: true,
+        json: true,
+      });
+      const username = decodedToken.payload.username;
+      const oldUser = await UserRepository.getUserByUsername(username);
+      if (!oldUser) {
+        res.status(404).json({message: 'Usuario no encontrado'});
+        return;
+        }
+      const newUser: IUser = {
+        id: oldUser.id,
+        email: req.body.email || oldUser.email,
+        name: req.body.name || oldUser.name,
+        username: req.body.username || oldUser.username,
+        password: req.body.password || oldUser.password,
+        bio: req.body.bio || oldUser.bio,
+      };
+      await UserRepository.editarUser(oldUser, newUser);
+      res.redirect(`http://localhost:8081/myProfile/${token}`);
+      }
+    catch (e) {
+        res.status(500);
+        res.json({
+          error: e,
+        });
+      }
+   }
   public static async getProfilePage(
     _req: Request,
     res: Response,
@@ -76,25 +107,29 @@ export class UserController {
     const viewIssueHTML = fs.readFileSync('src/public/views/editProfile.html');
     const $ = load(viewIssueHTML);
 
-    const scriptNode = `<fieldset>
-    <label for="username">Nombre de usuario</label>
-    <input type="text" name="username" placeholder=${user.username} id="username">
-        </fieldset>
-        <fieldset>
-            <label for="email">Correo</label>
-            <input type="email" name="email" id="email" placeholder=${user.email}>
-        </fieldset>
-        <fieldset>
-            <label for="full-name">Nombre completo</label>
-            <input type="text" name="full-name" id="full-name" placeholder=${user.name}>
-        </fieldset>
-        <fieldset>
-            <label for="bio">Bio (max. 210 caracteres)</label>
-            <textarea name="bio" id="bio" maxlength="210" placeholder=${user.bio}></textarea>
-        </fieldset>
-        <fieldset class="submit">
-            <button type="submit" class="btn-small" title="Guardar">Guardar</button>
-        </fieldset>`;
+    const scriptNode = `<form action="/myProfile/${token}/edit/submit" method="post">
+    <fieldset>
+      <label for="username">Nombre de usuario</label>
+      <input type="text" name="username" placeholder="${user.username}" id="username">
+    </fieldset>
+    <fieldset>
+      <label for="email">Correo</label>
+      <input type="email" name="email" id="email" placeholder="${user.email}">
+    </fieldset>
+    <fieldset>
+      <label for="full-name">Nombre completo</label>
+      <input type="text" name="name" id="full-name" placeholder="${user.name}">
+    </fieldset>
+    <fieldset>
+      <label for="bio">Bio (max. 210 caracteres)</label>
+      <textarea name="bio" id="bio" maxlength="210" placeholder="${user.bio}"></textarea>
+    </fieldset>
+    <fieldset class="submit">
+      <button type="submit" class="btn-small" title="Guardar">Guardar</button>
+    </fieldset>
+  </form>
+  
+  `;
     $('#editP').append(scriptNode);
     res.send($.html());
   }

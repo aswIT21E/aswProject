@@ -6,7 +6,11 @@ export class UserRepository {
   public static async addUser(user: IUser): Promise<User> {
     return await UserModel.create(user);
   }
-
+  public static async editarUser(oldUser: IUser, newUser: IUser): Promise<void> {
+    await UserModel.findByIdAndUpdate(newUser.id, {
+      ...newUser
+    });
+  }
   public static async getAllUsers(): Promise<IUser[]> {
     return await UserModel.find();
   }
