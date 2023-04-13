@@ -2,8 +2,6 @@ import fs from 'fs';
 
 import { load } from 'cheerio';
 import type { Request, Response } from 'express';
-import type { JwtPayload } from 'jsonwebtoken';
-import jwt from 'jsonwebtoken';
 
 import type { IComment } from '~/domain/entities/comment';
 import type { IFilter } from '~/domain/entities/filter';
@@ -11,18 +9,49 @@ import { IIssue, Issue } from '~/domain/entities/issue';
 import { UserRepository } from '~/domain/repositories';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
+import { getActor } from '~/utils';
+import { BulkIssuesDto, CreateIssueDto } from '~/infrastructure';
 
 export class IssueController {
+  public static async bulkIssues(req: Request, res: Response): Promise<void> {
+    try {
+      const creator = await getActor(req);
+      const issues: BulkIssuesDto['issues'] = req.body.issues;
+
+      if (!creator) {
+        res.status(400).json({ message: 'User creator not found' });
+      }
+
+      const date = new Date().toLocaleString('es-ES', {
+        timeZone: 'Europe/Madrid',
+      });
+      let lastNumberIssue = await IssueRepository.getLastIssue();
+
+      for (const issueDoc of issues) {
+        const issue: IIssue = new Issue({
+          ...issueDoc,
+          creator,
+          date,
+          numberIssue: lastNumberIssue,
+        });
+        ++lastNumberIssue;
+        await IssueRepository.addIssue(issue);
+      }
+
+      res.status(200);
+      res.redirect('http://localhost:8081/issue');
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+        message: 'issue not created',
+      });
+    }
+  }
+
   public static async createIssue(req: Request, res: Response): Promise<void> {
     try {
-      const auth = req.headers.authorization;
-      const token = auth.split(' ')[1];
-      const decodedToken: JwtPayload = jwt.decode(token, {
-        complete: true,
-        json: true,
-      });
-      const username = decodedToken.payload.username;
-      const creator = await UserRepository.getUserByUsername(username);
+      const creator = await getActor(req);
 
       if (!creator) {
         res.status(400).json({ message: 'User creator not found' });
@@ -30,13 +59,15 @@ export class IssueController {
       const date = new Date().toLocaleString('es-ES', {
         timeZone: 'Europe/Madrid',
       });
-      const issue: IIssue = new Issue({
-        ...req.body,
-        creator: creator.id,
-        date,
-      });
+      const issueDoc: CreateIssueDto = req.body;
       const lastNumberIssue = await IssueRepository.getLastIssue();
-      await IssueRepository.addIssue(issue, date, lastNumberIssue);
+      const issue: IIssue = new Issue({
+        ...issueDoc,
+        date,
+        creator,
+        numberIssue: lastNumberIssue + 1,
+      });
+      await IssueRepository.addIssue(issue);
       res.status(200);
       res.redirect('http://localhost:8081/issue');
     } catch (e) {

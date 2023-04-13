@@ -12,6 +12,7 @@ import {
   addWatchersDto,
   createIssueDto,
   assignIssueDto,
+  bulkIssuesDto,
 } from '~/infrastructure/dtos';
 
 import { filterDto } from '../dtos/filter-dto';
@@ -25,6 +26,13 @@ issueRouter.post(
   authMiddleware,
   createIssueDto,
   IssueController.createIssue,
+);
+
+issueRouter.post(
+  '/issues/bulk',
+  authMiddleware,
+  bulkIssuesDto,
+  IssueController.bulkIssues,
 );
 
 issueRouter.post(
@@ -82,7 +90,6 @@ issueRouter.get(
 issueRouter.put('/issues/:id/lock-issue', lockIssue);
 
 issueRouter.put('/issues/:id/unlock-issue', unlockIssue);
-
 
 issueRouter.post('/issues/:id/add-watchers', addWatchersDto, addWatchers);
 issueRouter.post('/issue/:id/remove', IssueController.removeIssue);

@@ -6,16 +6,10 @@ import { Issue } from '~/domain/entities/issue';
 import { IssueModel } from '~/domain/entities/issue';
 
 export class IssueRepository {
-  public static async addIssue(
-    issue: IIssue,
-    date: string,
-    lastNumberIssue: number,
-  ): Promise<IIssue> {
+  public static async addIssue(issue: IIssue): Promise<IIssue> {
     const newIssue = await IssueModel.create({
       ...issue,
-      date,
-      comments: [],
-      numberIssue: lastNumberIssue + 1,
+      creator: issue.creator.id,
     });
     return newIssue;
   }
