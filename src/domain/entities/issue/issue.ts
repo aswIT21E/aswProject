@@ -118,4 +118,8 @@ export class Issue implements IIssue {
     const newAttachments = [...this.attachments, attachment];
     this.attachments = newAttachments;
   }
+
+  public removeAttachment(index: number): void {
+    this.attachments.splice(index, 1);
+  }
 }

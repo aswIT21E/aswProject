@@ -26,6 +26,7 @@ export interface IIssue {
   addActivity: (activity: IActivity) => void;
   addAttachment: (attachment: string) => void;
   assignUser: (user: IUser) => void;
+  removeAttachment: (index: number) => void;
   readonly watchersIds: MongoId[];
   readonly activitiesIds: MongoId[];
 }

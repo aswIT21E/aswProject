@@ -6,15 +6,17 @@ import {
   addWatchers,
   unlockIssue,
   removeWatchers,
+  addAttachment,
+  assignUserToIssue,
+  removeAttachment,
 } from '~/application';
-import { addAttachment } from '~/application/use-cases/add-attachment';
-import { assignUserToIssue } from '~/application/use-cases/assign-user-to-issue';
 import {
   addWatchersDto,
   createIssueDto,
   assignIssueDto,
   bulkIssuesDto,
   addAttachmentDto,
+  removeAttachmentDto,
 } from '~/infrastructure/dtos';
 
 import { filterDto } from '../dtos/filter-dto';
@@ -28,6 +30,13 @@ issueRouter.post(
   authMiddleware,
   addAttachmentDto,
   addAttachment,
+);
+
+issueRouter.post(
+  '/issues/:id/removeAttachment',
+  authMiddleware,
+  removeAttachmentDto,
+  removeAttachment,
 );
 
 issueRouter.post(
