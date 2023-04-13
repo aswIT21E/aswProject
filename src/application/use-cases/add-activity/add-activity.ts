@@ -21,23 +21,23 @@ type ActionMessageMapType = {
 
 const actionMessagesMap: ActionMessageMapType = {
   addAttachment: (username: string, issueId: string) =>
-    `${username} has added an attachment to issue ${issueId}`,
+    `${username} has added an attachment to issue `,
   removeWatchers: (username: string, issueId: string) =>
-    `${username} has removed some watchers from issue ${issueId}`,
+    `${username} has removed some watchers from issue `,
   editIssue: (username: string, issueId: string) =>
-    `${username} has edited issue ${issueId}`,
+    `${username} has edited issue `,
   addComment: (username: string, issueId: string) =>
-    `${username} has added a comment to issue ${issueId}`,
+    `${username} has added a comment to issue `,
   assignIssue: (username: string, issueId: string) =>
-    `${username} has assigned issue ${issueId}`,
+    `${username} has assigned issue `,
   addWatchers: (username: string, issueId: string) =>
-    `${username} has added watchers to issue ${issueId}`,
+    `${username} has added watchers to issue `,
   lockIssue: (username: string, issueId: string) =>
-    `${username} has locked issue ${issueId}`,
+    `${username} has locked issue `,
   unlockIssue: (username: string, issueId: string) =>
-    `${username} has unlocked issue ${issueId}`,
+    `${username} has unlocked issue `,
   removeAttachment: (username: string, issueId: string) =>
-    `${username} removed an attachment from issue ${issueId}`,
+    `${username} removed an attachment from issue `,
 };
 
 export async function addActivity(

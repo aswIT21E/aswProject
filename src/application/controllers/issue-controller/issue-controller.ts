@@ -249,7 +249,16 @@ export class IssueController {
           </li>`;
       $('#comments-list').append(scriptNode3);
     }
-
+     
+    for(const act of issue.activity){
+      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+      $('.activitieslist').append(scriptActivities);
+    }
+    $('#comment-count').append(`${comments.length}`);
+    $('#activity-count').append(`${issue.activity.length}`);
+    $('#comment-count2').append(`${comments.length}`);
+    $('#activity-count2').append(`${issue.activity.length}`);
+    
     const scriptNode4 = `
     <span class= "editableText" id="text" contenteditable="false" style="">${issue.description}</span>
     <span class="edit-icon-wrapper">
