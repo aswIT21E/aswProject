@@ -1,20 +1,15 @@
 import type { IActivity } from '~/domain/entities/activity';
 import type { IComment } from '~/domain/entities/comment';
+import type { IFilter } from '~/domain/entities/filter';
 import type { IIssue } from '~/domain/entities/issue';
 import { Issue } from '~/domain/entities/issue';
 import { IssueModel } from '~/domain/entities/issue';
 
 export class IssueRepository {
-  public static async addIssue(
-    issue: IIssue,
-    date: string,
-    lastNumberIssue: number,
-  ): Promise<IIssue> {
+  public static async addIssue(issue: IIssue): Promise<IIssue> {
     const newIssue = await IssueModel.create({
       ...issue,
-      date,
-      comments: [],
-      numberIssue: lastNumberIssue + 1,
+      creator: issue.creator.id,
     });
     return newIssue;
   }
@@ -50,23 +45,9 @@ export class IssueRepository {
         model: 'User',
       })
       .populate({ path: 'watchers', model: 'User' })
-      .populate({ path: 'activity', model: 'Activity' });
-
-    const issue = new Issue(
-      issueDocument.id,
-      issueDocument.numberIssue,
-      issueDocument.subject,
-      issueDocument.description,
-      issueDocument.creator,
-      issueDocument.status,
-      issueDocument.severity,
-      issueDocument.type,
-      issueDocument.date,
-      issueDocument.priority,
-      issueDocument.comments,
-      issueDocument.watchers,
-      issueDocument.activity,
-    );
+      .populate({ path: 'activity', model: 'Activity' })
+      .populate({ path: 'assignedTo', model: 'User' });
+    const issue = new Issue(issueDocument);
     return issue;
   }
   public static async getIssueByType(issueType: string) {
@@ -113,13 +94,27 @@ export class IssueRepository {
   public static async updateIssue(newIssue: IIssue): Promise<IIssue> {
     const activity = newIssue.activitiesIds;
     const watchers = newIssue.watchersIds;
+    const assignedTo = newIssue.assignedTo.id;
 
     await IssueModel.findByIdAndUpdate(newIssue.id, {
       ...newIssue,
       watchers,
       activity,
+      assignedTo,
     });
 
     return newIssue;
+  }
+
+  public static async getIssueByFilter(filter: IFilter): Promise<IIssue[]> {
+    const query = {
+      ...(filter.tipo && { type: { $in: filter.tipo } }),
+      ...(filter.prioridad && { priority: { $in: filter.prioridad } }),
+      ...(filter.estado && { status: { $in: filter.estado } }),
+      ...(filter.gravedad && { severity: { $in: filter.gravedad } }),
+      ...(filter.crated_by && { creator: { $in: filter.crated_by } }),
+      ...(filter.asign_to && { assignedTo: { $in: filter.asign_to } }),
+    };
+    return await IssueModel.find(query);
   }
 }

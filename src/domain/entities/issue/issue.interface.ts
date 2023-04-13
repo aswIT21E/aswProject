@@ -4,11 +4,11 @@ import type { MongoId } from '~/types/types';
 import type { Activity, IActivity } from '../activity';
 
 export interface IIssue {
-  id: MongoId;
+  id?: MongoId;
   numberIssue: number;
   subject: string;
   description: string;
-  activity: Activity[];
+  activity?: Activity[];
   creator: IUser; // FK a IUser
   status: string;
   severity: string;
@@ -16,13 +16,14 @@ export interface IIssue {
   date: string;
   priority: string;
   comments?: IComment[];
-  locked: boolean;
-  watchers: IUser[];
-
+  locked?: boolean;
+  watchers?: IUser[];
+  assignedTo?: IUser;
   lockIssue: () => void;
   unlockIssue: () => void;
   updateWatchers: (watchers: IUser[]) => void;
   addActivity: (activity: IActivity) => void;
+  assignUser: (user: IUser) => void;
   readonly watchersIds: MongoId[];
   readonly activitiesIds: MongoId[];
 }

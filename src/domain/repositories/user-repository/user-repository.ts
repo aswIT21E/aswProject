@@ -3,10 +3,14 @@ import { User } from '~/domain/entities/user';
 import { UserModel } from '~/domain/entities/user';
 
 export class UserRepository {
-  public static async addUser(user: IUser): Promise<void> {
-    await UserModel.create(user);
+  public static async addUser(user: IUser): Promise<User> {
+    return await UserModel.create(user);
   }
-
+  public static async editarUser(oldUser: IUser, newUser: IUser): Promise<void> {
+    await UserModel.findByIdAndUpdate(newUser.id, {
+      ...newUser
+    });
+  }
   public static async getAllUsers(): Promise<IUser[]> {
     return await UserModel.find();
   }
@@ -20,8 +24,10 @@ export class UserRepository {
     const user = new User(
       userDocument.id,
       userDocument.email,
+      userDocument.name,
       userDocument.username,
       userDocument.password,
+      userDocument.bio,
     );
 
     return user;
@@ -35,10 +41,26 @@ export class UserRepository {
     const user = new User(
       userDocument.id,
       userDocument.email,
+      userDocument.name,
       userDocument.username,
       userDocument.password,
+      userDocument.bio,
     );
 
     return user;
   }
+
+  public static async getUserUsernames(): Promise<string[]> {
+    const users: IUser[] = await UserModel.find();
+    const uniqueUsernames: string[] = [];
+    
+    users.forEach(user => {
+      if (!uniqueUsernames.includes(user.username)) {
+        uniqueUsernames.push(user.username);
+      }
+    });
+  
+    return uniqueUsernames;
+  }
+  
 }

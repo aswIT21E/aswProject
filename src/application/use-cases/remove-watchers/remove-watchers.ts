@@ -3,6 +3,8 @@ import type { Request, Response } from 'express';
 import { UserRepository } from '~/domain/repositories';
 import { IssueRepository } from '~/domain/repositories/issue-repository';
 
+import { addActivity } from '../add-activity';
+
 export async function removeWatchers(
   req: Request,
   res: Response,
@@ -37,6 +39,7 @@ export async function removeWatchers(
       }
 
       issue.updateWatchers(newWatchers);
+      await addActivity(req, issue, 'removeWatchers');
       await IssueRepository.updateIssue(issue);
 
       res.status(200).json({

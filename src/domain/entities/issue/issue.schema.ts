@@ -18,6 +18,8 @@ const IssueSchema = new Schema({
   comments: [{ required: true, type: Schema.Types.ObjectId, model: 'Comment' }],
   locked: { required: true, type: Boolean, default: false },
   watchers: [{ required: true, type: Schema.Types.ObjectId, model: 'User' }],
+  assignedTo: { required: false, type: Schema.Types.ObjectId, model: 'User' },
+  tags: { required: false, type: [String] },
 });
 
 const IssueModel = model<IIssue>('Issue', IssueSchema);

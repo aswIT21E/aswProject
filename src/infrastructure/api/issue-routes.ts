@@ -7,10 +7,17 @@ import {
   unlockIssue,
   removeWatchers,
 } from '~/application';
-import { addWatchersDto, createIssueDto } from '~/infrastructure/dtos';
+import { assignUserToIssue } from '~/application/use-cases/assign-user-to-issue';
+import {
+  addWatchersDto,
+  createIssueDto,
+  assignIssueDto,
+  bulkIssuesDto,
+} from '~/infrastructure/dtos';
 
+import { filterDto } from '../dtos/filter-dto';
 import { removeWatchersDto } from '../dtos/remove-watchers.dto';
-import { authMiddleware } from '../middlewares';
+import { authMiddleware, checkBlockedIssue } from '../middlewares';
 
 export const issueRouter = express.Router();
 
@@ -21,11 +28,30 @@ issueRouter.post(
   IssueController.createIssue,
 );
 
-issueRouter.post('/issue/:id/new-comment', IssueController.createComment);
+issueRouter.post(
+  '/issues/bulk',
+  authMiddleware,
+  bulkIssuesDto,
+  IssueController.bulkIssues,
+);
 
-issueRouter.post('/issue/:id/editIssue', IssueController.modifyIssue);
+issueRouter.post(
+  '/issue/:id/new-comment',
+  checkBlockedIssue,
+  IssueController.createComment,
+);
 
-issueRouter.post('/issue/:id/modifyIssue', IssueController.modifyIssue);
+issueRouter.post(
+  '/issue/:id/editIssue',
+  checkBlockedIssue,
+  IssueController.modifyIssue,
+);
+
+issueRouter.post(
+  '/issue/:id/modifyIssue',
+  checkBlockedIssue,
+  IssueController.modifyIssue,
+);
 
 issueRouter.get('/issue/:id/assign', IssueController.getUserInfoAssign);
 
@@ -44,6 +70,9 @@ issueRouter.get('/issue', IssueController.getIssuePage);
 
 issueRouter.get('/issue/:id', IssueController.getIssue);
 
+issueRouter.get('/issuefilter', filterDto, IssueController.getIssuePage);
+
+issueRouter.post('/issuefilter', filterDto, IssueController.getIssuePage);
 
 issueRouter.get('/info/:id', IssueController.getIssueInfo);
 
@@ -82,5 +111,14 @@ issueRouter.post('/issue/:id/remove', IssueController.removeIssue);
 issueRouter.post(
   '/issues/:id/delete-watchers',
   removeWatchersDto,
+  checkBlockedIssue,
   removeWatchers,
+);
+
+issueRouter.post(
+  '/issues/:id/assign',
+  authMiddleware,
+  assignIssueDto,
+  checkBlockedIssue,
+  assignUserToIssue,
 );

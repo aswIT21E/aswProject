@@ -4,8 +4,7 @@
 }
 
 body {
-    width: 900px;
-    margin: 0 auto;
+    min-width: 1000px;
 }
 
 .master {

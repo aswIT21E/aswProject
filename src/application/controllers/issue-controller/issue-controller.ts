@@ -2,27 +2,57 @@ import fs from 'fs';
 
 import { load } from 'cheerio';
 import type { Request, Response } from 'express';
-import type { JwtPayload } from 'jsonwebtoken';
-import jwt from 'jsonwebtoken';
 
 import type { IComment } from '~/domain/entities/comment';
-import type { IIssue } from '~/domain/entities/issue';
-import type { IUser } from '~/domain/entities/user';
-import { UserRepository } from '~/domain/repositories/user-repository/user-repository';
+import type { IFilter } from '~/domain/entities/filter';
+import type { IUser } from '~/domain/entities/user'
+import { IIssue, Issue } from '~/domain/entities/issue';
+import { UserRepository } from '~/domain/repositories';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
+import { getActor } from '~/utils';
+import { BulkIssuesDto, CreateIssueDto } from '~/infrastructure';
 
 export class IssueController {
+  public static async bulkIssues(req: Request, res: Response): Promise<void> {
+    try {
+      const creator = await getActor(req);
+      const issues: BulkIssuesDto['issues'] = req.body.issues;
+
+      if (!creator) {
+        res.status(400).json({ message: 'User creator not found' });
+      }
+
+      const date = new Date().toLocaleString('es-ES', {
+        timeZone: 'Europe/Madrid',
+      });
+      let lastNumberIssue = await IssueRepository.getLastIssue();
+
+      for (const issueDoc of issues) {
+        const issue: IIssue = new Issue({
+          ...issueDoc,
+          creator,
+          date,
+          numberIssue: lastNumberIssue,
+        });
+        ++lastNumberIssue;
+        await IssueRepository.addIssue(issue);
+      }
+
+      res.status(200);
+      res.redirect('http://localhost:8081/issue');
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+        message: 'issue not created',
+      });
+    }
+  }
+
   public static async createIssue(req: Request, res: Response): Promise<void> {
     try {
-      const auth = req.headers.authorization;
-      const token = auth.split(' ')[1];
-      const decodedToken: JwtPayload = jwt.decode(token, {
-        complete: true,
-        json: true,
-      });
-      const username = decodedToken.payload.username;
-      const creator = await UserRepository.getUserByUsername(username);
+      const creator = await getActor(req);
 
       if (!creator) {
         res.status(400).json({ message: 'User creator not found' });
@@ -30,13 +60,15 @@ export class IssueController {
       const date = new Date().toLocaleString('es-ES', {
         timeZone: 'Europe/Madrid',
       });
-      const issue: IIssue = {
-        ...req.body,
-        date,
-        creator: creator.id,
-      };
+      const issueDoc: CreateIssueDto = req.body;
       const lastNumberIssue = await IssueRepository.getLastIssue();
-      await IssueRepository.addIssue(issue, date, lastNumberIssue);
+      const issue: IIssue = new Issue({
+        ...issueDoc,
+        date,
+        creator,
+        numberIssue: lastNumberIssue + 1,
+      });
+      await IssueRepository.addIssue(issue);
       res.status(200);
       res.redirect('http://localhost:8081/issue');
     } catch (e) {
@@ -130,29 +162,93 @@ export class IssueController {
     _req: Request,
     res: Response,
   ): Promise<void> {
-    const issues: IIssue[] = await IssueRepository.getAllIssues();
+    try {
+      const filtro: IFilter = {};
+      const {
+        tipo,
+        gravedad,
+        prioridad,
+        estado,
+        created_by,
+        asign_to,
+        asignee,
+      } = _req.query;
+      if (tipo) filtro.tipo = tipo.toString().split(',');
+      if (gravedad) filtro.gravedad = gravedad.toString().split(',');
+      if (prioridad) filtro.prioridad = prioridad.toString().split(',');
+      if (estado) filtro.estado = estado.toString().split(',');
+      if (created_by) filtro.crated_by = created_by.toString().split(',');
+      if (asign_to) filtro.asign_to = asign_to.toString().split(',');
+      if (asignee) filtro.asignee = asignee.toString().split(',');
 
-    const Indexhtml = fs.readFileSync('src/public/views/index.html');
-    const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
-    const $ = load(Indexhtml);
+      const issues: IIssue[] = await IssueRepository.getIssueByFilter(filtro);
+      const Indexhtml = fs.readFileSync('src/public/views/index.html');
+      const filterPage = fs.readFileSync('src/public/views/filter.html');
+      const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
+      const $ = load(Indexhtml);
 
-    $('#searchbar').append(load(searchPage).html());
-    for (const issue of issues) {
-      const scriptNode = `                           
-              <div class="issue">
-              <abbr title = "${issue.type}"> <div class="bola" id="${issue.type}"></div></abbr>
-              <abbr title = "${issue.severity}"><div class="bola" id="${issue.severity}"></div></abbr>
-              <abbr title = "${issue.priority}"><div class="bola" id="${issue.priority}"></div></abbr>
+      $('#searchbar').append(load(searchPage).html());
+      $('#Filters').append(load(filterPage).html());
+      for (const issue of issues) {
+        {
+          const scriptNode = `                           
+              <div class="issue" data-tipo="${issue.type}" data-gravedad="${
+            issue.severity
+          }" data-priority="${issue.priority}" data-status="${
+            issue.status
+          }" data-creador="${issue.creator}" data-asignedTo="${
+            issue.assignedTo.username
+          }" >
+              <abbr title = "${issue.type}"> <div class="bola" id="${
+            issue.type
+          }"> </div></abbr>
+              <abbr title = "${issue.severity}"><div class="bola" id="${
+            issue.severity
+          }"> </div></abbr>
+              <abbr title = "${issue.priority}"><div class="bola" id="${
+            issue.priority
+          }"> </div></abbr>
               <div class="informacion">
-                  <div class="numero-peticion" id="NumPeticion">#${issue.numberIssue}</div>
-                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8081/issue/${issue.id}">${issue.subject}</a> </div>
+                  <div class="numero-peticion" id="NumPeticion">#${
+                    issue.numberIssue
+                  }</div>
+                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8081/issue/${
+                    issue.id
+                  }">${issue.subject}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>
-              <div class="fecha-creacion" id = "FechaPeticion">${issue.creator == null ? 'undefined' : issue.creator.username}</div>
+              <div class="fecha-creacion" id = "FechaPeticion">${
+                issue.creator == null ? 'undefined' : issue.creator.username
+              }</div>
               </div>`;
-      $('body').append(scriptNode);
+          $('#issues').append(scriptNode);
+        }
+      }
+
+      const useranmes: String[] = await UserRepository.getUserUsernames();
+      useranmes.push('maci');
+      for (const name of useranmes) {
+        const scriptUsersAsignee = `
+        <label>
+        ${name} 
+          <input type="checkbox" name="asign_to" value="${name} " >
+        </label>`;
+        const scriptUserCreator = `
+        <label>
+          ${name}  
+          <input type="checkbox" name="crated_by" value="${name}" >
+        </label>`;
+        $('#menuAssignedTo').append(scriptUsersAsignee);
+        $('#menuCreador').append(scriptUserCreator);
+      }
+      res.send($.html());
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+        message: 'issues not found',
+      });
     }
-    res.send($.html());
   }
 
   public static async getIssue(_req: Request, res: Response): Promise<void> {
@@ -165,7 +261,7 @@ export class IssueController {
     for (const comment of comments) {
       const commentt = await CommentRepository.getComment(comment);
 
-        const scriptNode3 = `
+      const scriptNode3 = `
           <li>
             <div class="comment-wrapper">
               <img class="comment-img" src="https://picsum.photos/50">
@@ -181,8 +277,6 @@ export class IssueController {
             </div>
           
           </li>`;
-
-
       $('#comments-list').append(scriptNode3);
     }
 
@@ -441,12 +535,9 @@ export class IssueController {
   public static async removeIssue(req: Request, res: Response): Promise<void> {
     try {
       const numberIssue: string = req.params.id;
-      await IssueRepository.deleteIssue(
-        numberIssue,
-      );
+      await IssueRepository.deleteIssue(numberIssue);
       res.status(200);
       res.end();
-
     } catch (e) {
       res.status(500);
       res.json({

@@ -6,8 +6,26 @@ import type { IUser } from '../user';
 
 import type { IIssue } from './issue.interface';
 
+export type IssueProps = {
+  id?: MongoId;
+  numberIssue: number;
+  subject: string;
+  description: string;
+  creator: IUser;
+  status: string;
+  severity: string;
+  type: string;
+  date: string;
+  priority: string;
+  locked?: boolean;
+  watchers?: IUser[];
+  activity?: IActivity[];
+  comments?: IComment[];
+  assignedTo?: IUser;
+};
+
 export class Issue implements IIssue {
-  public id: MongoId;
+  public id?: MongoId;
   public numberIssue: number;
   public subject: string;
   public description: string;
@@ -18,26 +36,32 @@ export class Issue implements IIssue {
   public date: string;
   public priority: string;
   public comments?: IComment[];
-  public locked: boolean;
-  public watchers: IUser[];
-  public activity: IActivity[];
+  public assignedTo?: IUser;
+  public tags?: string[];
+  public locked?: boolean;
+  public watchers?: IUser[];
+  public activity?: IActivity[];
 
-  constructor(
-    id: MongoId,
-    numberIssue: number,
-    subject: string,
-    description: string,
-    creator: IUser,
-    status: string,
-    severity: string,
-    type: string,
-    date: string,
-    priority: string,
-    comments: IComment[],
-    watchers?: IUser[],
-    activity?: IActivity[],
-  ) {
-    this.id = id;
+  constructor(props: IssueProps) {
+    const {
+      id,
+      numberIssue,
+      subject,
+      description,
+      creator,
+      status,
+      severity,
+      type,
+      date,
+      priority,
+      comments,
+      locked,
+      watchers,
+      activity,
+      assignedTo,
+    } = props;
+
+    this.id = id || null;
     this.numberIssue = numberIssue;
     this.subject = subject;
     this.description = description;
@@ -47,10 +71,12 @@ export class Issue implements IIssue {
     this.type = type;
     this.date = date;
     this.priority = priority;
-    this.comments = comments;
-    this.locked = false;
-    this.watchers = watchers;
-    this.activity = activity;
+    this.comments = comments || [];
+    this.locked = locked || false;
+    this.watchers = watchers || [];
+    this.activity = activity || [];
+    this.locked = locked || false;
+    this.assignedTo = assignedTo || null;
   }
 
   public lockIssue(): void {
@@ -59,6 +85,10 @@ export class Issue implements IIssue {
 
   public unlockIssue(): void {
     this.locked = false;
+  }
+
+  public assignUser(user: IUser): void {
+    this.assignedTo = user;
   }
 
   public updateWatchers(watchers: IUser[]): void {
