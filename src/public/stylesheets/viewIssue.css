@@ -4,7 +4,8 @@
 }
 
 body {
-    min-width: 1000px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .master {
@@ -678,6 +679,8 @@ a {
   flex-grow: 1;
   margin-left: 0.5rem;
 }
+
+
 
 
 
