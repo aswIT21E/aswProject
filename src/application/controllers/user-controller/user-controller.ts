@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 
 import type { IUser } from '~/domain/entities/user';
 import { UserRepository } from '~/domain/repositories/user-repository/user-repository';
+import { IssueRepository } from '~/domain/repositories';
 
 export class UserController {
   public static async createUser(req: Request, res: Response): Promise<void> {
@@ -109,8 +110,8 @@ export class UserController {
     });
     const username = decodedToken.payload.username;
     const user = await UserRepository.getUserByUsername(username);
-    const viewIssueHTML = fs.readFileSync('src/public/views/profile.html');
-    const $ = load(viewIssueHTML);
+    const profileHTML = fs.readFileSync('src/public/views/profile.html');
+    const $ = load(profileHTML);
 
     const scriptNode = `<section class="profile-bar">
         <img src="https://picsum.photos/200" alt="" class="profile-image">
@@ -133,6 +134,8 @@ export class UserController {
                     <span>Observado</span>
                 </a>
             </nav>
+            <div class="timeline" id="timeline" style="display:flex; flex-direction:column;">
+            </div>
         </div>
         <aside class="profile-sidebar">
             <div class="editar-bio">
@@ -141,6 +144,19 @@ export class UserController {
             </div>
         </aside>
     </div>`;
+  const issues = await IssueRepository.getAllIssues();
+  for(const issue of issues){
+    for(const activity of issue.activity){
+      const user = await UserRepository.getUserById(activity.actor.toString());
+      console.log(user.username);console.log(activity.message);
+      if(user.username === username){
+    const scriptActivities = `<div class="timeline-item"> ${user.username} ${activity.message} </div>`;
+    console.log("PUTA");
+    $('.timeline-wrapper').append(scriptActivities);
+  }
+
+    
+}}
     $('#myProfile').append(scriptNode);
     res.send($.html());
   }
