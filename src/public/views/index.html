@@ -25,8 +25,10 @@
           <div style="display: flex; flex-direction: row;">
             <div id = "Filters" style="max-width: 25%;"></div>
             <div class="issues-wrapper">
-              <div id = "searchbar" style = "margin-left: 3em; min-width: 50%;">
-              </div>               
+              <div id = "searchbar" style = "margin-left: 3em; min-width: 60%;">
+                <div class="button">
+                  <button id="verPerfil">Ir al perfil</button>
+                </div></div>  
               <div class=" titulos" style="display: flex; align-items: center; justify-content: space-between;flex-direction: row;padding: 10px;transition: background-color 0.3s ease;min-width: 80%;margin-top: 5em;">
                 <span style = "display: flex; justify-content: left;">
                   <div style="margin-right: 4em;"> Tipo </div>
@@ -44,6 +46,23 @@
               </div>
             </div>
           </div>
-        </body>         
+          
+
+        </body>
+
+        
+        
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var profileElem = document.getElementById('verPerfil');
+    profileElem.addEventListener('click', function () {
+      viewProfile();
+    });
+    function viewProfile(){
+      const auth = localStorage.getItem('token');
+      window.location.href = `http://localhost:8081/myProfile/${auth}`;
+    }
+ });
+</script>
 </html>

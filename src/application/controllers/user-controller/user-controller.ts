@@ -7,7 +7,6 @@ import jwt from 'jsonwebtoken';
 
 import type { IUser } from '~/domain/entities/user';
 import { UserRepository } from '~/domain/repositories/user-repository/user-repository';
-import { IssueRepository } from '~/domain/repositories';
 
 export class UserController {
   public static async createUser(req: Request, res: Response): Promise<void> {
@@ -145,8 +144,8 @@ export class UserController {
     });
     const username = decodedToken.payload.username;
     const user = await UserRepository.getUserByUsername(username);
-    const profileHTML = fs.readFileSync('src/public/views/profile.html');
-    const $ = load(profileHTML);
+    const viewIssueHTML = fs.readFileSync('src/public/views/profile.html');
+    const $ = load(viewIssueHTML);
 
     const scriptNode = `<section class="profile-bar">
         <img src="https://picsum.photos/200" alt="" class="profile-image">
@@ -169,33 +168,15 @@ export class UserController {
                     <span>Observado</span>
                 </a>
             </nav>
-            <div class="timeline" id="timeline" style="display:flex; flex-direction:column;">
-            </div>
         </div>
         <aside class="profile-sidebar">
             <div class="editar-bio">
                 <h4>Tu perfil</h4>
                 <p>La gente puede ver todo lo que haces y en qué estás trabajando. Añade una buena bio para que puedan ver la mejor versión de tu perfil.</p>
             </div>
-            <div class="button">
-              <button id="editPerfil" class="btn-small">Editar Perfil</button>
-            </div>
         </aside>
     </div>`;
     $('#myProfile').append(scriptNode);
-    const issues = await IssueRepository.getAllIssues();
-  for(const issue of issues){
-    for(const activity of issue.activity){
-      const user = await UserRepository.getUserById(activity.actor.toString());
-      console.log(user.username);console.log(activity.message);
-      if(user.username === username){
-    const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
-    console.log(scriptActivities);
-    $('#timeline').append(scriptActivities);
-  }
-
-    
-}}
     res.send($.html());
   }
 
