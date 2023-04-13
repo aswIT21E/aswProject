@@ -18,6 +18,23 @@
     display: block;
 }
 
+.btn-small {
+    background-color: #83eede;
+    color: #2e3440;
+    transition: all .3s linear;
+    padding: 0.45rem 1rem;
+    font-size: .875rem;
+    align-items: center;
+    border: 0;
+    border-radius: 4px;
+    display: inline-flex;
+    justify-content: center;
+    line-height: initial;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
 .profile-image {
     height: 200px;
     margin-bottom: 1rem;
