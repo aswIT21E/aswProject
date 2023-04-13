@@ -94,9 +94,9 @@ export class IssueRepository {
   public static async updateIssue(newIssue: IIssue): Promise<IIssue> {
     const activity = newIssue.activitiesIds;
     const watchers = newIssue.watchersIds;
-    const assignedTo = newIssue.assignedTo.id;
+    const assignedTo = newIssue.assignedTo?.id;
 
-    await IssueModel.findByIdAndUpdate(newIssue.id, {
+    const res = await IssueModel.findByIdAndUpdate(newIssue.id, {
       ...newIssue,
       watchers,
       activity,

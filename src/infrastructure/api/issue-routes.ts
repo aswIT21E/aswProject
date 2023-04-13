@@ -7,12 +7,14 @@ import {
   unlockIssue,
   removeWatchers,
 } from '~/application';
+import { addAttachment } from '~/application/use-cases/add-attachment';
 import { assignUserToIssue } from '~/application/use-cases/assign-user-to-issue';
 import {
   addWatchersDto,
   createIssueDto,
   assignIssueDto,
   bulkIssuesDto,
+  addAttachmentDto,
 } from '~/infrastructure/dtos';
 
 import { filterDto } from '../dtos/filter-dto';
@@ -21,7 +23,12 @@ import { authMiddleware, checkBlockedIssue } from '../middlewares';
 
 export const issueRouter = express.Router();
 
-issueRouter.post('/test-upload', IssueController.testUpload);
+issueRouter.post(
+  '/issues/:id/addAttachment',
+  authMiddleware,
+  addAttachmentDto,
+  addAttachment,
+);
 
 issueRouter.post(
   '/issues/create',

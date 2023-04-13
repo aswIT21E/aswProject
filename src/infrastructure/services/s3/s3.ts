@@ -13,10 +13,6 @@ export class S3Service {
     this.accessKeyId = process.env.AWS_ACCESS_KEY;
     this.secretAccessKey = process.env.AWS_SECRET;
 
-    console.log(this.bucketName);
-    console.log(this.region);
-    console.log(this.secretAccessKey);
-
     this.s3Client = new S3({
       region: this.region,
       accessKeyId: this.accessKeyId,
