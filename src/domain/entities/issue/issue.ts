@@ -7,7 +7,7 @@ import type { IUser } from '../user';
 import type { IIssue } from './issue.interface';
 
 export type IssueProps = {
-  id: MongoId;
+  id?: MongoId;
   numberIssue: number;
   subject: string;
   description: string;
@@ -17,14 +17,16 @@ export type IssueProps = {
   type: string;
   date: string;
   priority: string;
-  locked: boolean;
-  watchers: IUser[];
-  activity: IActivity[];
+  locked?: boolean;
+  watchers?: IUser[];
+  activity?: IActivity[];
   comments?: IComment[];
+  assignedTo?: IUser;
+  attachments?: string[];
 };
 
 export class Issue implements IIssue {
-  public id: MongoId;
+  public id?: MongoId;
   public numberIssue: number;
   public subject: string;
   public description: string;
@@ -35,11 +37,12 @@ export class Issue implements IIssue {
   public date: string;
   public priority: string;
   public comments?: IComment[];
-  public asigned_to?: string;
+  public assignedTo?: IUser;
   public tags?: string[];
-  public locked: boolean;
-  public watchers: IUser[];
-  public activity: IActivity[];
+  public locked?: boolean;
+  public watchers?: IUser[];
+  public activity?: IActivity[];
+  public attachments?: string[];
 
   constructor(props: IssueProps) {
     const {
@@ -57,10 +60,11 @@ export class Issue implements IIssue {
       locked,
       watchers,
       activity,
-     
+      assignedTo,
+      attachments,
     } = props;
 
-    this.id = id;
+    this.id = id || null;
     this.numberIssue = numberIssue;
     this.subject = subject;
     this.description = description;
@@ -70,11 +74,13 @@ export class Issue implements IIssue {
     this.type = type;
     this.date = date;
     this.priority = priority;
-    this.comments = comments,
-    this.locked = false;
-    this.watchers = watchers;
-    this.activity = activity;
-    this.locked = locked;
+    this.comments = comments || [];
+    this.locked = locked || false;
+    this.watchers = watchers || [];
+    this.activity = activity || [];
+    this.locked = locked || false;
+    this.assignedTo = assignedTo || null;
+    this.attachments = attachments;
   }
 
   public lockIssue(): void {
@@ -83,6 +89,10 @@ export class Issue implements IIssue {
 
   public unlockIssue(): void {
     this.locked = false;
+  }
+
+  public assignUser(user: IUser): void {
+    this.assignedTo = user;
   }
 
   public updateWatchers(watchers: IUser[]): void {
@@ -102,5 +112,14 @@ export class Issue implements IIssue {
   public addActivity(newActivity: IActivity): void {
     const newActivities = [...this.activity, newActivity];
     this.activity = newActivities;
+  }
+
+  public addAttachment(attachment: string): void {
+    const newAttachments = [...this.attachments, attachment];
+    this.attachments = newAttachments;
+  }
+
+  public removeAttachment(index: number): void {
+    this.attachments.splice(index, 1);
   }
 }
