@@ -179,20 +179,20 @@ export class UserController {
             </div>
         </aside>
     </div>`;
-  const issues = await IssueRepository.getAllIssues();
+    $('#myProfile').append(scriptNode);
+    const issues = await IssueRepository.getAllIssues();
   for(const issue of issues){
     for(const activity of issue.activity){
       const user = await UserRepository.getUserById(activity.actor.toString());
       console.log(user.username);console.log(activity.message);
       if(user.username === username){
-    const scriptActivities = `<div class="timeline-item"> ${user.username} ${activity.message} </div>`;
-    console.log("PUTA");
-    $('.timeline-wrapper').append(scriptActivities);
+    const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+    console.log(scriptActivities);
+    $('#timeline').append(scriptActivities);
   }
 
     
 }}
-    $('#myProfile').append(scriptNode);
     res.send($.html());
   }
 
