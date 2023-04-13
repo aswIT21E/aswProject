@@ -16,6 +16,7 @@ const IssueSchema = new Schema({
   date: { required: false, type: String },
   priority: { required: true, type: String },
   comments: [{ required: true, type: Schema.Types.ObjectId, model: 'Comment' }],
+  attachments: [{ required: true, type: String }],
   locked: { required: true, type: Boolean, default: false },
   watchers: [{ required: true, type: Schema.Types.ObjectId, model: 'User' }],
   assignedTo: { required: false, type: Schema.Types.ObjectId, model: 'User' },

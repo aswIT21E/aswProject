@@ -6,13 +6,17 @@ import {
   addWatchers,
   unlockIssue,
   removeWatchers,
+  addAttachment,
+  assignUserToIssue,
+  removeAttachment,
 } from '~/application';
-import { assignUserToIssue } from '~/application/use-cases/assign-user-to-issue';
 import {
   addWatchersDto,
   createIssueDto,
   assignIssueDto,
   bulkIssuesDto,
+  addAttachmentDto,
+  removeAttachmentDto,
 } from '~/infrastructure/dtos';
 
 import { filterDto } from '../dtos/filter-dto';
@@ -20,6 +24,20 @@ import { removeWatchersDto } from '../dtos/remove-watchers.dto';
 import { authMiddleware, checkBlockedIssue } from '../middlewares';
 
 export const issueRouter = express.Router();
+
+issueRouter.post(
+  '/issues/:id/addAttachment',
+  authMiddleware,
+  addAttachmentDto,
+  addAttachment,
+);
+
+issueRouter.post(
+  '/issues/:id/removeAttachment',
+  authMiddleware,
+  removeAttachmentDto,
+  removeAttachment,
+);
 
 issueRouter.post(
   '/issues/create',

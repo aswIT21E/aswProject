@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import * as dotenv from 'dotenv';
 import express from 'express';
+import fileUpload from 'express-fileupload';
 import { connect } from 'mongoose';
 
 import { routes } from '~/infrastructure';
@@ -13,6 +14,7 @@ app.use(
   express.urlencoded({
     extended: true,
   }),
+  fileUpload(),
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
