@@ -320,17 +320,17 @@ export class IssueController {
         </div>
         `;
     
-        var scriptLockUnlockButton;
+        let scriptLockUnlockButton;
      if(issue.locked) {              
      scriptLockUnlockButton = `
     <button id="botonLock" data-lock="true" class="botonLock" onclick="LockUnlock()" style="background-color: #a52d47 ;">
       <i class="fas fa-lock"></i> 
-    </button>`}
+    </button>`;}
     else{
        scriptLockUnlockButton = `
     <button id="botonLock" data-lock="false" class="botonLock" onclick="LockUnlock()" style="background-color: #2dd486;">
       <i class="fas fa-unlock"></i> 
-    </button>`
+    </button>`;
     }
 
 
