@@ -23,6 +23,7 @@ export type IssueProps = {
   comments?: IComment[];
   assignedTo?: IUser;
   attachments?: string[];
+  deadline?: Date;
 };
 
 export class Issue implements IIssue {
@@ -43,6 +44,7 @@ export class Issue implements IIssue {
   public watchers?: IUser[];
   public activity?: IActivity[];
   public attachments?: string[];
+  public deadline?: Date;
 
   constructor(props: IssueProps) {
     const {
@@ -62,6 +64,7 @@ export class Issue implements IIssue {
       activity,
       assignedTo,
       attachments,
+      deadline,
     } = props;
 
     this.id = id || null;
@@ -81,6 +84,7 @@ export class Issue implements IIssue {
     this.locked = locked || false;
     this.assignedTo = assignedTo || null;
     this.attachments = attachments;
+    this.deadline = deadline;
   }
 
   public lockIssue(): void {
@@ -121,5 +125,13 @@ export class Issue implements IIssue {
 
   public removeAttachment(index: number): void {
     this.attachments.splice(index, 1);
+  }
+
+  public updateDeadline(deadline: Date): void {
+    this.deadline = deadline;
+  }
+
+  public removeDeadline(): void {
+    this.deadline = null;
   }
 }

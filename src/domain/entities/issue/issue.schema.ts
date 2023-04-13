@@ -21,6 +21,7 @@ const IssueSchema = new Schema({
   watchers: [{ required: true, type: Schema.Types.ObjectId, model: 'User' }],
   assignedTo: { required: false, type: Schema.Types.ObjectId, model: 'User' },
   tags: { required: false, type: [String] },
+  deadline: { required: false, type: Date },
 });
 
 const IssueModel = model<IIssue>('Issue', IssueSchema);
