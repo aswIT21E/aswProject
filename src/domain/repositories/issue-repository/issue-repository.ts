@@ -6,6 +6,26 @@ import { Issue } from '~/domain/entities/issue';
 import { IssueModel } from '~/domain/entities/issue';
 
 export class IssueRepository {
+  static getIssuesBySearch(searchtext: string[]):Promise<IIssue[]> {
+    return IssueModel.find({
+      $or: [
+        { subject: { $regex: searchtext.join('|'), $options: 'i' } },
+        { description: { $regex: searchtext.join('|'), $options: 'i' } },
+      ],
+    }) .populate({
+      path: 'creator',
+      model: 'User',
+    })
+    .populate({ path: 'watchers', model: 'User' })
+    .populate({
+      path: 'activity',
+      model: 'Activity',
+      populate: {
+        path: 'actor',
+        model: 'User',
+      },
+    });
+  }
   public static async addIssue(issue: IIssue): Promise<IIssue> {
     const newIssue = await IssueModel.create({
       ...issue,
@@ -123,6 +143,18 @@ export class IssueRepository {
       ...(filter.crated_by && { creator: { $in: filter.crated_by } }),
       ...(filter.asign_to && { assignedTo: { $in: filter.asign_to } }),
     };
-    return await IssueModel.find(query);
+    return await IssueModel.find(query) .populate({
+      path: 'creator',
+      model: 'User',
+    })
+    .populate({ path: 'watchers', model: 'User' })
+    .populate({
+      path: 'activity',
+      model: 'Activity',
+      populate: {
+        path: 'actor',
+        model: 'User',
+      },
+    });
   }
 }

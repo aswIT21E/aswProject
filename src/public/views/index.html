@@ -1,4 +1,19 @@
+
 <style>
+  /* Agrega estilos personalizados para la flecha */
+  .arrow {
+    cursor: pointer;
+    padding: 2px;
+    transform: rotate(90deg);
+  }
+  .arrow:before {
+    content: "\2194";
+    font-family: FontAwesome;
+    font-size: 14px;   
+    margin-right: 5px; 
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+  }
   .issues-wrapper{
     min-width: -webkit-fill-available;
   }
@@ -22,22 +37,6 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <style>
-      /* Agrega estilos personalizados para la flecha */
-      .arrow {
-        cursor: pointer;
-        padding: 2px;
-        transform: rotate(90deg);
-      }
-      .arrow:before {
-        content: "\2194";
-        font-family: FontAwesome;
-        font-size: 14px;   
-        margin-right: 5px; 
-        transform: rotate(90deg);
-        transition: transform 0.3s ease;
-      }
-    </style>
     <title>ASW</title>
   </head>
       <body style="margin: 0 5%; max-width: 75%;">
