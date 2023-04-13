@@ -151,6 +151,7 @@ export class IssueController {
         asignee,
         order,
         sentido,
+        text,
       } = _req.query;
       if (tipo) filtro.tipo = tipo.toString().split(',');
       if (gravedad) filtro.gravedad = gravedad.toString().split(',');
@@ -159,8 +160,12 @@ export class IssueController {
       if (created_by) filtro.crated_by = created_by.toString().split(',');
       if (asign_to) filtro.asign_to = asign_to.toString().split(',');
       if (asignee) filtro.asignee = asignee.toString().split(',');
-      const issues: IIssue[] = await IssueRepository.getIssueByFilter(filtro);
-      console.log(issues);
+      if(text){
+        var issues: IIssue[] = await IssueRepository.getIssuesBySearch(text.toString().split(','));
+      } 
+      else var issues: IIssue[] = await IssueRepository.getIssueByFilter(filtro);
+
+      
       if (order) {
         console.log(sentido);
         const orderField = order.toString();
@@ -241,7 +246,7 @@ export class IssueController {
       }
 
       const useranmes: String[] = await UserRepository.getUserUsernames();
-      useranmes.push('maci');
+
       for (const name of useranmes) {
         const scriptUsersAsignee = `
         <label>
@@ -502,6 +507,7 @@ export class IssueController {
     res: Response,
   ): Promise<void> {
     try {
+      
       const numberIssue: string = req.params.id;
       const content: string = req.body.comment;
       const date = new Date().toLocaleString('es-ES', {

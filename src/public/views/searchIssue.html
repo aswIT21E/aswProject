@@ -15,12 +15,11 @@
       <div class="search-filter">
         <div class="search-box">
           <span><i class="fas fa-search" style="padding-right: 1rem;"></i></span>
-          <input
-            class="search-input"
-            type="text"
-            id="input"
-            placeholder="Subject or reference"
-          />
+          <form id = "hacerSearch" style = "display: flex; flex-direction: row; min-width: -webkit-fill-available;">
+          
+          <input class="search-input" type="text" id="inputSearchbar" placeholder="Subject or reference"/>
+          <button id = "enviasubmit" type="submit">Enviar</button>
+          </form>
         </div>
         <div class="profile-button" style="display: inline-block; margin-left: auto;">
           <a href="#" id="irPerfil">
@@ -46,5 +45,18 @@
               window.location.href = `http://localhost:8081/myProfile/${auth}`;
             }
          });
-        </script>
+              
+         document.getElementById("hacerSearch").addEventListener("submit", function(event) {
+  event.preventDefault(); // Evitar el comportamiento predeterminado del formulario
+
+  // Obtener el valor del campo de entrada de texto y reemplazar espacios por comas
+  var inputValue = document.getElementById("inputSearchbar").value;
+
+  // Redirigir a la URL con el valor del input como parámetro de búsqueda
+  window.location.href = 'http://localhost:8081/issue?&text=' + inputValue;
+});
+
+</script>
+
+        
       </div>

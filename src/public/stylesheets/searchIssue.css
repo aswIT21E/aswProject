@@ -209,7 +209,7 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: stretch;
     margin-top: 20px;
     flex-basis: 650px;
 }
@@ -266,4 +266,15 @@ button {
 
     max-width: fit-content;
     align-items: flex-end;
+}
+#enviasubmit{
+    background-color: #008aa8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 5px;
+    min-width: fit-content;
 }
