@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" type="text/css" href="../stylesheets/viewIssue.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/viewIssue.css" />
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -17,6 +17,9 @@
 </head>
 
 <body>
+  <header id="header" class="header">
+    
+  </header>
   <div class="master">
     <div class="main">
       <div class="header-container">
@@ -64,14 +67,11 @@
         </div>
         <div class="assign-list">
           <div id="ticket-user-list" class="ticket-user-list">
-            <div class="assignUser">
-              <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
-              <div class="user-list-name"><span>Rubén Torrente</span></div>
-            </div>
+            
           </div>
           <div class="ticket-user-actions">
             <div class="icon-add"><ion-icon name="add-outline" class="plus-icon"></ion-icon></div>
-            <a href="http://localhost:8081/issue/${issueId}/AssignUser" class="ticket-actions-link"><span>Añadir asignación</span></a>
+           <div id="link1"></div>
           </div>
         </div>
       </section>
@@ -81,16 +81,13 @@
         </div>
         <div class="watchers-list">
           <div id="ticket-watchers-list" class="ticket-watchers-list">
-            <div class="watchUser">
-              <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
-              <div class="watcher-list-name"><span>Rubén Torrente</span></div>
-            </div>
+            
           </div>
           <div class="ticket-user-actions">
             <div class="icon-add"><ion-icon name="add-outline" class="plus-icon"></ion-icon></div>
-            <a href="" class="ticket-actions-link"><span>Añadir observadores</span></a>
+            <div id="link2"></div>
             <div class="icon-nowatch"><ion-icon name="eye-off-outline"></ion-icon></div>
-            <a href="" class="ticket-actions-link"><span>No observar</span></a>
+            <div id="link3"></div>
           </div>
         </div>
       </section>
@@ -204,6 +201,15 @@
         credentials: 'same-origin',
       }).catch(error => console.log(error));
     }
+
+    function goToProfile() {
+      const token = localStorage.getItem('token');
+
+      const url = `http://localhost:8081/myProfile/${token}`;
+
+      window.location.href = url;
+
+    }
   </script>
 
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -221,6 +227,8 @@
 
     updateCommentCount();
   </script>
+
+  
 
 </body>
 

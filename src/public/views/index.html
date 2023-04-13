@@ -19,14 +19,15 @@
       href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap"
       rel="stylesheet"
     />
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <title>ASW</title>
   </head>
         <body style="margin: 0 5%; max-width: 75%;">
           <div style="display: flex; flex-direction: row;">
             <div id = "Filters" style="max-width: 25%;"></div>
             <div class="issues-wrapper">
-              <div id = "searchbar" style = "margin-left: 3em; min-width: 50%;">
-              </div>               
+              <div id = "searchbar" style = "margin-left: 3em; min-width: 60%;"></div>
               <div class=" titulos" style="display: flex; align-items: center; justify-content: space-between;flex-direction: row;padding: 10px;transition: background-color 0.3s ease;min-width: 80%;margin-top: 5em;">
                 <span style = "display: flex; justify-content: left;">
                   <div style="margin-right: 4em;"> Tipo </div>
@@ -46,4 +47,18 @@
           </div>
         </body>         
 </div>
+<<<<<<< HEAD
+<script>
+    function goToProfile() {
+      const token = localStorage.getItem('token');
+
+      const url = `http://localhost:8081/myProfile/${token}`;
+
+      window.location.href = url;
+
+    }
+ 
+</script>
+=======
+>>>>>>> main
 </html>
