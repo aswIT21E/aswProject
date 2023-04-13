@@ -27,6 +27,7 @@
                 </select>
                 <div class="user-actions">
                     <button id="save-btn" class="save-btn">Añadir</button>
+                    <button id="delete-btn" class="save-btn">No observar</button>
                 </div>
             </form>
         </div>
@@ -36,6 +37,7 @@
 
 <script>
     const button = document.getElementById('save-btn');
+    const deleteButton = document.getElementById('delete-btn');
 
     button.addEventListener('click', (event) => {
         event.preventDefault();
@@ -50,6 +52,38 @@
         const parts = url.split("/");
         const issueId = parts[4];
         const newUrl = `http://localhost:8081/issues/${issueId}/add-watchers`;
+        const data = {
+            users: usersId
+        };
+
+        fetch(newUrl, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: headers
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log('Success:', data);
+        window.location.href = `http://localhost:8081/issue/${issueId}`;
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });
+    });
+
+    deleteButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        const token = localStorage.getItem('token');
+        const headers = new Headers();
+        headers.append('Authorization', `Bearer ${token}`);
+        headers.append('Content-Type', 'application/json');
+        const select = document.querySelector('#select');
+        const usersId = [];
+        usersId.push(select.value);
+        const url = window.location.href;
+        const parts = url.split("/");
+        const issueId = parts[4];
+        const newUrl = `http://localhost:8081/issues/${issueId}/delete-watchers`;
         const data = {
             users: usersId
         };

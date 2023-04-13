@@ -295,6 +295,10 @@ export class IssueController {
     <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Añadir observadores</span></a>
     `;
 
+    const scriptNode7 = `
+    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
+    `;
+
     const scriptNode4 = `
     <span class= "editableText" id="text" contenteditable="false" style="">${issue.description}</span>
     <span class="edit-icon-wrapper">
@@ -441,6 +445,7 @@ export class IssueController {
     $('#description').append(scriptNode4);
     $('#link1').append(scriptNode5);
     $('#link2').append(scriptNode6);
+    $('#link3').append(scriptNode7);
     if (issue.assignedTo) $('#ticket-user-list').append(scriptNodeAssign);
 
 
