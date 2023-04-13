@@ -5,13 +5,14 @@ import type { Request, Response } from 'express';
 
 import type { IComment } from '~/domain/entities/comment';
 import type { IFilter } from '~/domain/entities/filter';
-import { IIssue, Issue } from '~/domain/entities/issue';
+import type { IIssue} from '~/domain/entities/issue';
+import { Issue } from '~/domain/entities/issue';
 import { UserRepository } from '~/domain/repositories';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
-import { getActor } from '~/utils';
-import { BulkIssuesDto, CreateIssueDto } from '~/infrastructure';
+import type { BulkIssuesDto, CreateIssueDto } from '~/infrastructure';
 import { S3Service } from '~/infrastructure/services';
+import { getActor } from '~/utils';
 
 export class IssueController {
   public static async testUpload(req: Request, res: Response): Promise<void> {
@@ -148,6 +149,8 @@ export class IssueController {
         created_by,
         asign_to,
         asignee,
+        order,
+        sentido,
       } = _req.query;
       if (tipo) filtro.tipo = tipo.toString().split(',');
       if (gravedad) filtro.gravedad = gravedad.toString().split(',');
@@ -156,13 +159,55 @@ export class IssueController {
       if (created_by) filtro.crated_by = created_by.toString().split(',');
       if (asign_to) filtro.asign_to = asign_to.toString().split(',');
       if (asignee) filtro.asignee = asignee.toString().split(',');
-
       const issues: IIssue[] = await IssueRepository.getIssueByFilter(filtro);
+      console.log(issues);
+      if (order) {
+        console.log(sentido);
+        const orderField = order.toString();
+        console.log(orderField);
+        switch (orderField) {
+          case 'type':
+          case 'severity':
+          case 'subject':
+          case 'status':
+          case 'creator':
+            if(sentido === 'true'){
+              console.log('a');
+               // Sort in descending order
+            issues.sort((a: IIssue, b: IIssue) => {
+              if (a[orderField] > b[orderField]) {
+                return -1;
+              } else if (a[orderField] < b[orderField]) {
+                return 1;
+              } else {
+                return 0;
+              }
+            });
+          } else {
+            console.log('b');
+            // Sort in ascending order
+            issues.sort((a: IIssue, b: IIssue) => {
+              if (a[orderField] < b[orderField]) {
+                return -1;
+              } else if (a[orderField] > b[orderField]) {
+                return 1;
+              } else {
+                return 0;
+              }
+            });
+            }
+            break;
+          default:
+            // Ordenar por defecto por el campo "id" (MongoId)
+            //issues.sort((a: IIssue, b: IIssue) => a.id.localeCompare(b.id));
+      break;
+        }
+      }
       const Indexhtml = fs.readFileSync('src/public/views/index.html');
       const filterPage = fs.readFileSync('src/public/views/filter.html');
       const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
       const $ = load(Indexhtml);
-
+      
       $('#searchbar').append(load(searchPage).html());
       $('#Filters').append(load(filterPage).html());
       for (const issue of issues) {
@@ -211,6 +256,7 @@ export class IssueController {
         $('#menuAssignedTo').append(scriptUsersAsignee);
         $('#menuCreador').append(scriptUserCreator);
       }
+
       res.send($.html());
     } catch (e) {
       res.status(500);
