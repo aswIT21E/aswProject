@@ -30,8 +30,7 @@ export class IssueRepository {
     const issueDocument = await IssueModel.find().populate({
       path: 'creator',
       model: 'User',
-    }).populate({ path: 'watchers', model: 'User' })
-    .populate({ path: 'activity', model: 'Activity' });
+    });
     return issueDocument;
   }
 
@@ -46,14 +45,7 @@ export class IssueRepository {
         model: 'User',
       })
       .populate({ path: 'watchers', model: 'User' })
-      .populate({
-        path: 'activity',
-        model: 'Activity',
-        populate: {
-          path: 'actor',
-          model: 'User',
-        },
-      })
+      .populate({ path: 'activity', model: 'Activity' })
       .populate({ path: 'assignedTo', model: 'User' });
     const issue = new Issue(issueDocument);
     return issue;
@@ -102,7 +94,7 @@ export class IssueRepository {
   public static async updateIssue(newIssue: IIssue): Promise<IIssue> {
     const activity = newIssue.activitiesIds;
     const watchers = newIssue.watchersIds;
-    const assignedTo = newIssue.assignedTo?.id;
+    const assignedTo = newIssue.assignedTo.id;
 
     await IssueModel.findByIdAndUpdate(newIssue.id, {
       ...newIssue,

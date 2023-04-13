@@ -4,7 +4,8 @@
 }
 
 body {
-    min-width: 1000px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .master {
@@ -678,23 +679,14 @@ a {
   flex-grow: 1;
   margin-left: 0.5rem;
 }
-.botonLock{
 
-  border: 0;
-  border-radius: 4px;
-  color: #2e3440;
-  display: inline-flex;
-  justify-content: center;
-  line-height: initial;
-  text-align: center;
-  text-transform: uppercase;
-  white-space: nowrap;
-  padding: 0.5rem 1rem; 
-  cursor: pointer;
-  float: right;
-  margin-top: 2em;
-}
 
+
+
+
+
+  
+  
 
 
 

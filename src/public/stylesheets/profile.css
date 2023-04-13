@@ -18,23 +18,6 @@
     display: block;
 }
 
-.btn-small {
-    background-color: #83eede;
-    color: #2e3440;
-    transition: all .3s linear;
-    padding: 0.45rem 1rem;
-    font-size: .875rem;
-    align-items: center;
-    border: 0;
-    border-radius: 4px;
-    display: inline-flex;
-    justify-content: center;
-    line-height: initial;
-    text-align: center;
-    text-transform: uppercase;
-    white-space: nowrap;
-}
-
 .profile-image {
     height: 200px;
     margin-bottom: 1rem;
@@ -133,7 +116,7 @@
 
 .editar-bio p {
     font-size: .875rem;
-    color: #f1f1f4;
+    color: #70728f;
 }
 
 .edit-profile {
@@ -156,35 +139,3 @@
 .editar-bio span {
     color: #2e3440;
 }
-/* Estilo para el contenedor timeline */
-.timeline {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Estilo para las filas timeline-item */
-  .timeline-item {
-    margin-top: 10px; /* Espacio entre filas */
-    padding: 10px; /* Espaciado interno */
-    background-color: #dfe0ed; /* Color de fondo */
-    border-radius: 5px; /* Borde redondeado */
-    border-color: #2e3440;
-  }
-  
-  /* Estilo para el enlace en las filas timeline-item */
-  .timeline-item a {
-    color: #0066cc; /* Color del enlace */
-    text-decoration: none; /* Sin subrayado */
-  }
-  
-  /* Estilo para el número de issue en el enlace */
-  .timeline-item a::before {
-    content: "#"; /* Añadir el símbolo "#" antes del número de issue */
-    margin-right: 5px; /* Espacio entre "#" y el número de issue */
-  }
-  
-  /* Estilo para el título del issue en el enlace */
-  .timeline-item a::after {
-    content: ""; /* No hay contenido después del título del issue */
-  }
-  
