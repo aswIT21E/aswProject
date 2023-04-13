@@ -189,6 +189,8 @@ export class IssueController {
 
       $('#searchbar').append(load(searchPage).html());
       $('#Filters').append(load(filterPage).html());
+
+
       for (const issue of issues) {
         {
           const scriptNode = `                           
@@ -252,6 +254,15 @@ export class IssueController {
     const watchers: IUser[] = issue.watchers;
     const viewIssueHTML = fs.readFileSync('src/public/views/viewIssue.html');
     const $ = load(viewIssueHTML);
+
+    const scriptNodeBarra = `
+          <div class="left">
+      <a href="http://localhost:8081/issue"><ion-icon name="list"></ion-icon></a>
+    </div>
+    <div class="right">
+      <button id="profile-btn" onclick="goToProfile()"><ion-icon name="person"></ion-icon></button>
+    </div>
+          `
 
     for (const comment of comments) {
       const commentt = await CommentRepository.getComment(comment);
@@ -446,6 +457,7 @@ export class IssueController {
     $('#link1').append(scriptNode5);
     $('#link2').append(scriptNode6);
     $('#link3').append(scriptNode7);
+    $('#header').append(scriptNodeBarra);
     if (issue.assignedTo) $('#ticket-user-list').append(scriptNodeAssign);
 
 

@@ -14,7 +14,15 @@
         <title>Profile</title>
     </head>
     <body>
-          <div class="button">
+      <header id="header">
+        <div class="left">
+          <a href="http://localhost:8081/issue"><ion-icon name="list"></ion-icon></a>
+      </div>
+      <div class="right">
+        <button id="profile-btn" onclick="goToProfile()"><ion-icon name="person"></ion-icon></button>
+      </div>
+      </header>
+      <div class="button">
         <button id="editPerfil">Editar Perfil</button>
       </div>
         <div class="profile" id="myProfile">
@@ -34,4 +42,15 @@
         });
       </script>
     </body>
+
+    <script>
+      function goToProfile() {
+      const token = localStorage.getItem('token');
+
+      const url = `http://localhost:8081/myProfile/${token}`;
+
+      window.location.href = url;
+
+    }
+    </script>
 </html>
