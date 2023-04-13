@@ -46,7 +46,14 @@ export class IssueRepository {
         model: 'User',
       })
       .populate({ path: 'watchers', model: 'User' })
-      .populate({ path: 'activity', model: 'Activity' })
+      .populate({
+        path: 'activity',
+        model: 'Activity',
+        populate: {
+          path: 'actor',
+          model: 'User',
+        },
+      })
       .populate({ path: 'assignedTo', model: 'User' });
     const issue = new Issue(issueDocument);
     return issue;
