@@ -168,13 +168,7 @@ export class IssueController {
       for (const issue of issues) {
         {
           const scriptNode = `                           
-              <div class="issue" data-tipo="${issue.type}" data-gravedad="${
-            issue.severity
-          }" data-priority="${issue.priority}" data-status="${
-            issue.status
-          }" data-creador="${issue.creator}" data-asignedTo="${
-            issue.assignedTo.username
-          }" >
+              <div class="issue">
               <abbr title = "${issue.type}"> <div class="bola" id="${
             issue.type
           }"> </div></abbr>

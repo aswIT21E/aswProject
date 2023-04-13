@@ -174,6 +174,9 @@ export class UserController {
                 <h4>Tu perfil</h4>
                 <p>La gente puede ver todo lo que haces y en qué estás trabajando. Añade una buena bio para que puedan ver la mejor versión de tu perfil.</p>
             </div>
+            <div class="button">
+              <button id="editPerfil" class="btn-small">Editar Perfil</button>
+            </div>
         </aside>
     </div>`;
     $('#myProfile').append(scriptNode);
