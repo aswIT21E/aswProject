@@ -156,43 +156,35 @@
 .editar-bio span {
     color: #2e3440;
 }
-
-header {
+/* Estilo para el contenedor timeline */
+.timeline {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f5f5f5;
-    height: 60px;
-    padding: 0 20px;
+    flex-direction: column;
   }
   
-  .right {
-    display: flex;
-    align-items: center;
+  /* Estilo para las filas timeline-item */
+  .timeline-item {
+    margin-top: 10px; /* Espacio entre filas */
+    padding: 10px; /* Espaciado interno */
+    background-color: #dfe0ed; /* Color de fondo */
+    border-radius: 5px; /* Borde redondeado */
+    border-color: #2e3440;
   }
   
-  .right button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+  /* Estilo para el enlace en las filas timeline-item */
+  .timeline-item a {
+    color: #0066cc; /* Color del enlace */
+    text-decoration: none; /* Sin subrayado */
   }
   
-  .rigth button ion-icon {
-    font-size: 24px;
+  /* Estilo para el número de issue en el enlace */
+  .timeline-item a::before {
+    content: "#"; /* Añadir el símbolo "#" antes del número de issue */
+    margin-right: 5px; /* Espacio entre "#" y el número de issue */
   }
   
-  .left {
-    display: flex;
-    align-items: center;
+  /* Estilo para el título del issue en el enlace */
+  .timeline-item a::after {
+    content: ""; /* No hay contenido después del título del issue */
   }
   
-  .left a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-  }
-  
-  .left a ion-icon {
-    font-size: 24px;
-    margin-right: 10px;
-  }

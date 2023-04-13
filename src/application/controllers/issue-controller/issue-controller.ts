@@ -5,14 +5,14 @@ import type { Request, Response } from 'express';
 
 import type { IComment } from '~/domain/entities/comment';
 import type { IFilter } from '~/domain/entities/filter';
-import type { IUser } from '~/domain/entities/user'
-import { IIssue, Issue } from '~/domain/entities/issue';
+import type { IIssue} from '~/domain/entities/issue';
+import { Issue } from '~/domain/entities/issue';
 import { UserRepository } from '~/domain/repositories';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
-import { getActor } from '~/utils';
-import { BulkIssuesDto, CreateIssueDto } from '~/infrastructure';
+import type { BulkIssuesDto, CreateIssueDto } from '~/infrastructure';
 import { S3Service } from '~/infrastructure/services';
+import { getActor } from '~/utils';
 
 export class IssueController {
   public static async testUpload(req: Request, res: Response): Promise<void> {
@@ -134,42 +134,7 @@ export class IssueController {
       res.status(404).json({ message: 'not found' });
     }
   }
-  public static async getUserInfoAssign(req: Request, res: Response) : Promise<void> {
-    const users: IUser[] = await UserRepository.getAllUsers();
-    const assignHtml = fs.readFileSync('src/public/views/assign.html');
-    const $ = load(assignHtml);
-    for (const user of users) {
-      const scriptNode = `
-    <option class="item" value="${user.id}">
-      <div class="user-list-avatar">
-          <img src="https://picsum.photos/48" alt="" class="img-avatar">
-      </div>
-      <div class="user-list-name">${user.username}</div>
-    </option>
-    `;
-      $('#select').append(scriptNode);
-    } 
-    res.send($.html());
-    
-  }
 
-  public static async getUserInfoWatchers(req: Request, res: Response) : Promise<void> {
-    const users: IUser[] = await UserRepository.getAllUsers();
-    const watcherHtml = fs.readFileSync('src/public/views/watchers.html');
-    const $ = load(watcherHtml);
-    for (const user of users) {
-      const scriptNode = `
-      <option class="item" value="${user.id}">
-        <div class="watcher-list-avatar">
-            <img src="https://picsum.photos/48" alt="" class="img-avatar">
-        </div>
-        <div class="watcher-list-name">${user.username}</div>
-      </option>
-      `;
-        $('#select').append(scriptNode);
-    } 
-    res.send($.html());
-  }
   public static async getIssuePage(
     _req: Request,
     res: Response,
@@ -184,6 +149,8 @@ export class IssueController {
         created_by,
         asign_to,
         asignee,
+        order,
+        sentido,
       } = _req.query;
       if (tipo) filtro.tipo = tipo.toString().split(',');
       if (gravedad) filtro.gravedad = gravedad.toString().split(',');
@@ -192,17 +159,57 @@ export class IssueController {
       if (created_by) filtro.crated_by = created_by.toString().split(',');
       if (asign_to) filtro.asign_to = asign_to.toString().split(',');
       if (asignee) filtro.asignee = asignee.toString().split(',');
-
       const issues: IIssue[] = await IssueRepository.getIssueByFilter(filtro);
+      console.log(issues);
+      if (order) {
+        console.log(sentido);
+        const orderField = order.toString();
+        console.log(orderField);
+        switch (orderField) {
+          case 'type':
+          case 'severity':
+          case 'subject':
+          case 'status':
+          case 'creator':
+            if(sentido === 'true'){
+              console.log('a');
+               // Sort in descending order
+            issues.sort((a: IIssue, b: IIssue) => {
+              if (a[orderField] > b[orderField]) {
+                return -1;
+              } else if (a[orderField] < b[orderField]) {
+                return 1;
+              } else {
+                return 0;
+              }
+            });
+          } else {
+            console.log('b');
+            // Sort in ascending order
+            issues.sort((a: IIssue, b: IIssue) => {
+              if (a[orderField] < b[orderField]) {
+                return -1;
+              } else if (a[orderField] > b[orderField]) {
+                return 1;
+              } else {
+                return 0;
+              }
+            });
+            }
+            break;
+          default:
+            // Ordenar por defecto por el campo "id" (MongoId)
+            //issues.sort((a: IIssue, b: IIssue) => a.id.localeCompare(b.id));
+      break;
+        }
+      }
       const Indexhtml = fs.readFileSync('src/public/views/index.html');
       const filterPage = fs.readFileSync('src/public/views/filter.html');
       const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
       const $ = load(Indexhtml);
-
+      
       $('#searchbar').append(load(searchPage).html());
       $('#Filters').append(load(filterPage).html());
-
-
       for (const issue of issues) {
         {
           const scriptNode = `                           
@@ -249,6 +256,7 @@ export class IssueController {
         $('#menuAssignedTo').append(scriptUsersAsignee);
         $('#menuCreador').append(scriptUserCreator);
       }
+
       res.send($.html());
     } catch (e) {
       res.status(500);
@@ -263,18 +271,8 @@ export class IssueController {
     const id = _req.params.id;
     const issue: IIssue = await IssueRepository.getIssueById(id);
     const comments: IComment[] = issue.comments;
-    const watchers: IUser[] = issue.watchers;
     const viewIssueHTML = fs.readFileSync('src/public/views/viewIssue.html');
     const $ = load(viewIssueHTML);
-
-    const scriptNodeBarra = `
-          <div class="left">
-      <a href="http://localhost:8081/issue"><ion-icon name="list"></ion-icon></a>
-    </div>
-    <div class="right">
-      <button id="profile-btn" onclick="goToProfile()"><ion-icon name="person"></ion-icon></button>
-    </div>
-          `
 
     for (const comment of comments) {
       const commentt = await CommentRepository.getComment(comment);
@@ -297,30 +295,6 @@ export class IssueController {
           </li>`;
       $('#comments-list').append(scriptNode3);
     }
-
-    if (watchers) {
-      for (const watcher of watchers) {
-        const scriptNodeWatcher = `
-        <div class="watchUser">
-          <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
-          <div class="watcher-list-name"><span>${watcher.username}</span></div>
-      </div>
-        `;
-      $('#ticket-watchers-list').append(scriptNodeWatcher);
-      }
-    }
-
-    const scriptNode5 = `
-    <a href="http://localhost:8081/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
-    `;
-
-    const scriptNode6 = `
-    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Añadir observadores</span></a>
-    `;
-
-    const scriptNode7 = `
-    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
-    `;
 
     const scriptNode4 = `
     <span class= "editableText" id="text" contenteditable="false" style="">${issue.description}</span>
@@ -469,28 +443,12 @@ export class IssueController {
     </button>`;
     }
 
-<<<<<<< HEAD
-    const scriptNodeAssign = `
-            <div class="assignUser">
-              <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
-              <div class="user-list-name"><span>${issue.assignedTo ? issue.assignedTo.username : ''}</span></div>
-            </div>
-    `;
-
-=======
 
 
     $('#butonLockUnlock').append(scriptLockUnlockButton);
->>>>>>> main
     $('#detail-header').append(scriptNode);
     $('#atributos').append(scriptNode2);
     $('#description').append(scriptNode4);
-    $('#link1').append(scriptNode5);
-    $('#link2').append(scriptNode6);
-    $('#link3').append(scriptNode7);
-    $('#header').append(scriptNodeBarra);
-    if (issue.assignedTo) $('#ticket-user-list').append(scriptNodeAssign);
-
 
     res.send($.html());
   }
@@ -528,22 +486,6 @@ export class IssueController {
     res: Response,
   ): Promise<void> {
     res.sendFile('public/sytlesheets/viewIssue.css', { root: 'src' });
-  }
-
-
-
-  public static async getAssignPageCss(
-    req: Request,
-    res: Response,
-  ): Promise<void> {
-    res.sendFile('public/sytlesheets/assign.css', { root: 'src' });
-  }
-
-  public static async getWatchersPageCss(
-    req: Request,
-    res: Response,
-  ): Promise<void> {
-    res.sendFile('public/sytlesheets/watchers.css', { root: 'src' });
   }
 
   public static async createComment(

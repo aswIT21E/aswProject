@@ -27,16 +27,15 @@
       .arrow {
         cursor: pointer;
         padding: 2px;
+        transform: rotate(90deg);
       }
       .arrow:before {
-        content: "\f062";
+        content: "\2194";
         font-family: FontAwesome;
         font-size: 14px;   
-        margin-right: 5px;
+        margin-right: 5px; 
+        transform: rotate(90deg);
         transition: transform 0.3s ease;
-      }
-      .arrow.clicked:before {
-        transform: rotate(180deg);
       }
     </style>
     <title>ASW</title>
@@ -49,14 +48,14 @@
             </div>               
             <div class=" titulos" style="display: flex; align-items: center; justify-content: space-between;flex-direction: row;padding: 10px;transition: background-color 0.3s ease;min-width: 80%;margin-top: 5em;">
               <span style = "display: flex; justify-content: left;">
-                <div style="margin-right: 2em; display: flex;"> <div class="arrow" onclick="toggleArrow(this, 'tipo')"></div> Tipo </div>
-                <div style="margin-right: 1em; display: flex;"> <div class="arrow" onclick="toggleArrow(this, 'gravedad')"></div>  Gravedad </div>
-                <div style="display: flex;"> <div class="arrow" onclick="toggleArrow(this, 'tipo')"></div> Prioridad </div>
+                <div style="margin-right: 2em; display: flex;" > <div class="arrow" onclick="toggleArrow(this, 'type')"></div> Tipo </div>
+                <div style="margin-right: 1em; display: flex;"> <div class="arrow" onclick="toggleArrow(this, 'severity')"></div>  Gravedad </div>
+                <div style="display: flex;"> <div class="arrow" onclick="toggleArrow(this, 'type')"></div> Prioridad </div>
               </span>
-              <div id="peticion" style="display: flex;"><div class="arrow" onclick="toggleArrow(this, 'peticion')"></div> Peticion </div>
+              <div id="peticion" style="display: flex;"><div class="arrow" onclick="toggleArrow(this, 'subject')"></div> Peticion </div>
               <span style = "display: flex; justify-content:right;">
-                <div style="display: flex;" id="estado"><div class="arrow" onclick="toggleArrow(this, 'estado')"></div> Estado</div>
-                <div style = "margin-left: 4em; display: flex" id="creador" ><div class="arrow" onclick="toggleArrow(this, 'creador')"></div> Creador</div>
+                <div style="display: flex;" id="estado"><div class="arrow" onclick="toggleArrow(this, 'state')"></div> Estado</div>
+                <div style = "margin-left: 4em; display: flex" id="creador" ><div class="arrow" onclick="toggleArrow(this, 'creator')"></div> Creador</div>
               </span>
             </div>
             <div id="issues" class="issue-list">
@@ -64,12 +63,25 @@
           </div>
         </div>
           <script>
+            // Función para obtener el estado del arrow del localStorage
+            function checkArrowState(id){
+            }
+            function getArrowState(id) {
+              if(localStorage.getItem(id) === null) localStorage.setItem(id, 'true');
+              return localStorage.getItem(id) === 'true';
+            }
+
+              // Función para guardar el estado del arrow en el localStorage
+            function setArrowState(id, state) {
+                localStorage.setItem(id, state);
+            }
+
             function toggleArrow(element, id) {
               element.classList.toggle("clicked");
-              if (id === 'tipo' || id === 'gravedad' || id === 'peticion' || id === 'estado' || id === 'creador') {
-                  element.style.transform = element.style.transform === 'rotate(0deg)' ? 'rotate(180deg)' : 'rotate(0deg)';
-              }
-              let url = `http://localhost:8081/issue?&order=${id}`;
+              const arrowId = `arrow-${id}`;
+              const currentState = !getArrowState(arrowId);
+              setArrowState(arrowId, currentState);
+              let url = `http://localhost:8081/issue?&order=${id}&sentido=${currentState}`;
               window.location.href = url;
             }
           </script>
