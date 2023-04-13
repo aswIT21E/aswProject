@@ -46,7 +46,7 @@
               <span id="comment-count"></span><button class ="botoncomments" id ="commentB" >Comentarios</button>
               <span id="activity-count"></span><button class ="botoncomments" id ="activityB" onclick="mostrarAcividades()">Actividades</button>
             </h2>
-              <form action="issues/:id/new-comment" method="POST">
+              <form action="issues/${id}/new-comment" method="POST">
                   <div class="form-group">
                     <input type="hidden" name="id">
                     <textarea id="comment" name="comment" placeholder="Escribe un nuevo comentario aquí" required></textarea>
@@ -148,10 +148,13 @@
     // Obtener la ID de la issue de la URL actual
     const url = window.location.href;
     const issueId = url.substring(url.lastIndexOf('/') + 1);
-
+    const token = localStorage.getItem('token');
     // Actualizar el valor del atributo "action" del formulario
     const form = document.querySelector('form');
+    form.setRequestHeader('Authorization', `Bearer ${token}`);
     form.action = `/issue/${issueId}/new-comment`;
+    form.setRequestHeader('Authorization', `Bearer ${token}`);
+
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {

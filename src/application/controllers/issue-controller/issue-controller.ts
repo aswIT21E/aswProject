@@ -507,7 +507,9 @@ export class IssueController {
     res: Response,
   ): Promise<void> {
     try {
-      
+      console.log(req.headers.authorization);
+      const author = await getActor(req);
+      console.log(author); console.log(author.username);
       const numberIssue: string = req.params.id;
       const content: string = req.body.comment;
       const date = new Date().toLocaleString('es-ES', {
@@ -517,7 +519,7 @@ export class IssueController {
         content,
         numberIssue,
         date,
-        'Author',
+        author.username,
       );
       await IssueRepository.addComment(numberIssue, comment);
       res.status(200);
