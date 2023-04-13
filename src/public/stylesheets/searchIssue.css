@@ -208,22 +208,51 @@ button {
 .search-box{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     margin-top: 20px;
-    flex-basis: 1000px; 
+    flex-basis: 650px;
 }
 
-.switch{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-}
 .search-input{
-    width: 100%;
+    width: 80%;
+    align-self: start;
 }
+/* Estilos del contenedor del botón */
+/* Estilos del contenedor del botón */
+.profile-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #83eede;
+  }
+  
+  /* Estilos del enlace del botón */
+  .profile-button a {
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    margin-right: 50px;
+
+  }
+  
+  /* Estilos del icono de perfil */
+  .profile-button i {
+    font-size: 24px; /* Tamaño de fuente del icono */
+    color: #008aa8;
+    margin-bottom: 5px; /* Margen inferior del icono */
+  }
+  
+  /* Estilos del texto debajo del icono */
+  .profile-button span {
+    text-align: center;
+  }
+  
+  
 .filter{
         display: flex;
         flex-direction: column;

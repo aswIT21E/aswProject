@@ -18,22 +18,21 @@
     </div>
     </header>
       <div class="search-filter">
-        
         <div class="search-box">
+          <span><i class="fas fa-search" style="padding-right: 1rem;"></i></span>
           <input
             class="search-input"
             type="text"
             id="input"
             placeholder="Subject or reference"
           />
-          <span><i class="fas fa-search"></i></span>
         </div>
-        <div class="switch">
-          <input type="checkbox" id="toggle" />
-          <label for="toggle"></label>
-          <span class="label"> Tags</span>
+        <div class="profile-button" style="display: inline-block; margin-left: auto;">
+          <a href="#" id="irPerfil">
+            <i class="fas fa-user"></i> 
+            <span>Ir al perfil</span> 
+          </a>
         </div>
-
         <button
           type="button"
           class="new-issue-button"
@@ -41,4 +40,16 @@
         >
           <span>+ New Issue</span>
         </button>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            var profileElem = document.getElementById('irPerfil');
+            profileElem.addEventListener('click', function () {
+              viewProfile();
+            });
+            function viewProfile(){
+              const auth = localStorage.getItem('token');
+              window.location.href = `http://localhost:8081/myProfile/${auth}`;
+            }
+         });
+        </script>
       </div>

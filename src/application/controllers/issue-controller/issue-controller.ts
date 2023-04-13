@@ -12,8 +12,20 @@ import { CommentRepository } from '~/domain/repositories/comment-repository/comm
 import { IssueRepository } from '~/domain/repositories/issue-repository/issue-repository';
 import { getActor } from '~/utils';
 import { BulkIssuesDto, CreateIssueDto } from '~/infrastructure';
+import { S3Service } from '~/infrastructure/services';
 
 export class IssueController {
+  public static async testUpload(req: Request, res: Response): Promise<void> {
+    const uploadService = new S3Service();
+    const file = req.files.file;
+    const result = await uploadService.uploadFile(file);
+
+    res.status(200).json({
+      message: 'File uploaded successfully',
+      url: result.Location,
+    });
+  }
+
   public static async bulkIssues(req: Request, res: Response): Promise<void> {
     try {
       const creator = await getActor(req);
@@ -194,7 +206,11 @@ export class IssueController {
       for (const issue of issues) {
         {
           const scriptNode = `                           
+<<<<<<< HEAD
               <div class="issue">
+=======
+              <div class="issue" >
+>>>>>>> main
               <abbr title = "${issue.type}"> <div class="bola" id="${
             issue.type
           }"> </div></abbr>
@@ -443,7 +459,21 @@ export class IssueController {
                 </button>
         </div>
         `;
+    
+        let scriptLockUnlockButton;
+     if(issue.locked) {              
+     scriptLockUnlockButton = `
+    <button id="botonLock" data-lock="true" class="botonLock" onclick="LockUnlock()" style="background-color: #a52d47 ;">
+      <i class="fas fa-lock"></i> 
+    </button>`;}
+    else{
+       scriptLockUnlockButton = `
+    <button id="botonLock" data-lock="false" class="botonLock" onclick="LockUnlock()" style="background-color: #2dd486;">
+      <i class="fas fa-unlock"></i> 
+    </button>`;
+    }
 
+<<<<<<< HEAD
     const scriptNodeAssign = `
             <div class="assignUser">
               <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
@@ -451,6 +481,11 @@ export class IssueController {
             </div>
     `;
 
+=======
+
+
+    $('#butonLockUnlock').append(scriptLockUnlockButton);
+>>>>>>> main
     $('#detail-header').append(scriptNode);
     $('#atributos').append(scriptNode2);
     $('#description').append(scriptNode4);

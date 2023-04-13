@@ -1,19 +1,27 @@
 import type { Request, Response } from 'express';
-
 import { IssueRepository } from '~/domain/repositories/issue-repository';
+import { S3Service } from '~/infrastructure/services';
 
 import { addActivity } from '../add-activity';
 
-export async function lockIssue(req: Request, res: Response): Promise<void> {
+export async function addAttachment(
+  req: Request,
+  res: Response,
+): Promise<void> {
   const issueID = req.params.id;
+  const file = req.files.file;
   try {
     const issue = await IssueRepository.getIssueById(issueID);
+
     if (issue) {
-      issue.lockIssue();
-        await addActivity(req, issue, 'lockIssue');
+      const uploadService = new S3Service();
+      const result = await uploadService.uploadFile(file);
+      issue.addAttachment(result.Location);
+      await addActivity(req, issue, 'addAttachment');
       await IssueRepository.updateIssue(issue);
+
       res.status(200).json({
-        message: 'Issue locked successfully',
+        message: 'Attachment added successfully',
         issue,
       });
     } else {
