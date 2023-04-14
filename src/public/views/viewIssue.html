@@ -124,6 +124,8 @@
   </div>
     <script>
     async function LockUnlock() {
+      const url = window.location.href;
+      const issueId = url.substring(url.lastIndexOf('/') + 1);
       const token = localStorage.getItem('token');
       const opciones = {
         method: 'PUT',
