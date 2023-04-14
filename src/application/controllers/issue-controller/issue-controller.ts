@@ -418,6 +418,11 @@ export class IssueController {
                             <div class="created-date">
                             ${issue.date}
                             </div>
+                            <div>
+                                <div style="margin-top:5em;" id = "deadl"> </div>
+                                <button id="delete-deadline" class= botonLock style="display:flex ;    background-color: #E91E63;
+                                color: white;" onclick="eliminadeadline()"> Eliminar</button>
+                            </div>
                         </div>
     </div>`;
     const path = `'http://localhost:8080/issue/${issue.id}/modifyIssue'`;
@@ -547,7 +552,7 @@ export class IssueController {
       <i class="fas fa-unlock"></i> 
     </button>`;
     }
-
+    
     $('#butonLockUnlock').append(scriptLockUnlockButton);
     $('#detail-header').append(scriptNode);
     $('#atributos').append(scriptNode2);
@@ -556,6 +561,10 @@ export class IssueController {
     $('#link2').append(scriptNode6);
     $('#link3').append(scriptNode7);
     if (issue.assignedTo) $('#ticket-user-list').append(scriptNodeAssign);
+    if(issue.deadline){
+      const d = issue.deadline.toDateString();
+      $('#deadl').append(`Deadline: ${d}`);
+    }else $('#deadl').append(`Deadline: - `);
 
     res.send($.html());
   }
