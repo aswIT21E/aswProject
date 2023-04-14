@@ -7,5 +7,6 @@ Elsa Boix
 Quim Baget
 Ruben Torrente
 
-Link Taiga: https://api.taiga.io/api/v1/userstories/csv?uuid=b7b56098012f48469779e9aafee14bce
+Link Taiga: (https://tree.taiga.io/project/jmaci-asw/timeline)
+
 Deploy: http://13.39.86.38
