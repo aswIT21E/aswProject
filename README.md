@@ -2,9 +2,9 @@
 
 Membres:
 
-Joel Macías 
-Elsa Boix
-Quim Baget
+Joel Macías, 
+Elsa Boix,
+Quim Baget,
 Ruben Torrente
 
 Link Taiga: (https://tree.taiga.io/project/jmaci-asw/timeline)
