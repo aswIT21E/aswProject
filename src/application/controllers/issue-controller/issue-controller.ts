@@ -53,7 +53,7 @@ export class IssueController {
       }
 
       res.status(200);
-      res.redirect('http://localhost:8080/issue');
+      res.redirect('http://localhost:8081/issue');
     } catch (e) {
       res.status(500);
       res.json({
@@ -85,7 +85,7 @@ export class IssueController {
       await IssueRepository.addIssue(issue);
       console.log('added issue');
       res.status(200);
-      res.redirect('http://localhost:8080/issue');
+      res.redirect('http://localhost:8081/issue');
     } catch (e) {
       res.status(500);
       res.json({
@@ -148,7 +148,7 @@ export class IssueController {
       const scriptNode = `
     <option class="item" value="${user.id}">
       <div class="user-list-avatar">
-          <img src="https://picsum.photos/48" alt="" class="img-avatar">
+          <img src="${user.profilePicture}" alt="" class="img-avatar">
       </div>
       <div class="user-list-name">${user.username}</div>
     </option>
@@ -274,7 +274,7 @@ export class IssueController {
                   <div class="numero-peticion" id="NumPeticion">#${
                     issue.numberIssue
                   }</div>
-                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8080/issue/${
+                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8081/issue/${
                     issue.id
                   }">${issue.subject}</a> </div>
               </div>
@@ -343,7 +343,7 @@ export class IssueController {
     }
 
     for (const act of issue.activity) {
-      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =http://localhost:8080/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
       $('.activitieslist').append(scriptActivities);
     }
     $('#comment-count').append(`${comments.length}`);
@@ -364,15 +364,15 @@ export class IssueController {
     }
 
     const scriptNode5 = `
-    <a href="http://localhost:8080/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
+    <a href="http://localhost:8081/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
     `;
 
     const scriptNode6 = `
-    <a href="http://localhost:8080/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Añadir observadores</span></a>
+    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Añadir observadores</span></a>
     `;
 
     const scriptNode7 = `
-    <a href="http://localhost:8080/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
+    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
     `;
 
     const scriptNode4 = `
@@ -405,7 +405,7 @@ export class IssueController {
                             </div>
                         </div>
     </div>`;
-    const path = `'http://localhost:8080/issue/${issue.id}/modifyIssue'`;
+    const path = `'http://localhost:8081/issue/${issue.id}/modifyIssue'`;
     const scriptNode2 = `
       <script>
       function modifyIssue(parameter, newValue) {
@@ -511,7 +511,7 @@ export class IssueController {
 
     const scriptNodeAssign = `
             <div class="assignUser">
-              <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
+              <div class="img-avatar"><img src="${issue.assignedTo.profilePicture}" alt="" class="avatar"></div>
               <div class="user-list-name"><span>${
                 issue.assignedTo ? issue.assignedTo.username : ''
               }</span></div>
@@ -619,7 +619,7 @@ export class IssueController {
         await IssueRepository.updateIssue(issue);
 
         res.status(200);
-        res.redirect(`http://localhost:8080/issue/${issueID}`);
+        res.redirect(`http://localhost:8081/issue/${issueID}`);
       } else {
         res.status(404).json({
           message: `Issue ${issueID} not found`,
@@ -644,7 +644,7 @@ export class IssueController {
       );
       await IssueRepository.addComment(numberIssue, comment);
       res.status(200);
-      res.redirect(`http://localhost:8080/issue/${numberIssue}`);
+      res.redirect(`http://localhost:8081/issue/${numberIssue}`);
     } catch (e) {
       res.status(500);
       res.json({

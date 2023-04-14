@@ -145,7 +145,7 @@ issueRouter.post(
   checkBlockedIssue,
   removeDeadline,
 );
-
+console.log('1');
 issueRouter.post(
   '/issues/:id/addAttachment',
   authMiddleware,
