@@ -56,7 +56,7 @@ export class UserController {
   }
 
   public static async editUser(req: Request, res: Response): Promise<void> {
-    try{
+    try {
       const token = req.params.token;
       const decodedToken: JwtPayload = jwt.decode(token, {
         complete: true,
@@ -65,9 +65,9 @@ export class UserController {
       const username = decodedToken.payload.username;
       const oldUser = await UserRepository.getUserByUsername(username);
       if (!oldUser) {
-        res.status(404).json({message: 'Usuario no encontrado'});
+        res.status(404).json({ message: 'Usuario no encontrado' });
         return;
-        }
+      }
       const newUser: IUser = {
         id: oldUser.id,
         email: req.body.email || oldUser.email,
@@ -77,15 +77,14 @@ export class UserController {
         bio: req.body.bio || oldUser.bio,
       };
       await UserRepository.editarUser(oldUser, newUser);
-      res.redirect(`http://localhost:8081/myProfile/${token}`);
-      }
-    catch (e) {
-        res.status(500);
-        res.json({
-          error: e,
-        });
-      }
-   }
+      res.redirect(`http://localhost:8080/myProfile/${token}`);
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+      });
+    }
+  }
   public static async getProfilePage(
     _req: Request,
     res: Response,
@@ -149,7 +148,7 @@ export class UserController {
     const $ = load(profileHTML);
 
     const scriptNode = `<section class="profile-bar">
-        <img src="https://picsum.photos/200" alt="" class="profile-image">
+        <img src="${user.profilePicture}" alt="" class="profile-image">
         <div class="profile-data">
         <div class="profile-data">
             <h1>${user.name}</h1>
@@ -188,17 +187,18 @@ export class UserController {
     </div>`;
     $('#myProfile').append(scriptNode);
     const issues = await IssueRepository.getAllIssues();
-  for(const issue of issues){
-    for(const activity of issue.activity){
-      const user = await UserRepository.getUserById(activity.actor.toString());
-      if(user.username === username){
-    const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
-   
-    $('#timeline').append(scriptActivities);
-  }
+    for (const issue of issues) {
+      for (const activity of issue.activity) {
+        const user = await UserRepository.getUserById(
+          activity.actor.toString(),
+        );
+        if (user.username === username) {
+          const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8080/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
 
-    
-}}
+          $('#timeline').append(scriptActivities);
+        }
+      }
+    }
     res.send($.html());
   }
 
@@ -227,8 +227,6 @@ export class UserController {
     req: Request,
     res: Response,
   ): Promise<void> {
-
     res.sendFile('public/stylesheets/editProfile.css', { root: 'src' });
   }
-
 }

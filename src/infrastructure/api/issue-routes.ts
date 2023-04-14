@@ -45,6 +45,7 @@ issueRouter.post(
 
 issueRouter.post(
   '/issue/:id/new-comment',
+  authMiddleware,
   checkBlockedIssue,
   IssueController.createComment,
 );
