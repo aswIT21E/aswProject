@@ -118,10 +118,7 @@
         <input type="date" id="fecha" name="fecha">
         <input type="submit" value="Enviar" class = "botonLock">
       </form>
-    
-      <div id = "butonEditDeadline">
-
-      </div>
+   
 
     </aside>
   </div>
@@ -278,13 +275,14 @@ function mostrarAcividades() {
 }
 
   </script>
+
   <script>
 
     document.getElementById('clock-btn').addEventListener('click', function() {
-  document.getElementById('date-form').style.display = 'block'; // Muestra el formulario al hacer clic en el botón
-});
+  if(document.getElementById('date-form').style.display == 'inline-grid') document.getElementById('date-form').style.display = 'none'// Muestra el formulario al hacer clic en el botón
+  else document.getElementById('date-form').style.display = 'inline-grid'});
 
-document.getElementById('date-form').addEventListener('submit', function(event) {
+  document.getElementById('date-form').addEventListener('submit', async function(event) {
   event.preventDefault(); // Previene el envío del formulario por defecto
 
   // Obtiene la fecha del formulario
@@ -293,14 +291,14 @@ document.getElementById('date-form').addEventListener('submit', function(event) 
   // Crea un objeto de datos para enviar en la petición POST
 
   // Realiza la petición POST al servidor
-  fetch(`http://localhost:8081/issues/${issueId}/updateDeadline`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    },
-    body: deadline,
-  })
+  await fetch(`http://localhost:8081/issues/${issueId}/updateDeadline`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
+  },
+  body: JSON.stringify({ "deadline": deadline.toISOString() }), // Pasa un objeto con la propiedad "deadline" al método JSON.stringify()
+})
   .then(function(response) {
     if (response.ok) {
       // Aquí puedes manejar la respuesta del servidor si es exitosa
@@ -312,7 +310,23 @@ document.getElementById('date-form').addEventListener('submit', function(event) 
   }).then(() => {window.location.reload()});
   
 });
-
+ 
+function eliminadeadline() {
+  
+  fetch(`http://localhost:8081/issues/${issueId}/removeDeadline`, {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },}).then(function(response) {
+    if (response.ok) {
+      // Aquí puedes manejar la respuesta del servidor si es exitosa
+      console.log('Fecha borrada exitosamente');
+    } else {
+      // Aquí puedes manejar la respuesta del servidor si hay un error
+      console.error('Error al borrar la fecha');
+    }}).then(() => {window.location.reload()});
+  }
   </script>
 </body>
 
