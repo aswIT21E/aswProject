@@ -113,10 +113,8 @@
     const token = localStorage.getItem('token');
     // Actualizar el valor del atributo "action" del formulario
     const form = document.querySelector('form');
-    form.setRequestHeader('Authorization', `Bearer ${token}`);
     form.action = `/issue/${issueId}/new-comment`;
-    form.setRequestHeader('Authorization', `Bearer ${token}`);
-
+    
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {

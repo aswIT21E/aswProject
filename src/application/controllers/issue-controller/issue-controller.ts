@@ -316,6 +316,7 @@ export class IssueController {
     const $ = load(viewIssueHTML);
 
     for (const comment of comments) {
+
       const commentt = await CommentRepository.getComment(comment);
 
       const scriptNode3 = `
@@ -593,9 +594,6 @@ export class IssueController {
     res: Response,
   ): Promise<void> {
     try {
-      console.log(req.headers.authorization);
-      const author = await getActor(req);
-      console.log(author); console.log(author.username);
       const numberIssue: string = req.params.id;
       const content: string = req.body.comment;
       const date = new Date().toLocaleString('es-ES', {
@@ -605,7 +603,7 @@ export class IssueController {
         content,
         numberIssue,
         date,
-        author.username,
+        'Author',
       );
       await IssueRepository.addComment(numberIssue, comment);
       res.status(200);
