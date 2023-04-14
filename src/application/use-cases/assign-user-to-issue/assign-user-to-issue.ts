@@ -1,5 +1,7 @@
 import type { Request, Response } from 'express';
+
 import { IssueRepository, UserRepository } from '~/domain/repositories';
+
 import { addActivity } from '../add-activity';
 
 export async function assignUserToIssue(req: Request, res: Response) {

@@ -3,9 +3,12 @@ import fs from 'fs';
 import { load } from 'cheerio';
 import type { Request, Response } from 'express';
 
+import { addActivity } from '~/application/use-cases';
+import type { IUser } from '~/domain/entities';
 import type { IComment } from '~/domain/entities/comment';
+import { Comment, CommentModel } from '~/domain/entities/comment';
 import type { IFilter } from '~/domain/entities/filter';
-import type { IIssue} from '~/domain/entities/issue';
+import type { IIssue } from '~/domain/entities/issue';
 import { Issue } from '~/domain/entities/issue';
 import { UserRepository } from '~/domain/repositories';
 import { CommentRepository } from '~/domain/repositories/comment-repository/comment-repository';
@@ -13,7 +16,6 @@ import { IssueRepository } from '~/domain/repositories/issue-repository/issue-re
 import type { BulkIssuesDto, CreateIssueDto } from '~/infrastructure';
 import { S3Service } from '~/infrastructure/services';
 import { getActor } from '~/utils';
-import { IUser } from '~/domain/entities';
 
 export class IssueController {
   public static async testUpload(req: Request, res: Response): Promise<void> {
@@ -52,7 +54,7 @@ export class IssueController {
       }
 
       res.status(200);
-      res.redirect('http://localhost:8081/issue');
+      res.redirect('http://35.180.174.221/issue');
     } catch (e) {
       res.status(500);
       res.json({
@@ -80,9 +82,11 @@ export class IssueController {
         creator,
         numberIssue: lastNumberIssue + 1,
       });
+      console.log('created issue instance');
       await IssueRepository.addIssue(issue);
+      console.log('added issue');
       res.status(200);
-      res.redirect('http://localhost:8081/issue');
+      res.redirect('http://35.180.174.221/issue');
     } catch (e) {
       res.status(500);
       res.json({
@@ -134,7 +138,10 @@ export class IssueController {
       res.status(404).json({ message: 'not found' });
     }
   }
-  public static async getUserInfoAssign(req: Request, res: Response) : Promise<void> {
+  public static async getUserInfoAssign(
+    req: Request,
+    res: Response,
+  ): Promise<void> {
     const users: IUser[] = await UserRepository.getAllUsers();
     const assignHtml = fs.readFileSync('src/public/views/assign.html');
     const $ = load(assignHtml);
@@ -142,18 +149,20 @@ export class IssueController {
       const scriptNode = `
     <option class="item" value="${user.id}">
       <div class="user-list-avatar">
-          <img src="https://picsum.photos/48" alt="" class="img-avatar">
+          <img src="${user.profilePicture}" alt="" class="img-avatar">
       </div>
       <div class="user-list-name">${user.username}</div>
     </option>
     `;
       $('#select').append(scriptNode);
-    } 
+    }
     res.send($.html());
-    
   }
 
-  public static async getUserInfoWatchers(req: Request, res: Response) : Promise<void> {
+  public static async getUserInfoWatchers(
+    req: Request,
+    res: Response,
+  ): Promise<void> {
     const users: IUser[] = await UserRepository.getAllUsers();
     const watcherHtml = fs.readFileSync('src/public/views/watchers.html');
     const $ = load(watcherHtml);
@@ -161,13 +170,13 @@ export class IssueController {
       const scriptNode = `
       <option class="item" value="${user.id}">
         <div class="watcher-list-avatar">
-            <img src="https://picsum.photos/48" alt="" class="img-avatar">
+            <img src="${user.profilePicture}" alt="" class="img-avatar">
         </div>
         <div class="watcher-list-name">${user.username}</div>
       </option>
       `;
-        $('#select').append(scriptNode);
-    } 
+      $('#select').append(scriptNode);
+    }
     res.send($.html());
   }
   public static async getIssuePage(
@@ -195,12 +204,13 @@ export class IssueController {
       if (created_by) filtro.crated_by = created_by.toString().split(',');
       if (asign_to) filtro.asign_to = asign_to.toString().split(',');
       if (asignee) filtro.asignee = asignee.toString().split(',');
-      if(text){
-        var issues: IIssue[] = await IssueRepository.getIssuesBySearch(text.toString().split(','));
-      } 
-      else var issues: IIssue[] = await IssueRepository.getIssueByFilter(filtro);
+      if (text) {
+        var issues: IIssue[] = await IssueRepository.getIssuesBySearch(
+          text.toString().split(','),
+        );
+      } else
+        var issues: IIssue[] = await IssueRepository.getIssueByFilter(filtro);
 
-      
       if (order) {
         console.log(sentido);
         const orderField = order.toString();
@@ -211,43 +221,41 @@ export class IssueController {
           case 'subject':
           case 'status':
           case 'creator':
-            if(sentido === 'true'){
-              console.log('a');
-               // Sort in descending order
-            issues.sort((a: IIssue, b: IIssue) => {
-              if (a[orderField] > b[orderField]) {
-                return -1;
-              } else if (a[orderField] < b[orderField]) {
-                return 1;
-              } else {
-                return 0;
-              }
-            });
-          } else {
-            console.log('b');
-            // Sort in ascending order
-            issues.sort((a: IIssue, b: IIssue) => {
-              if (a[orderField] < b[orderField]) {
-                return -1;
-              } else if (a[orderField] > b[orderField]) {
-                return 1;
-              } else {
-                return 0;
-              }
-            });
+            if (sentido === 'true') {
+              // Sort in descending order
+              issues.sort((a: IIssue, b: IIssue) => {
+                if (a[orderField] > b[orderField]) {
+                  return -1;
+                } else if (a[orderField] < b[orderField]) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              });
+            } else {
+              // Sort in ascending order
+              issues.sort((a: IIssue, b: IIssue) => {
+                if (a[orderField] < b[orderField]) {
+                  return -1;
+                } else if (a[orderField] > b[orderField]) {
+                  return 1;
+                } else {
+                  return 0;
+                }
+              });
             }
             break;
           default:
             // Ordenar por defecto por el campo "id" (MongoId)
             //issues.sort((a: IIssue, b: IIssue) => a.id.localeCompare(b.id));
-      break;
+            break;
         }
       }
       const Indexhtml = fs.readFileSync('src/public/views/index.html');
       const filterPage = fs.readFileSync('src/public/views/filter.html');
       const searchPage = fs.readFileSync('src/public/views/searchIssue.html');
       const $ = load(Indexhtml);
-      
+
       $('#searchbar').append(load(searchPage).html());
       $('#Filters').append(load(filterPage).html());
       for (const issue of issues) {
@@ -267,7 +275,7 @@ export class IssueController {
                   <div class="numero-peticion" id="NumPeticion">#${
                     issue.numberIssue
                   }</div>
-                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8081/issue/${
+                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://35.180.174.221/issue/${
                     issue.id
                   }">${issue.subject}</a> </div>
               </div>
@@ -311,25 +319,23 @@ export class IssueController {
     const id = _req.params.id;
     const issue: IIssue = await IssueRepository.getIssueById(id);
     const comments: IComment[] = issue.comments;
+    const attachments = issue.attachments;
     const watchers: IUser[] = issue.watchers;
     const viewIssueHTML = fs.readFileSync('src/public/views/viewIssue.html');
     const $ = load(viewIssueHTML);
 
     for (const comment of comments) {
-
-      const commentt = await CommentRepository.getComment(comment);
-
       const scriptNode3 = `
           <li>
             <div class="comment-wrapper">
-              <img class="comment-img" src="https://picsum.photos/50">
+              <img class="comment-img" src="${comment.author.profilePicture}">
               <div class="comment-info">
                 <div class="comment-data">
-                  <span class="comment-creator">${commentt.author}</span>
-                  <span class="comment-date">${commentt.date}</span>
+                  <span class="comment-creator">${comment.author.name}</span>
+                  <span class="comment-date">${comment.date}</span>
                 </div>
                 <div class="comment-content">
-                  <span class="comment">${commentt.content}</span>
+                  <span class="comment">${comment.content}</span>
                 </div>
               </div>
             </div>
@@ -337,38 +343,51 @@ export class IssueController {
           </li>`;
       $('#comments-list').append(scriptNode3);
     }
-     
-    for(const act of issue.activity){
-      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+
+    for (const attachment of attachments) {
+      const scriptNode4 = `
+          <li>
+            <div>
+              <a href=${attachment}>
+                <img src="${attachment}" alt="" class="img-attachment">
+              </a>
+            </div>
+          </li>`;
+      $('#attachment-list').append(scriptNode4);
+    }
+
+    for (const act of issue.activity) {
+      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =http://35.180.174.221/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
       $('.activitieslist').append(scriptActivities);
     }
     $('#comment-count').append(`${comments.length}`);
     $('#activity-count').append(`${issue.activity.length}`);
     $('#comment-count2').append(`${comments.length}`);
     $('#activity-count2').append(`${issue.activity.length}`);
-    
+    $('#attachment-count').append(`${issue.attachments.length}`);
+
     if (watchers) {
       for (const watcher of watchers) {
         const scriptNodeWatcher = `
         <div class="watchUser">
-          <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
+          <div class="img-avatar"><img src="${watcher.profilePicture}" alt="" class="img-avatar"></div>
           <div class="watcher-list-name"><span>${watcher.username}</span></div>
       </div>
         `;
-      $('#ticket-watchers-list').append(scriptNodeWatcher);
+        $('#ticket-watchers-list').append(scriptNodeWatcher);
       }
     }
 
     const scriptNode5 = `
-    <a href="http://localhost:8081/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
+    <a href="http://35.180.174.221/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
     `;
 
     const scriptNode6 = `
-    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Añadir observadores</span></a>
+    <a href="http://35.180.174.221/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Añadir observadores</span></a>
     `;
 
     const scriptNode7 = `
-    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
+    <a href="http://35.180.174.221/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
     `;
 
     const scriptNode4 = `
@@ -406,7 +425,7 @@ export class IssueController {
                             </div>
                         </div>
     </div>`;
-    const path = `'http://localhost:8081/issue/${issue.id}/modifyIssue'`;
+    const path = `'http://35.180.174.221/issue/${issue.id}/modifyIssue'`;
     const scriptNode2 = `
       <script>
       function modifyIssue(parameter, newValue) {
@@ -512,24 +531,28 @@ export class IssueController {
 
     const scriptNodeAssign = `
             <div class="assignUser">
-              <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
-              <div class="user-list-name"><span>${issue.assignedTo ? issue.assignedTo.username : ''}</span></div>
+              <div class="img-avatar"><img src="${
+                issue.assignedTo ? issue.assignedTo.profilePicture : ''
+              }" alt="" class="img-avatar"></div>
+              <div class="user-list-name"><span>${
+                issue.assignedTo ? issue.assignedTo.username : ''
+              }</span></div>
             </div>
     `;
 
-     let scriptLockUnlockButton;
-     if(issue.locked) {              
-     scriptLockUnlockButton = `
+    let scriptLockUnlockButton;
+    if (issue.locked) {
+      scriptLockUnlockButton = `
     <button id="botonLock" data-lock="true" class="botonLock" onclick="LockUnlock()" style="background-color: #a52d47 ;">
       <i class="fas fa-lock"></i> 
-    </button>`;}
-    else{
-       scriptLockUnlockButton = `
+    </button>`;
+    } else {
+      scriptLockUnlockButton = `
     <button id="botonLock" data-lock="false" class="botonLock" onclick="LockUnlock()" style="background-color: #2dd486;">
       <i class="fas fa-unlock"></i> 
     </button>`;
     }
-    
+
     $('#butonLockUnlock').append(scriptLockUnlockButton);
     $('#detail-header').append(scriptNode);
     $('#atributos').append(scriptNode2);
@@ -538,11 +561,10 @@ export class IssueController {
     $('#link2').append(scriptNode6);
     $('#link3').append(scriptNode7);
     if (issue.assignedTo) $('#ticket-user-list').append(scriptNodeAssign);
-    if(issue.deadline){
+    if (issue.deadline) {
       const d = issue.deadline.toDateString();
       $('#deadl').append(`Deadline: ${d}`);
-    }else $('#deadl').append(`Deadline: - `);
-
+    } else $('#deadl').append(`Deadline: - `);
 
     res.send($.html());
   }
@@ -582,8 +604,6 @@ export class IssueController {
     res.sendFile('public/sytlesheets/viewIssue.css', { root: 'src' });
   }
 
-
-
   public static async getAssignPageCss(
     req: Request,
     res: Response,
@@ -602,6 +622,41 @@ export class IssueController {
     req: Request,
     res: Response,
   ): Promise<void> {
+    const issueID = req.params.id;
+    const content: string = req.body.comment;
+    const date = new Date().toLocaleString('es-ES', {
+      timeZone: 'Europe/Madrid',
+    });
+    try {
+      const issue = await IssueRepository.getIssueById(issueID);
+      const creator = await getActor(req);
+
+      const commentDoc = await CommentModel.create({
+        author: creator.id,
+        content,
+        date,
+      });
+
+      const comment = new Comment(commentDoc.id, content, creator, date);
+
+      if (issue) {
+        issue.addComment(comment);
+        await addActivity(req, issue, 'addComment');
+        await IssueRepository.updateIssue(issue);
+
+        res.status(200);
+        res.redirect(`http://35.180.174.221/issue/${issueID}`);
+      } else {
+        res.status(404).json({
+          message: `Issue ${issueID} not found`,
+        });
+      }
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+      });
+    }
     try {
       const numberIssue: string = req.params.id;
       const content: string = req.body.comment;
@@ -610,13 +665,12 @@ export class IssueController {
       });
       const comment: IComment = await CommentRepository.addComment(
         content,
-        numberIssue,
         date,
         'Author',
       );
       await IssueRepository.addComment(numberIssue, comment);
       res.status(200);
-      res.redirect(`http://localhost:8081/issue/${numberIssue}`);
+      res.redirect(`http://35.180.174.221/issue/${numberIssue}`);
     } catch (e) {
       res.status(500);
       res.json({

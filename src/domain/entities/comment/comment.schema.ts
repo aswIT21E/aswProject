@@ -3,8 +3,7 @@ import { Schema, model } from 'mongoose';
 import type { IComment } from './comment.interface';
 
 const CommentSchema = new Schema({
-  author: { required: true, type: String },
-  numberIssue: { required: true, type: String },
+  author: { required: true, type: Schema.Types.ObjectId, model: 'User' },
   content: { required: true, type: String },
   date: { required: false, type: String },
 });

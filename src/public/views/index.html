@@ -1,4 +1,3 @@
-
 <style>
   /* Agrega estilos personalizados para la flecha */
   .arrow {
@@ -7,14 +6,14 @@
     transform: rotate(90deg);
   }
   .arrow:before {
-    content: "\2194";
+    content: '\2194';
     font-family: FontAwesome;
-    font-size: 14px;   
-    margin-right: 5px; 
+    font-size: 14px;
+    margin-right: 5px;
     transform: rotate(90deg);
     transition: transform 0.3s ease;
   }
-  .issues-wrapper{
+  .issues-wrapper {
     min-width: -webkit-fill-available;
   }
 </style>
@@ -26,63 +25,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" type="text/css" href="stylesheets/previewIssue.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="stylesheets/previewIssue.css"
+    />
     <link rel="stylesheet" type="text/css" href="stylesheets/searchIssue.css" />
     <link rel="stylesheet" type="text/css" href="stylesheets/viewIssue.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap"
       rel="stylesheet"
     />
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
     <title>ASW</title>
   </head>
-      <body style="margin: 0 5%; max-width: 75%;">
-        <div style="display: flex; flex-direction: row;">
-          <div id = "Filters" style="max-width: 25%;"></div>
-          <div class="issues-wrapper">
-            <div id = "searchbar" style = "margin-left: 3em; min-width: 50%;">
-            </div>               
-            <div class=" titulos" style="display: flex; align-items: center; justify-content: space-between;flex-direction: row;padding: 10px;transition: background-color 0.3s ease;min-width: 80%;margin-top: 5em;">
-              <span style = "display: flex; justify-content: left;">
-                <div style="margin-right: 2em; display: flex;" > <div class="arrow" onclick="toggleArrow(this, 'type')"></div> Tipo </div>
-                <div style="margin-right: 1em; display: flex;"> <div class="arrow" onclick="toggleArrow(this, 'severity')"></div>  Gravedad </div>
-                <div style="display: flex;"> <div class="arrow" onclick="toggleArrow(this, 'type')"></div> Prioridad </div>
-              </span>
-              <div id="peticion" style="display: flex;"><div class="arrow" onclick="toggleArrow(this, 'subject')"></div> Peticion </div>
-              <span style = "display: flex; justify-content:right;">
-                <div style="display: flex;" id="estado"><div class="arrow" onclick="toggleArrow(this, 'state')"></div> Estado</div>
-                <div style = "margin-left: 4em; display: flex" id="creador" ><div class="arrow" onclick="toggleArrow(this, 'creator')"></div> Creador</div>
-              </span>
+  <body style="margin: 0 5%; max-width: 75%">
+    <div style="display: flex; flex-direction: row">
+      <div id="Filters" style="max-width: 25%"></div>
+      <div class="issues-wrapper">
+        <div id="searchbar" style="margin-left: 3em; min-width: 50%"></div>
+        <div
+          class="titulos"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: row;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+            min-width: 80%;
+            margin-top: 5em;
+          "
+        >
+          <span style="display: flex; justify-content: left">
+            <div style="margin-right: 2em; display: flex">
+              <div class="arrow" onclick="toggleArrow(this, 'type')"></div>
+              Tipo
             </div>
-            <div id="issues" class="issue-list">
+            <div style="margin-right: 1em; display: flex">
+              <div class="arrow" onclick="toggleArrow(this, 'severity')"></div>
+              Gravedad
             </div>
+            <div style="display: flex">
+              <div class="arrow" onclick="toggleArrow(this, 'type')"></div>
+              Prioridad
+            </div>
+          </span>
+          <div id="peticion" style="display: flex">
+            <div class="arrow" onclick="toggleArrow(this, 'subject')"></div>
+            Peticion
           </div>
+          <span style="display: flex; justify-content: right">
+            <div style="display: flex" id="estado">
+              <div class="arrow" onclick="toggleArrow(this, 'state')"></div>
+              Estado
+            </div>
+            <div style="margin-left: 4em; display: flex" id="creador">
+              <div class="arrow" onclick="toggleArrow(this, 'creator')"></div>
+              Creador
+            </div>
+          </span>
         </div>
-          <script>
-            // Función para obtener el estado del arrow del localStorage
-            function checkArrowState(id){
-            }
-            function getArrowState(id) {
-              if(localStorage.getItem(id) === null) localStorage.setItem(id, 'true');
-              return localStorage.getItem(id) === 'true';
-            }
+        <div id="issues" class="issue-list"></div>
+      </div>
+    </div>
+    <script>
+      // Función para obtener el estado del arrow del localStorage
+      function checkArrowState(id) {}
+      function getArrowState(id) {
+        if (localStorage.getItem(id) === null) localStorage.setItem(id, 'true');
+        return localStorage.getItem(id) === 'true';
+      }
 
-              // Función para guardar el estado del arrow en el localStorage
-            function setArrowState(id, state) {
-                localStorage.setItem(id, state);
-            }
+      // Función para guardar el estado del arrow en el localStorage
+      function setArrowState(id, state) {
+        localStorage.setItem(id, state);
+      }
 
-            function toggleArrow(element, id) {
-              element.classList.toggle("clicked");
-              const arrowId = `arrow-${id}`;
-              const currentState = !getArrowState(arrowId);
-              setArrowState(arrowId, currentState);
-              let url = `http://localhost:8081/issue?&order=${id}&sentido=${currentState}`;
-              window.location.href = url;
-            }
-          </script>
-    </body>
+      function toggleArrow(element, id) {
+        element.classList.toggle('clicked');
+        const arrowId = `arrow-${id}`;
+        const currentState = !getArrowState(arrowId);
+        setArrowState(arrowId, currentState);
+        let url = `http://35.180.174.221/issue?&order=${id}&sentido=${currentState}`;
+        window.location.href = url;
+      }
+    </script>
+  </body>
 </html>
