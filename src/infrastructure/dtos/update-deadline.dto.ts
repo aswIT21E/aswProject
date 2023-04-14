@@ -14,11 +14,11 @@ export async function updateDeadlineDto(
   next: NextFunction,
 ) {
   const DTO = new UpdateDeadlineDto();
-  DTO.deadline = req.body.deadline;
+  DTO.deadline = new Date(req.body.deadline);
 
   const errors = await validate(DTO);
   if (errors.length) {
-    res.status(400).json({ errors });
+    res.status(401).json({ errors , message: 'Invalid data'});
     return;
   }
 

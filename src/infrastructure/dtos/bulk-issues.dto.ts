@@ -1,6 +1,7 @@
 import { validate, ValidateNested } from 'class-validator';
 import type { NextFunction, Request, Response } from 'express';
-import { CreateIssueDto } from './create-issue.dto';
+
+import type { CreateIssueDto } from './create-issue.dto';
 
 export class BulkIssuesDto {
   @ValidateNested({ each: true })

@@ -12,7 +12,6 @@ import {
   updateDeadline,
   removeDeadline,
 } from '~/application';
-
 import {
   addWatchersDto,
   createIssueDto,
@@ -45,6 +44,7 @@ issueRouter.post(
 
 issueRouter.post(
   '/issue/:id/new-comment',
+  authMiddleware,
   checkBlockedIssue,
   IssueController.createComment,
 );
@@ -144,7 +144,7 @@ issueRouter.post(
   checkBlockedIssue,
   removeDeadline,
 );
-
+console.log('1');
 issueRouter.post(
   '/issues/:id/addAttachment',
   authMiddleware,

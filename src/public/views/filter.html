@@ -47,7 +47,7 @@
 </style>
 
 <div class="filter" style="margin-top: 1em; max-width: fit-content;">
-  <button type="button" class="filter-button"  style="margin-top: 1em;" onclick="actualizarFiltro()">enviar</button>
+  <button type="button" class="filter-button"  style="margin-top: 1em;" onclick="actualizarFiltro()">FILTRAR</button>
   <div id="menu" style="display: flex; flex-direction: column; margin-top: 1em; min-width: -webkit-fill-available;">
     <button type="button" class="typeDisplay" onclick="mostrarMenuTipus()">Tipos</button>
     <div id="menuTipus" style="display: none; margin-top:2em;">
@@ -282,7 +282,7 @@
     });
     
     // Crear la URL base de la petición GET
-    let url = "http://localhost:8081/issue?";
+    let url = "http://35.180.174.221/issue?";
 
     // Agregar los parámetros en forma de arrays de strings a la URL
     if (tipo.length > 0) url += "&tipo=" + tipo.join(",");

@@ -2,7 +2,7 @@ import { IsString, IsEmail, IsNotEmpty } from 'class-validator';
 import { validate } from 'class-validator';
 import type { NextFunction, Request, Response } from 'express';
 
-class CreateUserDto {
+export class CreateUserDto {
   @IsEmail()
   @IsNotEmpty()
   email: string;

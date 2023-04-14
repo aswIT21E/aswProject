@@ -10,7 +10,6 @@ export async function updateDeadline(
 ): Promise<void> {
   const issueID = req.params.id;
   const deadline = req.body.deadline;
-  console.log(deadline);
   try {
     const issue = await IssueRepository.getIssueById(issueID);
     if (issue) {

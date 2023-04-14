@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express';
+
 import { IssueRepository } from '~/domain/repositories/issue-repository';
 import { S3Service } from '~/infrastructure/services';
 
@@ -9,13 +10,16 @@ export async function addAttachment(
   res: Response,
 ): Promise<void> {
   const issueID = req.params.id;
+  console.log('3');
   const file = req.files.file;
   try {
     const issue = await IssueRepository.getIssueById(issueID);
 
     if (issue) {
       const uploadService = new S3Service();
+      console.log('4');
       const result = await uploadService.uploadFile(file);
+      console.log('6');
       issue.addAttachment(result.Location);
       await addActivity(req, issue, 'addAttachment');
       await IssueRepository.updateIssue(issue);
