@@ -78,8 +78,7 @@
           <div id="ticket-user-list" class="ticket-user-list">
             <div class="assign2 Comentarios
             User">
-              <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
-              <div class="user-list-name"><span>Rubén Torrente</span></div>
+              <div class="user-list-name">
             </div>
           </div>
           <div class="ticket-user-actions">
@@ -104,8 +103,42 @@
           </div>
         </div>
       </section>
+      <div id = "butonLockUnlock">
+
+      </div>
+      <div id = "butonEditDeadline">
+
+      </div>
+
     </aside>
   </div>
+    <script>
+    async function LockUnlock() {
+      const token = localStorage.getItem('token');
+      const opciones = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      };
+
+      var butonlock = document.getElementById("botonLock");
+      if (butonlock.dataset.lock == "true") {
+        butonlock.innerHTML = "<i class=\"fas fa-unlock\"></i>";
+          await fetch(`http://localhost:8081/issues/${issueId}/unlock-issue`, opciones);
+      } 
+      else {
+        butonlock.innerHTML = "<i class=\"fas fa-lock\"></i>";
+        await fetch(`http://localhost:8081/issues/${issueId}/lock-issue`,opciones);
+      }
+      window.location.reload();
+      
+
+
+
+    }
+  </script>
   <script>
     // Obtener la ID de la issue de la URL actual
     const url = window.location.href;
