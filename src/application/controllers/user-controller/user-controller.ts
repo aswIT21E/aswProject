@@ -173,6 +173,10 @@ export class UserController {
             </div>
         </div>
         <aside class="profile-sidebar">
+        <button class="botonLock" onclick="redirectToUrl()">
+        <i class="fas fa-home btn-icon"></i> Home
+      </button>
+      
             <div class="editar-bio">
                 <h4>Tu perfil</h4>
                 <p>La gente puede ver todo lo que haces y en qué estás trabajando. Añade una buena bio para que puedan ver la mejor versión de tu perfil.</p>
@@ -187,7 +191,6 @@ export class UserController {
   for(const issue of issues){
     for(const activity of issue.activity){
       const user = await UserRepository.getUserById(activity.actor.toString());
-      console.log(user.username);console.log(activity.message);
       if(user.username === username){
     const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
    

@@ -121,7 +121,9 @@
     flex-shrink: 0;
     width: 150px;
 }
-
+.editar-bio {
+   margin-top: 5em;
+}
 .editar-bio h4 {
     align-items: center;
     background: #f1f1f4;
@@ -188,3 +190,16 @@
     content: ""; /* No hay contenido después del título del issue */
   }
   
+  .botonLock{    border: 0;
+    border-radius: 4px;
+    color: #2e3440;
+    display: inline-flex;
+    justify-content: center;
+    line-height: initial;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    float: right;
+    margin-top: 1em;}

@@ -13,13 +13,18 @@
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
         <title>Profile</title>
     </head>
+    
+
     <body>
           <div class="button">
-        <button id="editPerfil">Editar Perfil</button>
+      
       </div>
         <div class="profile" id="myProfile">
         </div>
         <script>
+          function redirectToUrl() {
+      window.location.href = "http://localhost:8081/issue";
+    }
             document.addEventListener('DOMContentLoaded', function () {
             var editElem = document.getElementById('editPerfil');
             editElem.addEventListener('click', function () {

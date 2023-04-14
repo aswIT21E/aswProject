@@ -110,6 +110,15 @@
       <div id = "butonLockUnlock">
 
       </div>
+      <button id="clock-btn" style="margin-right: 17em;" class="botonLock" >
+        <i class="fas fa-clock"></i> 
+      </button>
+      <form id="date-form" class="date-form">
+        <label  >Deadline</label>
+        <input type="date" id="fecha" name="fecha">
+        <input type="submit" value="Enviar" class = "botonLock">
+      </form>
+    
       <div id = "butonEditDeadline">
 
       </div>
@@ -267,6 +276,42 @@ function mostrarAcividades() {
   commentCount.innerHTML = numC;
   activityCount.innerHTML = numA;
 }
+
+  </script>
+  <script>
+
+    document.getElementById('clock-btn').addEventListener('click', function() {
+  document.getElementById('date-form').style.display = 'block'; // Muestra el formulario al hacer clic en el botón
+});
+
+document.getElementById('date-form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Previene el envío del formulario por defecto
+
+  // Obtiene la fecha del formulario
+  var fechastring = document.getElementById('fecha').value;
+  var deadline = new Date(fechastring);
+  // Crea un objeto de datos para enviar en la petición POST
+
+  // Realiza la petición POST al servidor
+  fetch(`http://localhost:8081/issues/${issueId}/updateDeadline`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+    body: deadline,
+  })
+  .then(function(response) {
+    if (response.ok) {
+      // Aquí puedes manejar la respuesta del servidor si es exitosa
+      console.log('Fecha enviada exitosamente');
+    } else {
+      // Aquí puedes manejar la respuesta del servidor si hay un error
+      console.error('Error al enviar la fecha');
+    }
+  }).then(() => {window.location.reload()});
+  
+});
 
   </script>
 </body>

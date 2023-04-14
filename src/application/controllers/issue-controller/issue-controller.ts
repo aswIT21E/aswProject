@@ -579,14 +579,14 @@ export class IssueController {
     req: Request,
     res: Response,
   ): Promise<void> {
-    res.sendFile('public/sytlesheets/assign.css', { root: 'src' });
+    res.sendFile('public/stylesheets/assign.css', { root: 'src' });
   }
 
   public static async getWatchersPageCss(
     req: Request,
     res: Response,
   ): Promise<void> {
-    res.sendFile('public/sytlesheets/watchers.css', { root: 'src' });
+    res.sendFile('public/stylesheets/watchers.css', { root: 'src' });
   }
 
   public static async createComment(

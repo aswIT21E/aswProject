@@ -100,12 +100,12 @@ issueRouter.get(
 );
 
 issueRouter.get(
-  '/stylesheets/assign.css',
+  '/issue/:id/stylesheets/assign.css',
   IssueController.getAssignPageCss,
 );
 
 issueRouter.get(
-  '/stylesheets/watchers.css',
+  '/issue/:id/stylesheets/watchers.css',
   IssueController.getWatchersPageCss,
 );
 

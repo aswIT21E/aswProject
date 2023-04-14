@@ -696,7 +696,9 @@ a {
 }
 
 
-
+.date-form {
+  display: none; /* El formulario se oculta inicialmente */
+}
 
 
 
@@ -756,4 +758,35 @@ a {
 }
 .btn-icon {
   margin-right: 5px;
+}
+/* Estilos para el formulario */
+.date-form {
+  display: none;
+  margin-top: 1em; /* Añade un margen superior */
+}
+
+/* Estilos para la etiqueta del formulario */
+.date-form label {
+  display: block;
+  margin-bottom: 0.5em; /* Añade un margen inferior */
+  font-weight: bold; /* Añade negrita */
+}
+
+/* Estilos para el campo de entrada de fecha */
+.date-form input[type="date"] {
+  padding: 0.5em; /* Añade espacio interno */
+}
+
+/* Estilos para el botón de enviar del formulario */
+.date-form input[type="submit"] {
+  padding: 0.5em 1em; /* Añade espacio interno horizontal */
+  background-color: #007bff; /* Cambia el color de fondo */
+  color: #fff; /* Cambia el color del texto */
+  border: none;
+  cursor: pointer;
+}
+
+/* Estilos para el ícono de reloj dentro del botón */
+.botonLock i {
+  margin-right: 0.5em; /* Añade un margen derecho */
 }
