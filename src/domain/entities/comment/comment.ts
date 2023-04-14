@@ -1,4 +1,5 @@
-import { IUser } from '../user';
+import type { IUser } from '../user';
+
 import type { IComment } from './comment.interface';
 
 export class Comment implements IComment {

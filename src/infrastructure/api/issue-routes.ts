@@ -12,7 +12,6 @@ import {
   updateDeadline,
   removeDeadline,
 } from '~/application';
-
 import {
   addWatchersDto,
   createIssueDto,

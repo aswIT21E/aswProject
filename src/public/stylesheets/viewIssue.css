@@ -592,6 +592,15 @@ a {
     margin-right: 0.25rem;
     max-height: 3rem;
     max-width: 3rem;
+    width: 60px;
+}
+
+.img-attachment {
+  flex-basis: 6rem;
+    margin-right: 1rem;
+    max-height: 6rem;
+    max-width: 6rem;
+    width: 150px;
 }
 
 .avatar-img {
@@ -668,6 +677,7 @@ a {
     margin-right: 0.25rem;
     max-height: 3rem;
     max-width: 3rem;
+    width: 60px;
 }
 
 .avatar-img {

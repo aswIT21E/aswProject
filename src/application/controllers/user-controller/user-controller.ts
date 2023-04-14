@@ -6,8 +6,8 @@ import type { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 
 import type { IUser } from '~/domain/entities/user';
-import { UserRepository } from '~/domain/repositories/user-repository/user-repository';
 import { IssueRepository } from '~/domain/repositories';
+import { UserRepository } from '~/domain/repositories/user-repository/user-repository';
 
 export class UserController {
   public static async createUser(req: Request, res: Response): Promise<void> {
@@ -77,7 +77,7 @@ export class UserController {
         bio: req.body.bio || oldUser.bio,
       };
       await UserRepository.editarUser(oldUser, newUser);
-      res.redirect(`http://localhost:8081/myProfile/${token}`);
+      res.redirect(`http://localhost:8080/myProfile/${token}`);
     } catch (e) {
       res.status(500);
       res.json({
@@ -193,7 +193,7 @@ export class UserController {
           activity.actor.toString(),
         );
         if (user.username === username) {
-          const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+          const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8080/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
 
           $('#timeline').append(scriptActivities);
         }

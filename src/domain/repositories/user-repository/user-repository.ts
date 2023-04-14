@@ -4,11 +4,18 @@ import { UserModel } from '~/domain/entities/user';
 
 export class UserRepository {
   public static async addUser(user: IUser): Promise<User> {
-    return await UserModel.create(user);
+    return await UserModel.create({
+      ...user,
+      profilePicture:
+        'https://projecteaws.s3.eu-west-3.amazonaws.com/profile.png',
+    });
   }
-  public static async editarUser(oldUser: IUser, newUser: IUser): Promise<void> {
+  public static async editarUser(
+    oldUser: IUser,
+    newUser: IUser,
+  ): Promise<void> {
     await UserModel.findByIdAndUpdate(newUser.id, {
-      ...newUser
+      ...newUser,
     });
   }
   public static async getAllUsers(): Promise<IUser[]> {
@@ -53,14 +60,13 @@ export class UserRepository {
   public static async getUserUsernames(): Promise<string[]> {
     const users: IUser[] = await UserModel.find();
     const uniqueUsernames: string[] = [];
-    
-    users.forEach(user => {
+
+    users.forEach((user) => {
       if (!uniqueUsernames.includes(user.username)) {
         uniqueUsernames.push(user.username);
       }
     });
-  
+
     return uniqueUsernames;
   }
-  
 }

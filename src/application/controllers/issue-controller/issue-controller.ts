@@ -3,7 +3,10 @@ import fs from 'fs';
 import { load } from 'cheerio';
 import type { Request, Response } from 'express';
 
-import { Comment, CommentModel, IComment } from '~/domain/entities/comment';
+import { addActivity } from '~/application/use-cases';
+import type { IUser } from '~/domain/entities';
+import type { IComment } from '~/domain/entities/comment';
+import { Comment, CommentModel } from '~/domain/entities/comment';
 import type { IFilter } from '~/domain/entities/filter';
 import type { IIssue } from '~/domain/entities/issue';
 import { Issue } from '~/domain/entities/issue';
@@ -13,8 +16,6 @@ import { IssueRepository } from '~/domain/repositories/issue-repository/issue-re
 import type { BulkIssuesDto, CreateIssueDto } from '~/infrastructure';
 import { S3Service } from '~/infrastructure/services';
 import { getActor } from '~/utils';
-import { IUser } from '~/domain/entities';
-import { addActivity } from '~/application/use-cases';
 
 export class IssueController {
   public static async testUpload(req: Request, res: Response): Promise<void> {
@@ -53,7 +54,7 @@ export class IssueController {
       }
 
       res.status(200);
-      res.redirect('http://localhost:8081/issue');
+      res.redirect('http://localhost:8080/issue');
     } catch (e) {
       res.status(500);
       res.json({
@@ -85,7 +86,7 @@ export class IssueController {
       await IssueRepository.addIssue(issue);
       console.log('added issue');
       res.status(200);
-      res.redirect('http://localhost:8081/issue');
+      res.redirect('http://localhost:8080/issue');
     } catch (e) {
       res.status(500);
       res.json({
@@ -274,7 +275,7 @@ export class IssueController {
                   <div class="numero-peticion" id="NumPeticion">#${
                     issue.numberIssue
                   }</div>
-                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8081/issue/${
+                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8080/issue/${
                     issue.id
                   }">${issue.subject}</a> </div>
               </div>
@@ -318,6 +319,7 @@ export class IssueController {
     const id = _req.params.id;
     const issue: IIssue = await IssueRepository.getIssueById(id);
     const comments: IComment[] = issue.comments;
+    const attachments = issue.attachments;
     const watchers: IUser[] = issue.watchers;
     const viewIssueHTML = fs.readFileSync('src/public/views/viewIssue.html');
     const $ = load(viewIssueHTML);
@@ -342,20 +344,33 @@ export class IssueController {
       $('#comments-list').append(scriptNode3);
     }
 
+    for (const attachment of attachments) {
+      const scriptNode4 = `
+          <li>
+            <div>
+              <a href=${attachment}>
+                <img src="${attachment}" alt="" class="img-attachment">
+              </a>
+            </div>
+          </li>`;
+      $('#attachment-list').append(scriptNode4);
+    }
+
     for (const act of issue.activity) {
-      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =http://localhost:8080/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
       $('.activitieslist').append(scriptActivities);
     }
     $('#comment-count').append(`${comments.length}`);
     $('#activity-count').append(`${issue.activity.length}`);
     $('#comment-count2').append(`${comments.length}`);
     $('#activity-count2').append(`${issue.activity.length}`);
+    $('#attachment-count').append(`${issue.attachments.length}`);
 
     if (watchers) {
       for (const watcher of watchers) {
         const scriptNodeWatcher = `
         <div class="watchUser">
-          <div class="img-avatar"><img src="${watcher.profilePicture}" alt="" class="avatar"></div>
+          <div class="img-avatar"><img src="${watcher.profilePicture}" alt="" class="img-avatar"></div>
           <div class="watcher-list-name"><span>${watcher.username}</span></div>
       </div>
         `;
@@ -364,15 +379,15 @@ export class IssueController {
     }
 
     const scriptNode5 = `
-    <a href="http://localhost:8081/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
+    <a href="http://localhost:8080/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
     `;
 
     const scriptNode6 = `
-    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Añadir observadores</span></a>
+    <a href="http://localhost:8080/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Añadir observadores</span></a>
     `;
 
     const scriptNode7 = `
-    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
+    <a href="http://localhost:8080/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
     `;
 
     const scriptNode4 = `
@@ -405,7 +420,7 @@ export class IssueController {
                             </div>
                         </div>
     </div>`;
-    const path = `'http://localhost:8081/issue/${issue.id}/modifyIssue'`;
+    const path = `'http://localhost:8080/issue/${issue.id}/modifyIssue'`;
     const scriptNode2 = `
       <script>
       function modifyIssue(parameter, newValue) {
@@ -511,7 +526,9 @@ export class IssueController {
 
     const scriptNodeAssign = `
             <div class="assignUser">
-              <div class="img-avatar"><img src="${issue.assignedTo.profilePicture}" alt="" class="avatar"></div>
+              <div class="img-avatar"><img src="${
+                issue.assignedTo ? issue.assignedTo.profilePicture : ''
+              }" alt="" class="img-avatar"></div>
               <div class="user-list-name"><span>${
                 issue.assignedTo ? issue.assignedTo.username : ''
               }</span></div>
@@ -619,7 +636,7 @@ export class IssueController {
         await IssueRepository.updateIssue(issue);
 
         res.status(200);
-        res.redirect(`http://localhost:8081/issue/${issueID}`);
+        res.redirect(`http://localhost:8080/issue/${issueID}`);
       } else {
         res.status(404).json({
           message: `Issue ${issueID} not found`,
@@ -644,7 +661,7 @@ export class IssueController {
       );
       await IssueRepository.addComment(numberIssue, comment);
       res.status(200);
-      res.redirect(`http://localhost:8081/issue/${numberIssue}`);
+      res.redirect(`http://localhost:8080/issue/${numberIssue}`);
     } catch (e) {
       res.status(500);
       res.json({

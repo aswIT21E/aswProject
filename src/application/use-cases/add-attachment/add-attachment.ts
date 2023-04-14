@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express';
+
 import { IssueRepository } from '~/domain/repositories/issue-repository';
 import { S3Service } from '~/infrastructure/services';
 

@@ -56,7 +56,7 @@
       const url = window.location.href;
       const parts = url.split('/');
       const issueId = parts[4];
-      const newUrl = `http://localhost:8081/issues/${issueId}/add-watchers`;
+      const newUrl = `http://localhost:8080/issues/${issueId}/add-watchers`;
       const data = {
         users: usersId,
       };
@@ -69,7 +69,7 @@
         .then((response) => response.json())
         .then((data) => {
           console.log('Success:', data);
-          window.location.href = `http://localhost:8081/issue/${issueId}`;
+          window.location.href = `http://localhost:8080/issue/${issueId}`;
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -88,7 +88,7 @@
       const url = window.location.href;
       const parts = url.split('/');
       const issueId = parts[4];
-      const newUrl = `http://localhost:8081/issues/${issueId}/delete-watchers`;
+      const newUrl = `http://localhost:8080/issues/${issueId}/delete-watchers`;
       const data = {
         users: usersId,
       };
@@ -101,7 +101,7 @@
         .then((response) => response.json())
         .then((data) => {
           console.log('Success:', data);
-          window.location.href = `http://localhost:8081/issue/${issueId}`;
+          window.location.href = `http://localhost:8080/issue/${issueId}`;
         })
         .catch((error) => {
           console.error('Error:', error);
