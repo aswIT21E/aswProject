@@ -256,6 +256,8 @@
       confirmButtonSubject.style.display = 'none';
     });
     function deleteIssue(){
+      const url = window.location.href;
+      const issueId = url.substring(url.lastIndexOf('/') + 1);
       fetch(`http://35.180.174.221/issue/${issueId}/remove`, {
         method: 'POST',
         headers: {
@@ -269,6 +271,8 @@
       .catch(error => console.log(error));
     }
     function modifyIssue(parameter, newValue) {
+      const url = window.location.href;
+      const issueId = url.substring(url.lastIndexOf('/') + 1);
       fetch(`http://35.180.174.221/issue/${issueId}/modifyIssue`, {
         method: 'POST',
         headers: {
@@ -366,7 +370,8 @@ function mostrarAcividades() {
 });
  
 function eliminadeadline() {
-  
+  const url = window.location.href;
+      const issueId = url.substring(url.lastIndexOf('/') + 1);
   fetch(`http://35.180.174.221/issues/${issueId}/removeDeadline`, {
     method: 'POST',
     headers: {
