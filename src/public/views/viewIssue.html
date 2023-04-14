@@ -242,7 +242,7 @@
 
       // Al hacer clic en el botón de confirmación, deshabilitar la edición y ocultar el botón de confirmación
       confirmButton.addEventListener('click', function () {
-        textElementSubject.contentEditable = false;
+        textElement.contentEditable = false;
         confirmButtonSubject.style.display = 'none';
         var newValue = textElementSubject.innerText;
         modifyIssue('description', newValue);
