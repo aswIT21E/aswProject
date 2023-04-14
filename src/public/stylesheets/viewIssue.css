@@ -743,3 +743,17 @@ a {
 .activityIssue a::after {
   content: ""; /* No hay contenido después del título del issue */
 }
+.btn {
+  display: inline-block;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #0056b3;
+}
+.btn-icon {
+  margin-right: 5px;
+}

@@ -8,11 +8,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" type="text/css" href="../stylesheets/viewIssue.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/viewIssue.css" />
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  
   <title>View Issue</title>
 </head>
 
@@ -46,7 +45,7 @@
               <span id="comment-count"></span><button class ="botoncomments" id ="commentB" >Comentarios</button>
               <span id="activity-count"></span><button class ="botoncomments" id ="activityB" onclick="mostrarAcividades()">Actividades</button>
             </h2>
-              <form action="issues/:id/new-comment" method="POST">
+              <form action="issues/${id}/new-comment" method="POST">
                   <div class="form-group">
                     <input type="hidden" name="id">
                     <textarea id="comment" name="comment" placeholder="Escribe un nuevo comentario aquí" required></textarea>
@@ -71,6 +70,9 @@
       </div>
     </div>
     <aside id="sidebar" class="sidebar">
+      <button class="botonLock" onclick="redirectToUrl()">
+        <i class="fas fa-home btn-icon"></i> Casa
+      </button>
       <section id="atributos"></section>
       <section id="assign" class="assign">
         <div class="label-ticket">
@@ -80,13 +82,12 @@
           <div id="ticket-user-list" class="ticket-user-list">
             <div class="assign2 Comentarios
             User">
-              <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
-              <div class="user-list-name"><span>Rubén Torrente</span></div>
+              <div class="user-list-name">
             </div>
           </div>
           <div class="ticket-user-actions">
             <div class="icon-add"><ion-icon name="add-outline" class="plus-icon"></ion-icon></div>
-            <a href="http://localhost:8081/issue/${issueId}/AssignUser" class="ticket-actions-link"><span>Añadir asignación</span></a>
+           <div id="link1"></div>
           </div>
         </div>
       </section>
@@ -96,16 +97,13 @@
         </div>
         <div class="watchers-list">
           <div id="ticket-watchers-list" class="ticket-watchers-list">
-            <div class="watchUser">
-              <div class="img-avatar"><img src="https://picsum.photos/48" alt="" class="avatar"></div>
-              <div class="watcher-list-name"><span>Rubén Torrente</span></div>
-            </div>
+            
           </div>
           <div class="ticket-user-actions">
             <div class="icon-add"><ion-icon name="add-outline" class="plus-icon"></ion-icon></div>
-            <a href="" class="ticket-actions-link"><span>Añadir observadores</span></a>
+            <div id="link2"></div>
             <div class="icon-nowatch"><ion-icon name="eye-off-outline"></ion-icon></div>
-            <a href="" class="ticket-actions-link"><span>No observar</span></a>
+            <div id="link3"></div>
           </div>
         </div>
       </section>
@@ -115,9 +113,10 @@
       <div id = "butonEditDeadline">
 
       </div>
+
     </aside>
   </div>
-  <script>
+    <script>
     async function LockUnlock() {
       const token = localStorage.getItem('token');
       const opciones = {
@@ -148,12 +147,16 @@
     // Obtener la ID de la issue de la URL actual
     const url = window.location.href;
     const issueId = url.substring(url.lastIndexOf('/') + 1);
-
+    const token = localStorage.getItem('token');
     // Actualizar el valor del atributo "action" del formulario
     const form = document.querySelector('form');
     form.action = `/issue/${issueId}/new-comment`;
+    
   </script>
   <script>
+    function redirectToUrl() {
+      window.location.href = "http://localhost:8081/issue";
+    }
     document.addEventListener('DOMContentLoaded', function () {
       var textElement = document.getElementById('text');
       var editIcon = document.getElementById('edit-icon');

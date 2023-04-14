@@ -12,6 +12,7 @@ import {
   updateDeadline,
   removeDeadline,
 } from '~/application';
+
 import {
   addWatchersDto,
   createIssueDto,
@@ -27,20 +28,6 @@ import { removeWatchersDto } from '../dtos/remove-watchers.dto';
 import { authMiddleware, checkBlockedIssue } from '../middlewares';
 
 export const issueRouter = express.Router();
-
-issueRouter.post(
-  '/issues/:id/addAttachment',
-  authMiddleware,
-  addAttachmentDto,
-  addAttachment,
-);
-
-issueRouter.post(
-  '/issues/:id/removeAttachment',
-  authMiddleware,
-  removeAttachmentDto,
-  removeAttachment,
-);
 
 issueRouter.post(
   '/issues/create',
@@ -73,6 +60,10 @@ issueRouter.post(
   checkBlockedIssue,
   IssueController.modifyIssue,
 );
+
+issueRouter.get('/issue/:id/assign', IssueController.getUserInfoAssign);
+
+issueRouter.get('/issue/:id/watchers', IssueController.getUserInfoWatchers);
 
 issueRouter.get('/issues', IssueController.getAllIssues);
 
@@ -108,6 +99,16 @@ issueRouter.get(
   IssueController.getViewIssuePageCss,
 );
 
+issueRouter.get(
+  '/stylesheets/assign.css',
+  IssueController.getAssignPageCss,
+);
+
+issueRouter.get(
+  '/stylesheets/watchers.css',
+  IssueController.getWatchersPageCss,
+);
+
 issueRouter.put('/issues/:id/lock-issue', lockIssue);
 
 issueRouter.put('/issues/:id/unlock-issue', unlockIssue);
@@ -129,7 +130,6 @@ issueRouter.post(
   checkBlockedIssue,
   assignUserToIssue,
 );
-
 issueRouter.post(
   '/issues/:id/updateDeadline',
   authMiddleware,
@@ -143,4 +143,18 @@ issueRouter.post(
   authMiddleware,
   checkBlockedIssue,
   removeDeadline,
+);
+
+issueRouter.post(
+  '/issues/:id/addAttachment',
+  authMiddleware,
+  addAttachmentDto,
+  addAttachment,
+);
+
+issueRouter.post(
+  '/issues/:id/removeAttachment',
+  authMiddleware,
+  removeAttachmentDto,
+  removeAttachment,
 );
