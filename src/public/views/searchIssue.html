@@ -9,10 +9,10 @@
     />
   </head>
     <header>
-      <h1 style="color: #008aa8; font-family: Arial, verdana; display: inline-block; padding-right:750px">Issues</h1>
-     
+      <h1 style="color: #008aa8; font-family: Arial, verdana">Issues</h1>
     </header>
       <div class="search-filter">
+        
         <div class="search-box">
           <span><i class="fas fa-search" style="padding-right: 1rem;"></i></span>
           <form id = "hacerSearch" style = "display: flex; flex-direction: row; min-width: -webkit-fill-available;">
@@ -21,12 +21,12 @@
           <button id = "enviasubmit" type="submit">Enviar</button>
           </form>
         </div>
-        <div class="profile-button" style="display: inline-block; margin-left: auto;">
-          <a href="#" id="irPerfil">
-            <i class="fas fa-user"></i> 
-            <span>Ir al perfil</span> 
-          </a>
+        <div class="switch">
+          <input type="checkbox" id="toggle" />
+          <label for="toggle"></label>
+          <span class="label"> Tags</span>
         </div>
+
         <button
           type="button"
           class="new-issue-button"

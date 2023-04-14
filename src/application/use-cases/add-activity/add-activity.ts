@@ -11,10 +11,10 @@ export type Action =
   | 'addComment'
   | 'assignIssue'
   | 'addAttachment'
-  | 'lockIssue'
-  | 'removeAttachment'
   | 'removeDeadline'
   | 'updateDeadline'
+  | 'removeAttachment'
+  | 'lockIssue'
   | 'unlockIssue';
 
 type ActionMessageMapType = {
@@ -63,4 +63,5 @@ export async function addActivity(
 
   const newActivity = new Activity(activityDocument.id, actor, message);
   issue.addActivity(newActivity);
+  
 }
