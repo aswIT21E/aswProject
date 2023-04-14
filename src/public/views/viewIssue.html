@@ -351,6 +351,8 @@ function mostrarAcividades() {
   // Crea un objeto de datos para enviar en la petición POST
 
   // Realiza la petición POST al servidor
+  const url = window.location.href;
+  const issueId = url.substring(url.lastIndexOf('/') + 1);
   await fetch(`http://35.180.174.221/issues/${issueId}/updateDeadline`, {
   method: 'POST',
   headers: {
