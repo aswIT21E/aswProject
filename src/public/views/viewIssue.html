@@ -244,7 +244,7 @@
       confirmButton.addEventListener('click', function () {
         textElement.contentEditable = false;
         confirmButtonSubject.style.display = 'none';
-        var newValue = textElementSubject.innerText;
+        var newValue = textElement.innerText;
         modifyIssue('description', newValue);
       });
       confirmButton.style.display = 'none';
