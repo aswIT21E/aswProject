@@ -6,8 +6,8 @@ import type { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 
 import type { IUser } from '~/domain/entities/user';
-import { UserRepository } from '~/domain/repositories/user-repository/user-repository';
 import { IssueRepository } from '~/domain/repositories';
+import { UserRepository } from '~/domain/repositories/user-repository/user-repository';
 
 export class UserController {
   public static async createUser(req: Request, res: Response): Promise<void> {
@@ -56,7 +56,7 @@ export class UserController {
   }
 
   public static async editUser(req: Request, res: Response): Promise<void> {
-    try{
+    try {
       const token = req.params.token;
       const decodedToken: JwtPayload = jwt.decode(token, {
         complete: true,
@@ -65,9 +65,9 @@ export class UserController {
       const username = decodedToken.payload.username;
       const oldUser = await UserRepository.getUserByUsername(username);
       if (!oldUser) {
-        res.status(404).json({message: 'Usuario no encontrado'});
+        res.status(404).json({ message: 'Usuario no encontrado' });
         return;
-        }
+      }
       const newUser: IUser = {
         id: oldUser.id,
         email: req.body.email || oldUser.email,
@@ -78,14 +78,13 @@ export class UserController {
       };
       await UserRepository.editarUser(oldUser, newUser);
       res.redirect(`http://localhost:8081/myProfile/${token}`);
-      }
-    catch (e) {
-        res.status(500);
-        res.json({
-          error: e,
-        });
-      }
-   }
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+      });
+    }
+  }
   public static async getProfilePage(
     _req: Request,
     res: Response,
@@ -130,7 +129,9 @@ export class UserController {
   </form>
   
   `;
+    const profileImage = `<img src=${user.profilePicture} alt="" class="image">`;
     $('#editP').append(scriptNode);
+    $('#image-container').append(profileImage);
     res.send($.html());
   }
 
@@ -143,13 +144,21 @@ export class UserController {
       complete: true,
       json: true,
     });
-    const username = decodedToken.payload.username;
-    const user = await UserRepository.getUserByUsername(username);
+    let user;
+    let username;
+    if(decodedToken != null){
+      username = decodedToken.payload.username;
+      user = await UserRepository.getUserByUsername(username);
+    }
+    else{
+      username = token;
+      user = await UserRepository.getUserById(username);
+      username = user.username;
+    }
     const profileHTML = fs.readFileSync('src/public/views/profile.html');
     const $ = load(profileHTML);
-
     const scriptNode = `<section class="profile-bar">
-        <img src="https://picsum.photos/200" alt="" class="profile-image">
+        <img src="${user.profilePicture}" alt="" class="profile-image">
         <div class="profile-data">
         <div class="profile-data">
             <h1>${user.name}</h1>
@@ -176,29 +185,36 @@ export class UserController {
         <button class="botonLock" onclick="redirectToUrl()">
         <i class="fas fa-home btn-icon"></i> Home
       </button>
-      
-            <div class="editar-bio">
-                <h4>Tu perfil</h4>
-                <p>La gente puede ver todo lo que haces y en qué estás trabajando. Añade una buena bio para que puedan ver la mejor versión de tu perfil.</p>
-            </div>
-            <div class="button">
-              <button id="editPerfil" class="btn-small">Editar Perfil</button>
-            </div>
+      <div id="myperfil"></div>
+            
         </aside>
     </div>`;
     $('#myProfile').append(scriptNode);
+    if (decodedToken) {
+      const editarBioHTML = `
+        <div class="editar-bio">
+          <h4>Tu perfil</h4>
+          <p>La gente puede ver todo lo que haces y en qué estás trabajando. Añade una buena bio para que puedan ver la mejor versión de tu perfil.</p>
+        </div>
+        <div class="button">
+          <button id="editPerfil" class="btn-small">Editar Perfil</button>
+        </div>
+      `;
+      $('#myperfil').append(editarBioHTML);
+    }
     const issues = await IssueRepository.getAllIssues();
-  for(const issue of issues){
-    for(const activity of issue.activity){
-      const user = await UserRepository.getUserById(activity.actor.toString());
-      if(user.username === username){
-    const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
-   
-    $('#timeline').append(scriptActivities);
-  }
+    for (const issue of issues) {
+      for (const activity of issue.activity) {
+        const user = await UserRepository.getUserById(
+          activity.actor.toString(),
+        );
+        if (user.username === username) {
+          const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
 
-    
-}}
+          $('#timeline').append(scriptActivities);
+        }
+      }
+    }
     res.send($.html());
   }
 
@@ -227,8 +243,6 @@ export class UserController {
     req: Request,
     res: Response,
   ): Promise<void> {
-
     res.sendFile('public/stylesheets/editProfile.css', { root: 'src' });
   }
-
 }

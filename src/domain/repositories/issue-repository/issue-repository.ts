@@ -7,25 +7,26 @@ import { Issue } from '~/domain/entities/issue';
 import { IssueModel } from '~/domain/entities/issue';
 
 export class IssueRepository {
-  static getIssuesBySearch(searchtext: string[]):Promise<IIssue[]> {
+  static getIssuesBySearch(searchtext: string[]): Promise<IIssue[]> {
     return IssueModel.find({
       $or: [
         { subject: { $regex: searchtext.join('|'), $options: 'i' } },
         { description: { $regex: searchtext.join('|'), $options: 'i' } },
       ],
-    }) .populate({
-      path: 'creator',
-      model: 'User',
     })
-    .populate({ path: 'watchers', model: 'User' })
-    .populate({
-      path: 'activity',
-      model: 'Activity',
-      populate: {
-        path: 'actor',
+      .populate({
+        path: 'creator',
         model: 'User',
-      },
-    });
+      })
+      .populate({ path: 'watchers', model: 'User' })
+      .populate({
+        path: 'activity',
+        model: 'Activity',
+        populate: {
+          path: 'actor',
+          model: 'User',
+        },
+      });
   }
   public static async addIssue(issue: IIssue): Promise<IIssue> {
     const newIssue = await IssueModel.create({
@@ -48,11 +49,13 @@ export class IssueRepository {
   }
 
   public static async getAllIssues(): Promise<IIssue[]> {
-    const issueDocument = await IssueModel.find().populate({
-      path: 'creator',
-      model: 'User',
-    }).populate({ path: 'watchers', model: 'User' })
-    .populate({ path: 'activity', model: 'Activity' });
+    const issueDocument = await IssueModel.find()
+      .populate({
+        path: 'creator',
+        model: 'User',
+      })
+      .populate({ path: 'watchers', model: 'User' })
+      .populate({ path: 'activity', model: 'Activity' });
     return issueDocument;
   }
 
@@ -67,6 +70,14 @@ export class IssueRepository {
         model: 'User',
       })
       .populate({ path: 'watchers', model: 'User' })
+      .populate({
+        path: 'comments',
+        model: 'Comment',
+        populate: {
+          path: 'author',
+          model: 'User',
+        },
+      })
       .populate({
         path: 'activity',
         model: 'Activity',

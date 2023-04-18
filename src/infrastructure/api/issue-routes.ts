@@ -12,7 +12,6 @@ import {
   updateDeadline,
   removeDeadline,
 } from '~/application';
-
 import {
   addWatchersDto,
   createIssueDto,
@@ -37,7 +36,7 @@ issueRouter.post(
 );
 
 issueRouter.post(
-  '/issues/bulk',
+  '/issue/bulk',
   authMiddleware,
   bulkIssuesDto,
   IssueController.bulkIssues,
@@ -45,6 +44,7 @@ issueRouter.post(
 
 issueRouter.post(
   '/issue/:id/new-comment',
+  authMiddleware,
   checkBlockedIssue,
   IssueController.createComment,
 );
@@ -67,6 +67,7 @@ issueRouter.get('/issue/:id/watchers', IssueController.getUserInfoWatchers);
 
 issueRouter.get('/issues', IssueController.getAllIssues);
 
+issueRouter.get('/issues/bulk', IssueController.getBulkIssuesPage);
 issueRouter.get('/issues/newIssue', IssueController.getNewIssuePage);
 
 issueRouter.get(
@@ -107,6 +108,11 @@ issueRouter.get(
 issueRouter.get(
   '/issue/:id/stylesheets/watchers.css',
   IssueController.getWatchersPageCss,
+);
+
+issueRouter.get(
+  '/stylesheets/bulkIssues.css',
+  IssueController.getBulkIssuesPageCss,
 );
 
 issueRouter.put('/issues/:id/lock-issue', lockIssue);
@@ -151,6 +157,8 @@ issueRouter.post(
   addAttachmentDto,
   addAttachment,
 );
+
+issueRouter.post('/issues/bulkIssues', IssueController.bulkIssues);
 
 issueRouter.post(
   '/issues/:id/removeAttachment',

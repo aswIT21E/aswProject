@@ -32,6 +32,7 @@ export interface IIssue {
   removeAttachment: (index: number) => void;
   updateDeadline: (deadline: Date) => void;
   removeDeadline: () => void;
+  addComment: (newComment: IComment) => void;
 
   readonly watchersIds: MongoId[];
   readonly activitiesIds: MongoId[];

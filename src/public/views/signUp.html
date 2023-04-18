@@ -5,18 +5,51 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/stylesheets/signUp.css">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/signUp.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="signup-container">
       <h1>Bienvenido a tu Issue Tracker</h1>
       <form method="post" action="http://localhost:8081/users/signup">
-        <input type="email" id="email" name="email" placeholder="Correo" required>
-        <input type="text" id="name" name="name" placeholder="Nombre completo" required>
-        <input type="text" id="username" name="username" placeholder="Nombre de usuario" required>
-        <input type="password" id="password" name="password" placeholder="Contraseña" required>
-        <input type="text" id="bio" name="bio" placeholder="Descripcion" required>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Correo"
+          required
+        />
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Nombre completo"
+          required
+        />
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Nombre de usuario"
+          required
+        />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Contraseña"
+          required
+        />
+        <input
+          type="text"
+          id="bio"
+          name="bio"
+          placeholder="Descripcion"
+          required
+        />
         <button class="submit-btn" type="submit">Registrar</button>
       </form>
     </div>

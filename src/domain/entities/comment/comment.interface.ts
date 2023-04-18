@@ -1,9 +1,8 @@
+import type { IUser } from '../user';
 
 export interface IComment {
-    _id: string;
-    author: string;
-    numberIssue: string;
-    content: string; 
-    date: string;
-  }
-  
+  _id: string;
+  author: IUser;
+  content: string;
+  date: string;
+}

@@ -1,63 +1,80 @@
+<head>
+  <meta charset="UTF-8" />
+  <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<header>
+  <h1 style="color: #008aa8; font-family: Arial, verdana">Issues</h1>
+</header>
+<div class="search-filter">
+  <div class="search-box">
+    <span><i class="fas fa-search" style="padding-right: 1rem"></i></span>
+    <form
+      id="hacerSearch"
+      style="
+        display: flex;
+        flex-direction: row;
+        min-width: -webkit-fill-available;
+      "
+    >
+      <input
+        class="search-input"
+        type="text"
+        id="inputSearchbar"
+        placeholder="Subject or reference"
+      />
+      <button id="enviasubmit" type="submit">Filtrar</button>
+    </form>
+  </div>
+  <div class="profile-button" style="display: inline-block; margin-left: auto">
+    <a href="#" id="irPerfil">
+      <i class="fas fa-user"></i>
+      <span>Ir al perfil</span>
+    </a>
+  </div>
 
-  <head>
-    <meta charset="UTF-8" />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-      crossorigin="anonymous"
-    />
-  </head>
-    <header>
-      <h1 style="color: #008aa8; font-family: Arial, verdana">Issues</h1>
-    </header>
-      <div class="search-filter">
-        
-        <div class="search-box">
-          <span><i class="fas fa-search" style="padding-right: 1rem;"></i></span>
-          <form id = "hacerSearch" style = "display: flex; flex-direction: row; min-width: -webkit-fill-available;">
-          
-          <input class="search-input" type="text" id="inputSearchbar" placeholder="Subject or reference"/>
-          <button id = "enviasubmit" type="submit">Filtrar</button>
-          </form>
-        </div>
-        <div class="profile-button" style="display: inline-block; margin-left: auto;">
-          <a href="#" id="irPerfil">
-            <i class="fas fa-user"></i> 
-            <span>Ir al perfil</span> 
-          </a>
-        </div>
+  <button
+    type="button"
+    class="new-issue-button"
+    onclick="window.location.href='/issues/newIssue'"
+  >
+    <span>+ New Issue</span>
+  </button>
+  <button
+    type="button"
+    class="bulk-button"
+    onclick="window.location.href='/issues/bulk'"
+  >
+  <i class="fas fa-file-import"></i>
+  </button>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var profileElem = document.getElementById('irPerfil');
+      profileElem.addEventListener('click', function () {
+        viewProfile();
+      });
+      function viewProfile() {
+        const auth = localStorage.getItem('token');
+        window.location.href = `http://localhost:8081/myProfile/${auth}`;
+      }
+    });
 
-        <button
-          type="button"
-          class="new-issue-button"
-          onclick="window.location.href='/issues/newIssue'"
-        >
-          <span>+ New Issue</span>
-        </button>
-        <script>
-          document.addEventListener('DOMContentLoaded', function () {
-            var profileElem = document.getElementById('irPerfil');
-            profileElem.addEventListener('click', function () {
-              viewProfile();
-            });
-            function viewProfile(){
-              const auth = localStorage.getItem('token');
-              window.location.href = `http://localhost:8081/myProfile/${auth}`;
-            }
-         });
-              
-         document.getElementById("hacerSearch").addEventListener("submit", function(event) {
-  event.preventDefault(); // Evitar el comportamiento predeterminado del formulario
+    document
+      .getElementById('hacerSearch')
+      .addEventListener('submit', function (event) {
+        event.preventDefault(); // Evitar el comportamiento predeterminado del formulario
 
-  // Obtener el valor del campo de entrada de texto y reemplazar espacios por comas
-  var inputValue = document.getElementById("inputSearchbar").value;
+        // Obtener el valor del campo de entrada de texto y reemplazar espacios por comas
+        var inputValue = document.getElementById('inputSearchbar').value;
 
-  // Redirigir a la URL con el valor del input como parámetro de búsqueda
-  window.location.href = 'http://localhost:8081/issue?&text=' + inputValue;
-});
-
-</script>
-
-        
-      </div>
+        // Redirigir a la URL con el valor del input como parámetro de búsqueda
+        window.location.href =
+          'http://localhost:8081/issue?&text=' + inputValue;
+      });
+  </script>
+</div>

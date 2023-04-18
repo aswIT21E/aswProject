@@ -123,6 +123,11 @@ export class Issue implements IIssue {
     this.activity = newActivities;
   }
 
+  public addComment(newComment: IComment): void {
+    const newComments = [...this.comments, newComment];
+    this.comments = newComments;
+  }
+
   public addAttachment(attachment: string): void {
     const newAttachments = [...this.attachments, attachment];
     this.attachments = newAttachments;
