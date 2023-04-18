@@ -107,6 +107,7 @@
           </div>
         </div>
       </section>
+      <div style ="display: flow-root; margin-bottom: 1em;">
       <div id = "butonLockUnlock">
 
       </div>
@@ -118,28 +119,44 @@
         <input type="date" id="fecha" name="fecha">
         <input type="submit" value="Enviar" class = "botonLock">
       </form>
+    </div>
+      <div id = "lockReason" class = "bloqueado">
+
+      </div>
    
 
     </aside>
   </div>
     <script>
     async function LockUnlock() {
+      
       const token = localStorage.getItem('token');
-      const opciones = {
+
+      var butonlock = document.getElementById("botonLock");
+      if (butonlock.dataset.lock == "true") {
+        const opciones = {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
       };
-
-      var butonlock = document.getElementById("botonLock");
-      if (butonlock.dataset.lock == "true") {
         butonlock.innerHTML = "<i class=\"fas fa-unlock\"></i>";
           await fetch(`http://localhost:8081/issues/${issueId}/unlock-issue`, opciones);
       } 
       else {
+        const opciones = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+         reason: document.getElementById("campoTextoLock").value || null,
+        })
+      };
         butonlock.innerHTML = "<i class=\"fas fa-lock\"></i>";
+        document.getElementById("formularioLock").style.display = "none";
         await fetch(`http://localhost:8081/issues/${issueId}/lock-issue`,opciones);
       }
       window.location.reload();
@@ -327,6 +344,11 @@ function eliminadeadline() {
       console.error('Error al borrar la fecha');
     }}).then(() => {window.location.reload()});
   }
+  </script>
+  <script>
+    function mostrarCampoTexto() {
+    document.getElementById("formularioLock").style.display = "block"; // Muestra el formulario cuando se hace clic en el botón
+}
   </script>
 </body>
 

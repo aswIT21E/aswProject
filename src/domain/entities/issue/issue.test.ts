@@ -38,7 +38,7 @@ describe('Issue Entity', function () {
   });
 
   it('locksIssue sets locked property as true', function () {
-    instance.lockIssue();
+    instance.lockIssue("test");
 
     expect(instance.locked).toBeTruthy();
   });
