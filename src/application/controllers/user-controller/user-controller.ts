@@ -77,7 +77,7 @@ export class UserController {
         bio: req.body.bio || oldUser.bio,
       };
       await UserRepository.editarUser(oldUser, newUser);
-      res.redirect(`http://35.180.174.221/myProfile/${token}`);
+      res.redirect(`http://localhost:8081/myProfile/${token}`);
     } catch (e) {
       res.status(500);
       res.json({
@@ -144,11 +144,19 @@ export class UserController {
       complete: true,
       json: true,
     });
-    const username = decodedToken.payload.username;
-    const user = await UserRepository.getUserByUsername(username);
+    let user;
+    let username;
+    if(decodedToken != null){
+      username = decodedToken.payload.username;
+      user = await UserRepository.getUserByUsername(username);
+    }
+    else{
+      username = token;
+      user = await UserRepository.getUserById(username);
+      username = user.username;
+    }
     const profileHTML = fs.readFileSync('src/public/views/profile.html');
     const $ = load(profileHTML);
-
     const scriptNode = `<section class="profile-bar">
         <img src="${user.profilePicture}" alt="" class="profile-image">
         <div class="profile-data">
@@ -177,17 +185,23 @@ export class UserController {
         <button class="botonLock" onclick="redirectToUrl()">
         <i class="fas fa-home btn-icon"></i> Home
       </button>
-      
-            <div class="editar-bio">
-                <h4>Tu perfil</h4>
-                <p>La gente puede ver todo lo que haces y en qué estás trabajando. Añade una buena bio para que puedan ver la mejor versión de tu perfil.</p>
-            </div>
-            <div class="button">
-              <button id="editPerfil" class="btn-small">Editar Perfil</button>
-            </div>
+      <div id="myperfil"></div>
+            
         </aside>
     </div>`;
     $('#myProfile').append(scriptNode);
+    if (decodedToken) {
+      const editarBioHTML = `
+        <div class="editar-bio">
+          <h4>Tu perfil</h4>
+          <p>La gente puede ver todo lo que haces y en qué estás trabajando. Añade una buena bio para que puedan ver la mejor versión de tu perfil.</p>
+        </div>
+        <div class="button">
+          <button id="editPerfil" class="btn-small">Editar Perfil</button>
+        </div>
+      `;
+      $('#myperfil').append(editarBioHTML);
+    }
     const issues = await IssueRepository.getAllIssues();
     for (const issue of issues) {
       for (const activity of issue.activity) {
@@ -195,7 +209,7 @@ export class UserController {
           activity.actor.toString(),
         );
         if (user.username === username) {
-          const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://35.180.174.221/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+          const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
 
           $('#timeline').append(scriptActivities);
         }

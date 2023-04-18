@@ -36,7 +36,7 @@ issueRouter.post(
 );
 
 issueRouter.post(
-  '/issues/bulk',
+  '/issue/bulk',
   authMiddleware,
   bulkIssuesDto,
   IssueController.bulkIssues,
@@ -67,6 +67,7 @@ issueRouter.get('/issue/:id/watchers', IssueController.getUserInfoWatchers);
 
 issueRouter.get('/issues', IssueController.getAllIssues);
 
+issueRouter.get('/issues/bulk', IssueController.getBulkIssuesPage);
 issueRouter.get('/issues/newIssue', IssueController.getNewIssuePage);
 
 issueRouter.get(
@@ -109,6 +110,11 @@ issueRouter.get(
   IssueController.getWatchersPageCss,
 );
 
+issueRouter.get(
+  '/stylesheets/bulkIssues.css',
+  IssueController.getBulkIssuesPageCss,
+);
+
 issueRouter.put('/issues/:id/lock-issue', lockIssue);
 
 issueRouter.put('/issues/:id/unlock-issue', unlockIssue);
@@ -144,13 +150,15 @@ issueRouter.post(
   checkBlockedIssue,
   removeDeadline,
 );
-console.log('1');
+
 issueRouter.post(
   '/issues/:id/addAttachment',
   authMiddleware,
   addAttachmentDto,
   addAttachment,
 );
+
+issueRouter.post('/issues/bulkIssues', IssueController.bulkIssues);
 
 issueRouter.post(
   '/issues/:id/removeAttachment',
