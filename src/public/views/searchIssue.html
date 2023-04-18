@@ -6,6 +6,7 @@
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
     crossorigin="anonymous"
   />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <header>
   <h1 style="color: #008aa8; font-family: Arial, verdana">Issues</h1>
@@ -44,6 +45,13 @@
   >
     <span>+ New Issue</span>
   </button>
+  <button
+    type="button"
+    class="bulk-button"
+    onclick="window.location.href='/issues/bulk'"
+  >
+  <i class="fas fa-file-import"></i>
+  </button>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       var profileElem = document.getElementById('irPerfil');
@@ -52,7 +60,7 @@
       });
       function viewProfile() {
         const auth = localStorage.getItem('token');
-        window.location.href = `http://35.180.174.221/myProfile/${auth}`;
+        window.location.href = `http://localhost:8081/myProfile/${auth}`;
       }
     });
 
@@ -66,7 +74,7 @@
 
         // Redirigir a la URL con el valor del input como parámetro de búsqueda
         window.location.href =
-          'http://35.180.174.221/issue?&text=' + inputValue;
+          'http://localhost:8081/issue?&text=' + inputValue;
       });
   </script>
 </div>

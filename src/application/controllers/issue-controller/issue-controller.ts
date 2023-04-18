@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import type { Request, Response } from 'express';
 
 import { addActivity } from '~/application/use-cases';
-import type { IUser } from '~/domain/entities';
+import { IUser, User } from '~/domain/entities';
 import type { IComment } from '~/domain/entities/comment';
 import { Comment, CommentModel } from '~/domain/entities/comment';
 import type { IFilter } from '~/domain/entities/filter';
@@ -32,7 +32,6 @@ export class IssueController {
     try {
       const creator = await getActor(req);
       const issues: BulkIssuesDto['issues'] = req.body.issues;
-
       if (!creator) {
         res.status(400).json({ message: 'User creator not found' });
       }
@@ -47,14 +46,15 @@ export class IssueController {
           ...issueDoc,
           creator,
           date,
-          numberIssue: lastNumberIssue,
+          numberIssue: lastNumberIssue + 1,
         });
+        console.log('Issue -> ', issue);
         ++lastNumberIssue;
         await IssueRepository.addIssue(issue);
       }
 
       res.status(200);
-      res.redirect('http://35.180.174.221/issue');
+      res.redirect('http://localhost:8081/issue');
     } catch (e) {
       res.status(500);
       res.json({
@@ -82,11 +82,10 @@ export class IssueController {
         creator,
         numberIssue: lastNumberIssue + 1,
       });
-      console.log('created issue instance');
-      await IssueRepository.addIssue(issue);
-      console.log('added issue');
+      const x = await IssueRepository.addIssue(issue);
+      console.log(x);
       res.status(200);
-      res.redirect('http://35.180.174.221/issue');
+      res.redirect('http://localhost:8081/issue');
     } catch (e) {
       res.status(500);
       res.json({
@@ -121,11 +120,26 @@ export class IssueController {
     res.sendFile('public/views/addIssue.html', { root: 'src' });
   }
 
+  
   public static async getNewIssuePageCss(
     _req: Request,
     res: Response,
   ): Promise<void> {
     res.sendFile('public/stylesheets/addIssue.css', { root: 'src' });
+  }
+
+  public static async getBulkIssuesPage(
+    _req: Request,
+    res: Response,
+  ): Promise<void> {
+    res.sendFile('public/views/bulkIssues.html', { root: 'src' });
+  }
+
+  public static async getBulkIssuesPageCss(
+    _req: Request,
+    res: Response,
+  ): Promise<void> {
+    res.sendFile('public/stylesheets/bulkIssues.css', { root: 'src' });
   }
 
   public static async getIssueInfo(req: Request, res: Response): Promise<void> {
@@ -212,9 +226,7 @@ export class IssueController {
         var issues: IIssue[] = await IssueRepository.getIssueByFilter(filtro);
 
       if (order) {
-        console.log(sentido);
         const orderField = order.toString();
-        console.log(orderField);
         switch (orderField) {
           case 'type':
           case 'severity':
@@ -260,6 +272,9 @@ export class IssueController {
       $('#Filters').append(load(filterPage).html());
       for (const issue of issues) {
         {
+          let username: User = null;
+          if(issue.creator) username = new User(issue.creator.id, issue.creator.email, issue.creator.name, issue.creator.username, issue.creator.password, issue.creator.bio);
+
           const scriptNode = `                           
               <div class="issue">
               <abbr title = "${issue.type}"> <div class="bola" id="${
@@ -275,12 +290,12 @@ export class IssueController {
                   <div class="numero-peticion" id="NumPeticion">#${
                     issue.numberIssue
                   }</div>
-                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://35.180.174.221/issue/${
+                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8081/issue/${
                     issue.id
                   }">${issue.subject}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>
-              <div class="fecha-creacion" id = "FechaPeticion">${
+              <div class="fecha-creacion" id = "FechaPeticion" onclick="${issue.creator ? `window.location.href = 'http://localhost:8081/myProfile/${username.id}';` : ''}" >${
                 issue.creator == null ? 'undefined' : issue.creator.username
               }</div>
               </div>`;
@@ -357,7 +372,7 @@ export class IssueController {
     }
 
     for (const act of issue.activity) {
-      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =http://35.180.174.221/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
       $('.activitieslist').append(scriptActivities);
     }
     $('#comment-count').append(`${comments.length}`);
@@ -368,26 +383,27 @@ export class IssueController {
 
     if (watchers) {
       for (const watcher of watchers) {
+        const username: User = new User(watcher.id, watcher.email, watcher.name, watcher.username, watcher.password, watcher.bio);
         const scriptNodeWatcher = `
-        <div class="watchUser">
-          <div class="img-avatar"><img src="${watcher.profilePicture}" alt="" class="img-avatar"></div>
+        <div class="watchUser" onclick="window.location.href = 'http://localhost:8081/myProfile/${username.id}';">
+          <div class="img-avatar"><img src="${username.profilePicture}" alt="" class="img-avatar"></div>
           <div class="watcher-list-name"><span>${watcher.username}</span></div>
-      </div>
+        </div>
         `;
         $('#ticket-watchers-list').append(scriptNodeWatcher);
       }
     }
 
     const scriptNode5 = `
-    <a href="http://35.180.174.221/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
+    <a href="http://localhost:8081/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
     `;
 
     const scriptNode6 = `
-    <a href="http://35.180.174.221/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Añadir observadores</span></a>
+    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Añadir observadores</span></a>
     `;
 
     const scriptNode7 = `
-    <a href="http://35.180.174.221/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
+    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
     `;
 
     const scriptNode4 = `
@@ -396,6 +412,7 @@ export class IssueController {
     <i id="edit-icon" class="fas fa-pencil-alt"></i>
     </span>
     `;
+    const idUser = new User(issue.creator.id,issue.creator.email,issue.creator.name,issue.creator.username,issue.creator.password,issue.creator.bio);
     const scriptNode = `
                       <div class="detail-nom">
                         <div class="detail-title">
@@ -414,7 +431,7 @@ export class IssueController {
                     </div>
                     <div class="subheader">
                         <div class="created-by">
-                            <a href="" class="created-title">Creado por ${issue.creator.username}</a>
+                            <a href="http://localhost:8081/myProfile/${idUser.id}" class="created-title">Creado por ${issue.creator.username}</a>
                             <div class="created-date">
                             ${issue.date}
                             </div>
@@ -425,7 +442,7 @@ export class IssueController {
                             </div>
                         </div>
     </div>`;
-    const path = `'http://35.180.174.221/issue/${issue.id}/modifyIssue'`;
+    const path = `'http://localhost:8081/issue/${issue.id}/modifyIssue'`;
     const scriptNode2 = `
       <script>
       function modifyIssue(parameter, newValue) {
@@ -528,11 +545,12 @@ export class IssueController {
                 </button>
         </div>
         `;
-
-    const scriptNodeAssign = `
-            <div class="assignUser">
+        let username: User = issue.assignedTo;
+        if(issue.assignedTo) username = new User(issue.assignedTo.id,issue.assignedTo.email,issue.assignedTo.name,issue.assignedTo.username,issue.assignedTo.password,issue.assignedTo.bio);
+      const scriptNodeAssign = `
+            <div class="assignUser" onclick="${username ? `window.location.href = 'http://localhost:8081/myProfile/${username.id}';` : ''}">
               <div class="img-avatar"><img src="${
-                issue.assignedTo ? issue.assignedTo.profilePicture : ''
+                issue.assignedTo ? username.profilePicture : ''
               }" alt="" class="img-avatar"></div>
               <div class="user-list-name"><span>${
                 issue.assignedTo ? issue.assignedTo.username : ''
@@ -645,7 +663,7 @@ export class IssueController {
         await IssueRepository.updateIssue(issue);
 
         res.status(200);
-        res.redirect(`http://35.180.174.221/issue/${issueID}`);
+        res.redirect(`http://localhost:8081/issue/${issueID}`);
       } else {
         res.status(404).json({
           message: `Issue ${issueID} not found`,
@@ -670,7 +688,7 @@ export class IssueController {
       );
       await IssueRepository.addComment(numberIssue, comment);
       res.status(200);
-      res.redirect(`http://35.180.174.221/issue/${numberIssue}`);
+      res.redirect(`http://localhost:8081/issue/${numberIssue}`);
     } catch (e) {
       res.status(500);
       res.json({
