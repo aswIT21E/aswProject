@@ -33,6 +33,7 @@
     text-align: center;
     text-transform: uppercase;
     white-space: nowrap;
+    cursor: pointer;
 }
 
 .profile-image {

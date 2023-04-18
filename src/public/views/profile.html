@@ -29,6 +29,7 @@
   <body>
     <div class="button"></div>
     <div class="profile" id="myProfile"></div>
+    <div class="button" id="logout-btn"></div>
     <script>
       function redirectToUrl() {
         window.location.href = 'http://localhost:8081/issue';
@@ -45,6 +46,12 @@
           window.location.href = `http://localhost:8081/myProfile/${auth}/edit`;
         }
       });
+
+      function logout() {
+        localStorage.removeItem('token');
+        window.location.href = 'http://localhost:8081/login';
+
+      };
     </script>
   </body>
 </html>
