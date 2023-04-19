@@ -157,13 +157,11 @@ export class IssueRepository {
     };
     if (filter.crated_by) {
       const users = await UserModel.find({ username: { $in: filter.crated_by } });
-      const userIds = users.map(user => user.username);
-      query.creator = { $in: userIds };
+      query.creator = { $in: users };
   }
   if (filter.asign_to) {
     const users = await UserModel.find({ username: { $in: filter.asign_to } });
-    const userIds = users.map(user => user.username);
-    query.assignedTo = { $in: userIds };
+    query.assignedTo = { $in: users };
 }
 
     return await IssueModel.find(query) .populate({
