@@ -18,6 +18,7 @@ export class IssueRepository {
         path: 'creator',
         model: 'User',
       })
+      .populate({ path: 'assignedTo', model: 'User' })
       .populate({ path: 'watchers', model: 'User' })
       .populate({
         path: 'activity',
@@ -171,6 +172,7 @@ export class IssueRepository {
       model: 'User',
     })
     .populate({ path: 'watchers', model: 'User' })
+    .populate({ path: 'assignedTo', model: 'User' })
     .populate({
       path: 'activity',
       model: 'Activity',

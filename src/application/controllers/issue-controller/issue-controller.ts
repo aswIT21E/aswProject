@@ -48,7 +48,6 @@ export class IssueController {
           date,
           numberIssue: lastNumberIssue + 1,
         });
-        console.log('Issue -> ', issue);
         ++lastNumberIssue;
         await IssueRepository.addIssue(issue);
       }
@@ -227,29 +226,43 @@ export class IssueController {
 
       if (order) {
         const orderField = order.toString();
+        // if( orderField == 'creator' ) {
+        //   orderField = 'assignedTo';
+        // }
         switch (orderField) {
           case 'type':
           case 'severity':
           case 'subject':
           case 'status':
-          case 'creator':
+          case 'priority':
+          case 'assignedTo':
             if (sentido === 'true') {
-              // Sort in descending order
-              issues.sort((a: IIssue, b: IIssue) => {
-                if (a[orderField] > b[orderField]) {
+              issues.sort((a, b) => {
+                if (a[orderField] === undefined && orderField === 'assignedTo') {
+                  return 1;
+                } else if (a[orderField] === null) {
+                  return 1;
+                } else if (b[orderField] === null) {
                   return -1;
                 } else if (a[orderField] < b[orderField]) {
+                  return -1;
+                } else if (a[orderField] > b[orderField]) {
                   return 1;
                 } else {
                   return 0;
                 }
               });
             } else {
-              // Sort in ascending order
-              issues.sort((a: IIssue, b: IIssue) => {
-                if (a[orderField] < b[orderField]) {
+              issues.sort((a, b) => {
+                if (a[orderField] === undefined && orderField === 'assignedTo') {
                   return -1;
+                } else if (a[orderField] === null) {
+                  return -1;
+                } else if (b[orderField] === null) {
+                  return 1;
                 } else if (a[orderField] > b[orderField]) {
+                  return -1;
+                } else if (a[orderField] < b[orderField]) {
                   return 1;
                 } else {
                   return 0;
@@ -272,8 +285,8 @@ export class IssueController {
       $('#Filters').append(load(filterPage).html());
       for (const issue of issues) {
         {
-          let username: User = null;
-          if(issue.creator) username = new User(issue.creator.id, issue.creator.email, issue.creator.name, issue.creator.username, issue.creator.password, issue.creator.bio);
+          let assigned: User = null;
+          if(issue.assignedTo) assigned = new User(issue.assignedTo.id, issue.assignedTo.email, issue.assignedTo.name, issue.assignedTo.username, issue.assignedTo.password, issue.assignedTo.bio);
 
           const scriptNode = `                           
               <div class="issue">
@@ -295,9 +308,9 @@ export class IssueController {
                   }">${issue.subject}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>
-              <div class="fecha-creacion" id = "FechaPeticion" onclick="${issue.creator ? `window.location.href = 'http://localhost:8081/myProfile/${username.id}';` : ''}" >${
-                issue.creator == null ? 'undefined' : issue.creator.username
-              }</div>
+              <div class="fecha-creacion" id="FechaPeticion" onclick="${assigned != null ? `window.location.href = 'http://localhost:8081/myProfile/${assigned.id}';` : ''}" ${assigned == null ? 'style="color: gray;"' : ''}>
+                ${assigned == null ? 'Not assigned' : `<img src="${assigned.profilePicture}" alt="Imagen por defecto" style="width: 25px; height: 25px; margin-right: 5px;">${assigned.username}`}
+              </div>
               </div>`;
           $('#issues').append(scriptNode);
         }
@@ -399,12 +412,12 @@ export class IssueController {
     `;
 
     const scriptNode6 = `
-    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Añadir observadores</span></a>
+    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Modificar observadores</span></a>
     `;
 
-    const scriptNode7 = `
-    <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
-    `;
+    // const scriptNode7 = `
+    // <a href="http://localhost:8081/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
+    // `;
 
     const scriptNode4 = `
     <span class= "editableText" id="text" contenteditable="false" style="">${issue.description}</span>
@@ -589,7 +602,7 @@ export class IssueController {
     $('#description').append(scriptNode4);
     $('#link1').append(scriptNode5);
     $('#link2').append(scriptNode6);
-    $('#link3').append(scriptNode7);
+   // $('#link3').append(scriptNode7);
     if (issue.assignedTo) $('#ticket-user-list').append(scriptNodeAssign);
     if (issue.deadline) {
       const d = issue.deadline.toDateString();
