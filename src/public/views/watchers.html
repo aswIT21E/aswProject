@@ -22,10 +22,10 @@
   <body>
     <div class="lightbox">
       <div class="cerrar">
-        <a class="cerrar-enlace" href="#">X</a>
+        <a class="cerrar-enlace" id="cerrar">X</a>
       </div>
       <div class="select-watcher-form">
-        <h2 class="title">Añadir observadores</h2>
+        <h2 class="title">Modificar observadores</h2>
         <form id="watcher-list" class="watcher-list">
           <select name="select" id="select"></select>
           <div
@@ -43,6 +43,7 @@
   <script>
     const button = document.getElementById('save-btn');
     const deleteButton = document.getElementById('delete-btn');
+    const close = document.getElementById('cerrar');
 
     button.addEventListener('click', (event) => {
       event.preventDefault();
@@ -106,6 +107,13 @@
         .catch((error) => {
           console.error('Error:', error);
         });
+    });
+    close.addEventListener('click', (event) => {
+      const url = window.location.href;
+      const parts = url.split('/');
+      const issueId = parts[4];
+      const newUrl = `http://localhost:8081/issue/${issueId}`;
+      window.location.href = newUrl;
     });
   </script>
 </html>
