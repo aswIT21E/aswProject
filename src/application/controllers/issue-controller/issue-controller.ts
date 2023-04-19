@@ -558,19 +558,31 @@ export class IssueController {
             </div>
     `;
 
-    let scriptLockUnlockButton;
-    if (issue.locked) {
-      scriptLockUnlockButton = `
+     let scriptLockUnlockButton;
+     let scriptLockReason;
+     if(issue.locked) {              
+     scriptLockUnlockButton = `
     <button id="botonLock" data-lock="true" class="botonLock" onclick="LockUnlock()" style="background-color: #a52d47 ;">
       <i class="fas fa-lock"></i> 
     </button>`;
-    } else {
-      scriptLockUnlockButton = `
-    <button id="botonLock" data-lock="false" class="botonLock" onclick="LockUnlock()" style="background-color: #2dd486;">
-      <i class="fas fa-unlock"></i> 
-    </button>`;
+    scriptLockReason = `<div style =" background-color: #ff4c4c; 
+    padding: 10px; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    color: white> <i class="fas fa-lock"></i> ${issue.reasonLock}</div>   `
     }
+    else{
+       scriptLockUnlockButton = `
+    <button id="botonLock" data-lock="false" class="botonLock" onclick="mostrarCampoTexto()" style="background-color: #2dd486;">
+      <i class="fas fa-unlock"></i> 
+    </button>
+    <form id="formularioLock" style="display:none;">
+    Introduzca el motivo: <input type="text" id="campoTextoLock"> 
+                <button type="button" id="botonLock" data-lock="true" onclick="LockUnlock()">Confirmar</button>
+    `;
 
+    }
+    $('#lockReason').append(scriptLockReason);
     $('#butonLockUnlock').append(scriptLockUnlockButton);
     $('#detail-header').append(scriptNode);
     $('#atributos').append(scriptNode2);
@@ -581,8 +593,12 @@ export class IssueController {
     if (issue.assignedTo) $('#ticket-user-list').append(scriptNodeAssign);
     if (issue.deadline) {
       const d = issue.deadline.toDateString();
-      $('#deadl').append(`Deadline: ${d}`);
-    } else $('#deadl').append(`Deadline: - `);
+      if(issue.deadline < new Date(Date.now())) $('#deadl').append(`Deadline: <span style="color: red;">${d}</span>`);
+      else  if(issue.deadline < new Date(Date.now() + 86400000 * 3)) $('#deadl').append(`Deadline: <span style="color: orange;">${d}</span>`);
+      else $('#deadl').append(`Deadline: <span style="color: green;">${d}</span>`);
+    }
+    else $('#deadl').append(`Deadline: - `);
+
 
     res.send($.html());
   }

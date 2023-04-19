@@ -17,12 +17,13 @@ export interface IIssue {
   priority: string;
   comments?: IComment[];
   locked?: boolean;
+  reasonLock?: string;
   watchers?: IUser[];
   assignedTo?: IUser;
   attachments?: string[];
   deadline?: Date;
 
-  lockIssue: () => void;
+  lockIssue: (reason: String) => void;
   unlockIssue: () => void;
   updateWatchers: (watchers: IUser[]) => void;
   addActivity: (activity: IActivity) => void;
