@@ -169,11 +169,11 @@ export class UserController {
     <div class="main">
         <div class="timeline-wrapper">
             <nav class="profile-content-tabs">
-                <a href="" class="tab active">
+                <a class="tab active" id="timeLineButton">
                     <ion-icon class="icon" name="reorder-four-outline"></ion-icon>
                     <span>Timeline</span>
                 </a>
-                <a href="" class="tab">
+                <a class="tab" id="timeWatcher">
                     <ion-icon class="icon" name="eye-outline"></ion-icon>
                     <span>Observado</span>
                 </a>
@@ -203,15 +203,24 @@ export class UserController {
       $('#myperfil').append(editarBioHTML);
     }
     const issues = await IssueRepository.getAllIssues();
+    const param = req.query.view;
     for (const issue of issues) {
-      for (const activity of issue.activity) {
-        const user = await UserRepository.getUserById(
-          activity.actor.toString(),
-        );
-        if (user.username === username) {
-          const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
-
-          $('#timeline').append(scriptActivities);
+      if(param === 'watched'){
+        for (const watcher of issue.watchers) {
+          if (watcher.username === username) {
+            const scriptActivities = `<div class="timeline-item"> <a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a> </div>`;
+            $('#timeline').append(scriptActivities);
+          }
+        }
+      }else {
+        for (const activity of issue.activity) {
+          const user = await UserRepository.getUserById(
+            activity.actor.toString(),
+          );
+          if (user.username === username) {
+            const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+            $('#timeline').append(scriptActivities);
+          }
         }
       }
     }
