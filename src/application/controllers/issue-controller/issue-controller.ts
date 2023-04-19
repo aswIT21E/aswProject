@@ -236,7 +236,7 @@ export class IssueController {
           case 'status':
           case 'priority':
           case 'assignedTo':
-            if (sentido === 'true') {
+            if (sentido !== 'true') {
               issues.sort((a, b) => {
                 if (a[orderField] === undefined && orderField === 'assignedTo') {
                   return 1;
