@@ -373,7 +373,10 @@ export class IssueController {
     }
 
     for (const attachment of attachments) {
-      const scriptNode4 = `
+      const extension = attachment.split('.').pop().toLowerCase();
+      let attachmentNode;
+      if (['jpg', 'jpeg', 'png', 'gif'].includes(extension)) {
+        attachmentNode = `
           <li>
             <div>
               <a href=${attachment}>
@@ -381,7 +384,18 @@ export class IssueController {
               </a>
             </div>
           </li>`;
-      $('#attachment-list').append(scriptNode4);
+      } else {
+        const filename = attachment.split('/').pop();
+        attachmentNode = `
+          <li>
+            <div>
+              <a href=${attachment} download>
+                ${filename}
+              </a>
+            </div>
+          </li>`;
+      }
+      $('#attachment-list').append(attachmentNode);
     }
 
     for (const act of issue.activity) {
