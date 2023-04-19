@@ -204,7 +204,7 @@ export class IssueController {
         gravedad,
         prioridad,
         estado,
-        created_by,
+        crated_by,
         asign_to,
         asignee,
         order,
@@ -215,7 +215,7 @@ export class IssueController {
       if (gravedad) filtro.gravedad = gravedad.toString().split(',');
       if (prioridad) filtro.prioridad = prioridad.toString().split(',');
       if (estado) filtro.estado = estado.toString().split(',');
-      if (created_by) filtro.crated_by = created_by.toString().split(',');
+      if (crated_by) filtro.crated_by = crated_by.toString().split(',');
       if (asign_to) filtro.asign_to = asign_to.toString().split(',');
       if (asignee) filtro.asignee = asignee.toString().split(',');
       if (text) {
