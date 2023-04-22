@@ -1,0 +1,61 @@
+/* Estilos básicos para el formulario de bulk de issues */
+* {
+    box-sizing: border-box;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+}
+a.cerrar-enlace {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    color: #fff;
+    background-color: #f00;
+    border-radius: 50%;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+a.cerrar-enlace:hover {
+    background-color: #d00;
+}
+.cerrar{
+    align-items: self-start;
+    display: flex;
+    flex-direction: row-reverse
+}
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    display: revert;
+  }
+  
+  .h1 {
+    text-align: center;
+  }
+  
+  .bulk-form {
+    margin-top: 20px;
+  }
+  
+  .bulk-input {
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+    resize: none;
+  }
+  
+  .bulk-button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #83eede;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+  }
+  

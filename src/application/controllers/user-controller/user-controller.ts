@@ -144,11 +144,18 @@ export class UserController {
       complete: true,
       json: true,
     });
-    const username = decodedToken.payload.username;
-    const user = await UserRepository.getUserByUsername(username);
+    let user;
+    let username;
+    if (decodedToken != null) {
+      username = decodedToken.payload.username;
+      user = await UserRepository.getUserByUsername(username);
+    } else {
+      username = token;
+      user = await UserRepository.getUserById(username);
+      username = user.username;
+    }
     const profileHTML = fs.readFileSync('src/public/views/profile.html');
     const $ = load(profileHTML);
-
     const scriptNode = `<section class="profile-bar">
         <img src="${user.profilePicture}" alt="" class="profile-image">
         <div class="profile-data">
@@ -161,11 +168,11 @@ export class UserController {
     <div class="main">
         <div class="timeline-wrapper">
             <nav class="profile-content-tabs">
-                <a href="" class="tab active">
+                <a class="tab active" id="timeLineButton">
                     <ion-icon class="icon" name="reorder-four-outline"></ion-icon>
                     <span>Timeline</span>
                 </a>
-                <a href="" class="tab">
+                <a class="tab" id="timeWatcher">
                     <ion-icon class="icon" name="eye-outline"></ion-icon>
                     <span>Observado</span>
                 </a>
@@ -177,27 +184,42 @@ export class UserController {
         <button class="botonLock" onclick="redirectToUrl()">
         <i class="fas fa-home btn-icon"></i> Home
       </button>
-      
-            <div class="editar-bio">
-                <h4>Tu perfil</h4>
-                <p>La gente puede ver todo lo que haces y en qué estás trabajando. Añade una buena bio para que puedan ver la mejor versión de tu perfil.</p>
-            </div>
-            <div class="button">
-              <button id="editPerfil" class="btn-small">Editar Perfil</button>
-            </div>
+      <div id="myperfil"></div>
+            
         </aside>
     </div>`;
     $('#myProfile').append(scriptNode);
+    if (decodedToken) {
+      const editarBioHTML = `
+        <div class="editar-bio">
+          <h4>Tu perfil</h4>
+          <p>La gente puede ver todo lo que haces y en qué estás trabajando. Añade una buena bio para que puedan ver la mejor versión de tu perfil.</p>
+        </div>
+        <div class="button">
+          <button id="editPerfil" class="btn-small">Editar Perfil</button>
+        </div>
+      `;
+      $('#myperfil').append(editarBioHTML);
+    }
     const issues = await IssueRepository.getAllIssues();
+    const param = req.query.view;
     for (const issue of issues) {
-      for (const activity of issue.activity) {
-        const user = await UserRepository.getUserById(
-          activity.actor.toString(),
-        );
-        if (user.username === username) {
-          const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8080/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
-
-          $('#timeline').append(scriptActivities);
+      if (param === 'watched') {
+        for (const watcher of issue.watchers) {
+          if (watcher.username === username) {
+            const scriptActivities = `<div class="timeline-item"> <a href =http://localhost:8080/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a> </div>`;
+            $('#timeline').append(scriptActivities);
+          }
+        }
+      } else {
+        for (const activity of issue.activity) {
+          const user = await UserRepository.getUserById(
+            activity.actor.toString(),
+          );
+          if (user.username === username) {
+            const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8080/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+            $('#timeline').append(scriptActivities);
+          }
         }
       }
     }

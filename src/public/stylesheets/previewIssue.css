@@ -98,6 +98,9 @@
   
   .fecha-creacion {
     text-align: center;
+    display: flex;
+    align-items: center;
     width: 100px;
-    color:#8f8989
+    margin-left: 40px;
+    margin-right: 20px;
   }

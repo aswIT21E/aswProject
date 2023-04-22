@@ -32,14 +32,38 @@
     <script>
       function redirectToUrl() {
         window.location.href = 'http://localhost:8080/issue';
+        window.location.href = 'http://localhost:8080/issue';
       }
       document.addEventListener('DOMContentLoaded', function () {
         var editElem = document.getElementById('editPerfil');
-        editElem.addEventListener('click', function () {
-          console.log('entro');
+        var viewTimeline = document.getElementById('timeLineButton');
+        var viewTimeWatcher = document.getElementById('timeWatcher');
+
+        editElem?.addEventListener('click', function () {
           viewProfile();
         });
-        console.log(editElem);
+
+        viewTimeline.addEventListener('click', function () {
+          const auth = localStorage.getItem('token');
+          const url = window.location.href;
+          const parts = url.split('/');
+          const author = parts[4];
+          const authorReal = author.split('?');
+          console.log(author);
+          const newUrl = `http://localhost:8080/myProfile/${authorReal[0]}?&view=timeline`;
+          window.location.href = newUrl;
+        });
+
+        viewTimeWatcher.addEventListener('click', function () {
+          const url = window.location.href;
+          const parts = url.split('/');
+          const author = parts[4];
+          const authorReal = author.split('?');
+          console.log(author);
+          const newUrl = `http://localhost:8080/myProfile/${authorReal[0]}?&view=watched`;
+          window.location.href = newUrl;
+        });
+
         function viewProfile() {
           const auth = localStorage.getItem('token');
           window.location.href = `http://localhost:8080/myProfile/${auth}/edit`;

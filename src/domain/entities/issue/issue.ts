@@ -18,6 +18,7 @@ export type IssueProps = {
   date: string;
   priority: string;
   locked?: boolean;
+  reasonLock?: string;
   watchers?: IUser[];
   activity?: IActivity[];
   comments?: IComment[];
@@ -41,6 +42,7 @@ export class Issue implements IIssue {
   public assignedTo?: IUser;
   public tags?: string[];
   public locked?: boolean;
+  public reasonLock?: string;
   public watchers?: IUser[];
   public activity?: IActivity[];
   public attachments?: string[];
@@ -60,6 +62,7 @@ export class Issue implements IIssue {
       priority,
       comments,
       locked,
+      reasonLock,
       watchers,
       activity,
       assignedTo,
@@ -79,6 +82,7 @@ export class Issue implements IIssue {
     this.priority = priority;
     this.comments = comments || [];
     this.locked = locked || false;
+    this.reasonLock = reasonLock || null;
     this.watchers = watchers || [];
     this.activity = activity || [];
     this.locked = locked || false;
@@ -87,8 +91,9 @@ export class Issue implements IIssue {
     this.deadline = deadline;
   }
 
-  public lockIssue(): void {
+  public lockIssue(reason: string): void {
     this.locked = true;
+    this.reasonLock = reason;
   }
 
   public unlockIssue(): void {

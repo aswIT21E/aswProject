@@ -100,6 +100,35 @@ input {
     outline: none;
     border: 2px solid hsl( 208,79%,51% );
 }
+/* Estilos básicos para el botón similar a Taiga */
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.h1 {
+  text-align: center;
+}
+
+.bulk-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #008aa8;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.bulk-button i {
+    font-size: 24px; 
+    padding: 5px; 
+    border-radius: 5px; 
+}
 
 textarea {
     background: #fff;
@@ -260,6 +289,7 @@ button {
   /* Estilos del texto debajo del icono */
   .profile-button span {
     text-align: center;
+    white-space: nowrap
   }
   
   
