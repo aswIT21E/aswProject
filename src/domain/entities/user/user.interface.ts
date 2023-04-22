@@ -8,4 +8,6 @@ export interface IUser {
   password: string;
   bio: string;
   profilePicture?: string;
+
+  updateProfilePic?: (link: string) => void;
 }

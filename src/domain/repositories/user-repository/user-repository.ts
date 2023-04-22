@@ -3,12 +3,13 @@ import { User } from '~/domain/entities/user';
 import { UserModel } from '~/domain/entities/user';
 
 export class UserRepository {
-  public static async addUser(user: IUser): Promise<User> {
-    return await UserModel.create({
+  public static async addUser(user: IUser): Promise<IUser> {
+    await UserModel.create({
       ...user,
       profilePicture:
         'https://projecteaws.s3.eu-west-3.amazonaws.com/profile.png',
     });
+    return user;
   }
   public static async editarUser(
     oldUser: IUser,

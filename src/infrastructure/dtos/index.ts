@@ -7,3 +7,5 @@ export * from './bulk-issues.dto';
 export * from './add-attachment.dto';
 export * from './remove-attachment.dto';
 export * from './update-deadline.dto';
+export * from './upload-profile-pic.dto';
+export * from './google-auth.dto';

@@ -1,15 +1,31 @@
 import express from 'express';
 
 // eslint-disable-next-line import/named
-import { logIn, signUp, UserController } from '~/application';
-import { createUserDto, loginDto } from '~/infrastructure/dtos';
+import { logIn, signUp, UserController, googleAuth } from '~/application';
+import {
+  createUserDto,
+  loginDto,
+  uploadProfilePicDto,
+  googleAuthDto,
+} from '~/infrastructure/dtos';
+import { authMiddleware } from '../middlewares';
 
 export const userRouter = express.Router();
 
 userRouter.post('/users/signup', createUserDto, signUp);
 
 userRouter.post('/users/login', loginDto, logIn);
+
+userRouter.post('/users/googleAuth', googleAuthDto, googleAuth);
+
 userRouter.post('/users/editProfile', UserController.editUser);
+
+userRouter.post(
+  '/user/editProfilePic',
+  authMiddleware,
+  uploadProfilePicDto,
+  uploadProfilePicDto,
+);
 
 userRouter.get('/users', UserController.getAllUsers);
 
