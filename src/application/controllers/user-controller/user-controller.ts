@@ -199,7 +199,11 @@ export class UserController {
           <button id="editPerfil" class="btn-small">Editar Perfil</button>
         </div>
       `;
+      const logOut = `
+      <button id="logout" class="btn-small" onclick="logout()">Log Out</button>
+      `
       $('#myperfil').append(editarBioHTML);
+      $('#logout-btn').append(logOut);
     }
     const issues = await IssueRepository.getAllIssues();
     const param = req.query.view;
