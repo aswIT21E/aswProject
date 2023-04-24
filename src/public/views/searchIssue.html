@@ -56,36 +56,28 @@
     <i class="fas fa-file-import"></i>
   </button>
   <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          var profileElem = document.getElementById('irPerfil');
-          profileElem.addEventListener('click', function () {
-            viewProfile();
-          });
-          function viewProfile() {
-            const auth = localStorage.getItem('token');
-    <<<<<<< HEAD
-            window.location.href = `http://localhost:8080/myProfile/${auth}`;
-    =======
-            window.location.href = `http://localhost:8080/myProfile/${auth}`;
-    >>>>>>> 25d209e2416008748c799ae2aaf0545607534e29
-          }
-        });
+    document.addEventListener('DOMContentLoaded', function () {
+      var profileElem = document.getElementById('irPerfil');
+      profileElem.addEventListener('click', function () {
+        viewProfile();
+      });
+      function viewProfile() {
+        const auth = localStorage.getItem('token');
+        window.location.href = `http://localhost:8080/myProfile/${auth}`;
+      }
+    });
 
-        document
-          .getElementById('hacerSearch')
-          .addEventListener('submit', function (event) {
-            event.preventDefault(); // Evitar el comportamiento predeterminado del formulario
+    document
+      .getElementById('hacerSearch')
+      .addEventListener('submit', function (event) {
+        event.preventDefault(); // Evitar el comportamiento predeterminado del formulario
 
-            // Obtener el valor del campo de entrada de texto y reemplazar espacios por comas
-            var inputValue = document.getElementById('inputSearchbar').value;
+        // Obtener el valor del campo de entrada de texto y reemplazar espacios por comas
+        var inputValue = document.getElementById('inputSearchbar').value;
 
-            // Redirigir a la URL con el valor del input como parámetro de búsqueda
-            window.location.href =
-    <<<<<<< HEAD
-              'http://localhost:8080/issue?&text=' + inputValue;
-    =======
-              'http://localhost:8080/issue?&text=' + inputValue;
-    >>>>>>> 25d209e2416008748c799ae2aaf0545607534e29
-          });
+        // Redirigir a la URL con el valor del input como parámetro de búsqueda
+        window.location.href =
+          'http://localhost:8080/issue?&text=' + inputValue;
+      });
   </script>
 </div>
