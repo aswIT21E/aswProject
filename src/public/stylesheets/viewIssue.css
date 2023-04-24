@@ -801,3 +801,15 @@ a {
   margin-right: 0.5em; /* Añade un margen derecho */
 }
 
+.attachmentS{
+  background-color: #eceff4;
+  display: flex;
+  justify-content: space-between;
+  padding: 4px;
+  margin-top: 1rem;
+}
+.removeAttachmentBtn{
+  background-color: transparent;
+  border: 0;
+
+}
