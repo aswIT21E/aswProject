@@ -392,31 +392,35 @@ export class IssueController {
           </li>`;
       $('#comments-list').append(scriptNode3);
     }
-
+    let contador = 0;
     for (const attachment of attachments) {
+      console.log(attachment);
       const extension = attachment.split('.').pop().toLowerCase();
       let attachmentNode;
       if (['jpg', 'jpeg', 'png', 'gif'].includes(extension)) {
         attachmentNode = `
           <li>
-            <div>
+            <div class="attachmentS">
               <a href=${attachment}>
                 <img src="${attachment}" alt="" class="img-attachment">
               </a>
+              <button class="removeAttachmentBtn" id = "removeAttachmentBtn" data-attachment-index="${contador}">X</butotn>
             </div>
           </li>`;
       } else {
         const filename = attachment.split('/').pop();
         attachmentNode = `
           <li>
-            <div>
+            <div  class="attachmentS">
               <a href=${attachment} download>
                 ${filename}
               </a>
+              <button class="removeAttachmentBtn" id = "removeAttachmentBtn" data-attachment-index="${contador}">X</butotn>
             </div>
           </li>`;
       }
       $('#attachment-list').append(attachmentNode);
+      ++contador;
     }
 
     for (const act of issue.activity) {

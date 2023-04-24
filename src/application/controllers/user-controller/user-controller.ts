@@ -121,7 +121,7 @@ export class UserController {
     </fieldset>
     <fieldset>
       <label for="bio">Bio (max. 210 caracteres)</label>
-      <textarea name="bio" id="bio" maxlength="210" placeholder="${user.bio}"></textarea>
+      <textarea name="bio" id="bio" maxlength="210" placeholder="${user.bio ? user.bio : ''}"></textarea>
     </fieldset>
     <fieldset class="submit">
       <button type="submit" class="btn-small" title="Guardar">Guardar</button>
@@ -162,7 +162,7 @@ export class UserController {
         <div class="profile-data">
             <h1>${user.name}</h1>
             <div class="username">@${user.username}</div>
-            <h2>${user.bio}</h2>
+            <h2>${user.bio ? user.bio : ''}</h2>
         </div>
     </section>
     <div class="main">
