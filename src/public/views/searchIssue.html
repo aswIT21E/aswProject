@@ -63,11 +63,8 @@
           });
           function viewProfile() {
             const auth = localStorage.getItem('token');
-    <<<<<<< HEAD
-            window.location.href = `http://localhost:8080/myProfile/${auth}`;
-    =======
-            window.location.href = `http://localhost:8080/myProfile/${auth}`;
-    >>>>>>> 25d209e2416008748c799ae2aaf0545607534e29
+
+            window.location.href = `http://localhost:8081/myProfile/${auth}`;
           }
         });
 
@@ -80,12 +77,8 @@
             var inputValue = document.getElementById('inputSearchbar').value;
 
             // Redirigir a la URL con el valor del input como parámetro de búsqueda
-            window.location.href =
-    <<<<<<< HEAD
-              'http://localhost:8080/issue?&text=' + inputValue;
-    =======
-              'http://localhost:8080/issue?&text=' + inputValue;
-    >>>>>>> 25d209e2416008748c799ae2aaf0545607534e29
+            window.location.href = 'http://localhost:8081/issue?&text=' + inputValue;
+
           });
   </script>
 </div>

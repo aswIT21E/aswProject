@@ -125,11 +125,8 @@
               const arrowId = `arrow-${id}`;
               const currentState = !getArrowState(arrowId);
               setArrowState(arrowId, currentState);
-      <<<<<<< HEAD
-              let url = `http://localhost:8080/issue?&order=${id}&sentido=${currentState}`;
-      =======
-              let url = `http://localhost:8080/issue?&order=${id}&sentido=${currentState}`;
-      >>>>>>> 25d209e2416008748c799ae2aaf0545607534e29
+
+              let url = `http://localhost:8081/issue?&order=${id}&sentido=${currentState}`;
               window.location.href = url;
             }
     </script>

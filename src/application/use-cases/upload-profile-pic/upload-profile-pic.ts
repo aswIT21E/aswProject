@@ -16,8 +16,13 @@ export async function uploadProfilePic(
       const uploadService = new S3Service();
 
       const result = await uploadService.uploadFile(file);
+      console.log(result.Location);
       user.updateProfilePic(result.Location);
+      console.log(user);
       await UserRepository.editarUser(user, user);
+      const useract = await UserRepository.getUserByUsername(user.username);
+      console.log(useract);
+
 
       res.status(200).json({
         message: 'Profile pic uploaded',
