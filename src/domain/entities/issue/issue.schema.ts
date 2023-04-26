@@ -18,6 +18,7 @@ const IssueSchema = new Schema({
   comments: [{ required: true, type: Schema.Types.ObjectId, model: 'Comment' }],
   attachments: [{ required: true, type: String }],
   locked: { required: true, type: Boolean, default: false },
+  reasonLock: { required: false, type: String },
   watchers: [{ required: true, type: Schema.Types.ObjectId, model: 'User' }],
   assignedTo: { required: false, type: Schema.Types.ObjectId, model: 'User' },
   tags: { required: false, type: [String] },

@@ -9,11 +9,11 @@ export async function lockIssue(req: Request, res: Response): Promise<void> {
   try {
     const issue = await IssueRepository.getIssueById(issueID);
     if (issue) {
-      issue.lockIssue();
+      issue.lockIssue(req.body.reason);
         await addActivity(req, issue, 'lockIssue');
       await IssueRepository.updateIssue(issue);
       res.status(200).json({
-        message: 'Issue locked successfully',
+        message: `Issue locked successfully because the following reason: ${req.body.reason}`,
         issue,
       });
     } else {

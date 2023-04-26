@@ -1,3 +1,4 @@
+import { UserModel } from '~/domain/entities';
 import type { IActivity } from '~/domain/entities/activity';
 import type { IComment } from '~/domain/entities/comment';
 import type { IFilter } from '~/domain/entities/filter';
@@ -17,6 +18,7 @@ export class IssueRepository {
         path: 'creator',
         model: 'User',
       })
+      .populate({ path: 'assignedTo', model: 'User' })
       .populate({ path: 'watchers', model: 'User' })
       .populate({
         path: 'activity',
@@ -151,22 +153,31 @@ export class IssueRepository {
       ...(filter.prioridad && { priority: { $in: filter.prioridad } }),
       ...(filter.estado && { status: { $in: filter.estado } }),
       ...(filter.gravedad && { severity: { $in: filter.gravedad } }),
-      ...(filter.crated_by && { creator: { $in: filter.crated_by } }),
-      ...(filter.asign_to && { assignedTo: { $in: filter.asign_to } }),
+      ...(filter.crated_by && { creator: {} }),
+      ...(filter.asign_to && { assignedTo: {} }),
     };
-    return await IssueModel.find(query)
-      .populate({
-        path: 'creator',
+    if (filter.crated_by) {
+      const users = await UserModel.find({ username: { $in: filter.crated_by } });
+      query.creator = { $in: users };
+  }
+  if (filter.asign_to) {
+    const users = await UserModel.find({ username: { $in: filter.asign_to } });
+    query.assignedTo = { $in: users };
+}
+
+    return await IssueModel.find(query) .populate({
+      path: 'creator',
+      model: 'User',
+    })
+    .populate({ path: 'watchers', model: 'User' })
+    .populate({ path: 'assignedTo', model: 'User' })
+    .populate({
+      path: 'activity',
+      model: 'Activity',
+      populate: {
+        path: 'actor',
         model: 'User',
-      })
-      .populate({ path: 'watchers', model: 'User' })
-      .populate({
-        path: 'activity',
-        model: 'Activity',
-        populate: {
-          path: 'actor',
-          model: 'User',
-        },
-      });
+      },
+    });
   }
 }

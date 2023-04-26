@@ -5,7 +5,6 @@ import type { Request, Response } from 'express';
 import type { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 
-import { S3Service } from '~/infrastructure/services';
 import type { IUser } from '~/domain/entities/user';
 import { IssueRepository } from '~/domain/repositories';
 import { UserRepository } from '~/domain/repositories/user-repository/user-repository';
@@ -69,18 +68,9 @@ export class UserController {
         res.status(404).json({ message: 'Usuario no encontrado' });
         return;
       }
-      const uploadService = new S3Service();
-      const profilepic = req.files.profilePicture;
-      const result = await uploadService.uploadFile(profilepic);
-      const url = result.Location;
-
-      res.status(200).json({
-        message: 'File uploaded successfully',
-        
-      });
+  
       const newUser: IUser = {
         id: oldUser.id,
-        profilePicture: url || oldUser.profilePicture,
         email: req.body.email || oldUser.email,
         name: req.body.name || oldUser.name,
         username: req.body.username || oldUser.username,
@@ -88,7 +78,7 @@ export class UserController {
         bio: req.body.bio || oldUser.bio,
       };
       await UserRepository.editarUser(oldUser, newUser);
-      /*res.redirect(`http://localhost:8081/myProfile/${token}`);*/
+      res.redirect(`http://localhost:8081/myProfile/${token}`);
     } catch (e) {
       console.log(e);
       res.status(500).json({
@@ -116,7 +106,6 @@ export class UserController {
     const user = await UserRepository.getUserByUsername(username);
     const viewIssueHTML = fs.readFileSync('src/public/views/editProfile.html');
     const $ = load(viewIssueHTML);
-
     const scriptNode = `<form action="/myProfile/${token}/edit/submit" method="post">
     <fieldset class="image-container" id="image-container">
           <label for="image-input" class="image-label">CAMBIAR FOTO</label>
@@ -124,7 +113,7 @@ export class UserController {
     </fieldset>
     <fieldset>
       <label for="username">Nombre de usuario</label>
-      <input type="text" name="username" placeholder="${user.username}" id="username">
+      <input type="text" name="username" placeholder="${user.username}" id="username" readonly>
     </fieldset>
     <fieldset>
       <label for="email">Correo</label>
@@ -139,7 +128,7 @@ export class UserController {
       <textarea name="bio" id="bio" maxlength="210" placeholder="${user.bio}"></textarea>
     </fieldset>
     <fieldset class="submit">
-      <button type="submit" class="btn-small" title="Guardar">Guardar</button>
+      <button id="submit" type="submit" class="btn-small" title="Guardar">Guardar</button>
     </fieldset>
   </form>
   
@@ -161,11 +150,10 @@ export class UserController {
     });
     let user;
     let username;
-    if(decodedToken != null){
+    if (decodedToken != null) {
       username = decodedToken.payload.username;
       user = await UserRepository.getUserByUsername(username);
-    }
-    else{
+    } else {
       username = token;
       user = await UserRepository.getUserById(username);
       username = user.username;
@@ -184,11 +172,11 @@ export class UserController {
     <div class="main">
         <div class="timeline-wrapper">
             <nav class="profile-content-tabs">
-                <a href="" class="tab active">
+                <a class="tab active" id="timeLineButton">
                     <ion-icon class="icon" name="reorder-four-outline"></ion-icon>
                     <span>Timeline</span>
                 </a>
-                <a href="" class="tab">
+                <a class="tab" id="timeWatcher">
                     <ion-icon class="icon" name="eye-outline"></ion-icon>
                     <span>Observado</span>
                 </a>
@@ -218,15 +206,24 @@ export class UserController {
       $('#myperfil').append(editarBioHTML);
     }
     const issues = await IssueRepository.getAllIssues();
+    const param = req.query.view;
     for (const issue of issues) {
-      for (const activity of issue.activity) {
-        const user = await UserRepository.getUserById(
-          activity.actor.toString(),
-        );
-        if (user.username === username) {
-          const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
-
-          $('#timeline').append(scriptActivities);
+      if (param === 'watched') {
+        for (const watcher of issue.watchers) {
+          if (watcher.username === username) {
+            const scriptActivities = `<div class="timeline-item"> <a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a> </div>`;
+            $('#timeline').append(scriptActivities);
+          }
+        }
+      } else {
+        for (const activity of issue.activity) {
+          const user = await UserRepository.getUserById(
+            activity.actor.toString(),
+          );
+          if (user.username === username) {
+            const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+            $('#timeline').append(scriptActivities);
+          }
         }
       }
     }

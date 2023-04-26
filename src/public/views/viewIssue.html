@@ -71,7 +71,7 @@
     </div>
     <aside id="sidebar" class="sidebar">
       <button class="botonLock" onclick="redirectToUrl()">
-        <i class="fas fa-home btn-icon"></i> Casa
+        <i class="fas fa-home btn-icon"></i> Home
       </button>
       <section id="atributos"></section>
       <section id="assign" class="assign">
@@ -101,12 +101,12 @@
           </div>
           <div class="ticket-user-actions">
             <div class="icon-add"><ion-icon name="add-outline" class="plus-icon"></ion-icon></div>
-            <div id="link2"></div>
             <div class="icon-nowatch"><ion-icon name="eye-off-outline"></ion-icon></div>
-            <div id="link3"></div>
+            <div id="link2"></div>
           </div>
         </div>
       </section>
+      <div style ="display: flow-root; margin-bottom: 1em;">
       <div id = "butonLockUnlock">
 
       </div>
@@ -118,6 +118,10 @@
         <input type="date" id="fecha" name="fecha">
         <input type="submit" value="Enviar" class = "botonLock">
       </form>
+    </div>
+      <div id = "lockReason" class = "bloqueado">
+
+      </div>
    
 
     </aside>
@@ -127,22 +131,32 @@
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       const token = localStorage.getItem('token');
-      const opciones = {
+
+      var butonlock = document.getElementById("botonLock");
+      if (butonlock.dataset.lock == "true") {
+        const opciones = {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
       };
-
-      var butonlock = document.getElementById("botonLock");
-      if (butonlock.dataset.lock == "true") {
         butonlock.innerHTML = "<i class=\"fas fa-unlock\"></i>";
-          await fetch(`http://localhost:8081/issues/${issueId}/unlock-issue`, opciones);
+          await fetch(`http://localhost:8080/issues/${issueId}/unlock-issue`, opciones);
       } 
       else {
+        const opciones = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+         reason: document.getElementById("campoTextoLock").value || null,
+        })
+      };
         butonlock.innerHTML = "<i class=\"fas fa-lock\"></i>";
-        await fetch(`http://localhost:8081/issues/${issueId}/lock-issue`,opciones);
+        await fetch(`http://localhost:8080/issues/${issueId}/lock-issue`,opciones);
       }
       window.location.reload();
       
@@ -161,7 +175,7 @@
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       const token = localStorage.getItem('token');
       event.preventDefault();
-      const newUrl = `http://localhost:8081/issue/${issueId}/new-comment`;
+      const newUrl = `http://localhost:8080/issue/${issueId}/new-comment`;
       fetch(newUrl, {
       method: 'POST',
             headers: {
@@ -174,7 +188,7 @@
       })
         .then((data) => {
           console.log('Success:', data);
-          window.location.href = `http://localhost:8081/issue/${issueId}`;
+          window.location.href = `http://localhost:8080/issue/${issueId}`;
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -186,7 +200,7 @@
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       const token = localStorage.getItem('token');
       event.preventDefault();
-      const newUrl = `http://localhost:8081/issues/${issueId}/addAttachment`;
+      const newUrl = `http://localhost:8080/issues/${issueId}/addAttachment`;
       const formData = new FormData();
       formData.append('file', attachment.files[0]);
       console.log(attachment.files[0]);
@@ -200,7 +214,7 @@
             })
         .then((data) => {
           console.log('Success:', data);
-          /*window.location.href = `http://localhost:8081/issue/${issueId}`;*/
+          /*window.location.href = `http://localhost:8080/issue/${issueId}`;*/
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -217,7 +231,7 @@
   </script>
   <script>
     function redirectToUrl() {
-      window.location.href = "http://localhost:8081/issue";
+      window.location.href = "http://localhost:8080/issue";
     }
     document.addEventListener('DOMContentLoaded', function () {
       var textElement = document.getElementById('text');
@@ -260,7 +274,7 @@
     function deleteIssue(){
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-      fetch(`http://localhost:8081/issue/${issueId}/remove`, {
+      fetch(`http://localhost:8080/issue/${issueId}/remove`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -268,14 +282,14 @@
         },
         credentials: 'same-origin',
       }).then(() => {
-    window.location.replace("http://localhost:8081/issue");
+    window.location.replace("http://localhost:8080/issue");
   })
       .catch(error => console.log(error));
     }
     function modifyIssue(parameter, newValue) {
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-      fetch(`http://localhost:8081/issue/${issueId}/modifyIssue`, {
+      fetch(`http://localhost:8080/issue/${issueId}/modifyIssue`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -353,7 +367,7 @@ function mostrarAcividades() {
   // Realiza la petición POST al servidor
   const url = window.location.href;
   const issueId = url.substring(url.lastIndexOf('/') + 1);
-  await fetch(`http://localhost:8081/issues/${issueId}/updateDeadline`, {
+  await fetch(`http://localhost:8080/issues/${issueId}/updateDeadline`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -376,7 +390,7 @@ function mostrarAcividades() {
 function eliminadeadline() {
   const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-  fetch(`http://localhost:8081/issues/${issueId}/removeDeadline`, {
+  fetch(`http://localhost:8080/issues/${issueId}/removeDeadline`, {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json',
@@ -390,6 +404,11 @@ function eliminadeadline() {
       console.error('Error al borrar la fecha');
     }}).then(() => {window.location.reload()});
   }
+  </script>
+  <script>
+    function mostrarCampoTexto() {
+    document.getElementById("formularioLock").style.display = "block"; // Muestra el formulario cuando se hace clic en el botón
+}
   </script>
 </body>
 

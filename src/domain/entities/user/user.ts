@@ -28,4 +28,8 @@ export class User implements IUser {
     this.profilePicture =
       'https://projecteaws.s3.eu-west-3.amazonaws.com/profile.png';
   }
+
+  public updateProfilePic(link: string): void {
+    this.profilePicture = link;
+  }
 }

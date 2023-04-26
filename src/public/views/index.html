@@ -79,7 +79,7 @@
               Gravedad
             </div>
             <div style="display: flex">
-              <div class="arrow" onclick="toggleArrow(this, 'type')"></div>
+              <div class="arrow" onclick="toggleArrow(this, 'priority')"></div>
               Prioridad
             </div>
           </span>
@@ -89,12 +89,18 @@
           </div>
           <span style="display: flex; justify-content: right">
             <div style="display: flex" id="estado">
-              <div class="arrow" onclick="toggleArrow(this, 'state')"></div>
+              <div class="arrow" onclick="toggleArrow(this, 'status')"></div>
               Estado
             </div>
-            <div style="margin-left: 4em; display: flex" id="creador">
-              <div class="arrow" onclick="toggleArrow(this, 'creator')"></div>
-              Creador
+            <div
+              style="margin-left: 3em; display: flex; margin-right: 50"
+              id="creador"
+            >
+              <div
+                class="arrow"
+                onclick="toggleArrow(this, 'assignedTo')"
+              ></div>
+              Assign To
             </div>
           </span>
         </div>
@@ -102,26 +108,30 @@
       </div>
     </div>
     <script>
-      // Función para obtener el estado del arrow del localStorage
-      function checkArrowState(id) {}
-      function getArrowState(id) {
-        if (localStorage.getItem(id) === null) localStorage.setItem(id, 'true');
-        return localStorage.getItem(id) === 'true';
-      }
+            // Función para obtener el estado del arrow del localStorage
+            function checkArrowState(id) {}
+            function getArrowState(id) {
+              if (localStorage.getItem(id) === null) localStorage.setItem(id, 'true');
+              return localStorage.getItem(id) === 'true';
+            }
 
-      // Función para guardar el estado del arrow en el localStorage
-      function setArrowState(id, state) {
-        localStorage.setItem(id, state);
-      }
+            // Función para guardar el estado del arrow en el localStorage
+            function setArrowState(id, state) {
+              localStorage.setItem(id, state);
+            }
 
-      function toggleArrow(element, id) {
-        element.classList.toggle('clicked');
-        const arrowId = `arrow-${id}`;
-        const currentState = !getArrowState(arrowId);
-        setArrowState(arrowId, currentState);
-        let url = `http://localhost:8081/issue?&order=${id}&sentido=${currentState}`;
-        window.location.href = url;
-      }
+            function toggleArrow(element, id) {
+              element.classList.toggle('clicked');
+              const arrowId = `arrow-${id}`;
+              const currentState = !getArrowState(arrowId);
+              setArrowState(arrowId, currentState);
+      <<<<<<< HEAD
+              let url = `http://localhost:8080/issue?&order=${id}&sentido=${currentState}`;
+      =======
+              let url = `http://localhost:8080/issue?&order=${id}&sentido=${currentState}`;
+      >>>>>>> 25d209e2416008748c799ae2aaf0545607534e29
+              window.location.href = url;
+            }
     </script>
   </body>
 </html>
