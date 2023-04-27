@@ -104,6 +104,7 @@ export class UserController {
     });
     const username = decodedToken.payload.username;
     const user = await UserRepository.getUserByUsername(username);
+    console.log(user);
     const viewIssueHTML = fs.readFileSync('src/public/views/editProfile.html');
     const $ = load(viewIssueHTML);
     const scriptNode = `<form action="/myProfile/${token}/edit/submit" method="post">

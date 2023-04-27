@@ -24,9 +24,7 @@ export async function uploadProfilePic(
       console.log(useract);
 
 
-      res.status(200).json({
-        message: 'Profile pic uploaded',
-      });
+      res.status(200);
     } else {
       res.status(404).json({
         message: `User not found`,
