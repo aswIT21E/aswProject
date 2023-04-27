@@ -113,13 +113,9 @@ export class UserController {
     </fieldset>
     <fieldset>
       <label for="username">Nombre de usuario</label>
-<<<<<<< HEAD
-      <input type="text" name="username" placeholder="${user.username}" id="username" readonly>
-=======
       <input type="text" name="username" placeholder="${
         user.username
       }" id="username">
->>>>>>> main
     </fieldset>
     <fieldset>
       <label for="email">Correo</label>
