@@ -53,7 +53,7 @@ export class IssueController {
       }
 
       res.status(200);
-      res.redirect('http://localhost:8080/issue');
+      res.redirect(`${process.env.API_URL}/issue`);
     } catch (e) {
       res.status(500);
       res.json({
@@ -84,7 +84,7 @@ export class IssueController {
       const x = await IssueRepository.addIssue(issue);
       console.log(x);
       res.status(200);
-      res.redirect('http://localhost:8080/issue');
+      res.redirect(`${process.env.API_URL}/issue`);
     } catch (e) {
       res.status(500);
       res.json({
@@ -316,14 +316,14 @@ export class IssueController {
                   <div class="numero-peticion" id="NumPeticion">#${
                     issue.numberIssue
                   }</div>
-                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="http://localhost:8080/issue/${
-                    issue.id
-                  }">${issue.subject}</a> </div>
+                  <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="${
+                    process.env.API_URL
+                  }/issue/${issue.id}">${issue.subject}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>
               <div class="fecha-creacion" id="FechaPeticion" onclick="${
                 assigned != null
-                  ? `window.location.href = 'http://localhost:8080/myProfile/${assigned.id}';`
+                  ? `window.location.href = '${process.env.API_URL}/myProfile/${assigned.id}';`
                   : ''
               }" ${assigned == null ? 'style="color: gray;"' : ''}>
                 ${
@@ -424,7 +424,7 @@ export class IssueController {
     }
 
     for (const act of issue.activity) {
-      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =http://localhost:8080/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =${process.env.API_URL}/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
       $('.activitieslist').append(scriptActivities);
     }
     $('#comment-count').append(`${comments.length}`);
@@ -444,7 +444,7 @@ export class IssueController {
           watcher.bio,
         );
         const scriptNodeWatcher = `
-        <div class="watchUser" onclick="window.location.href = 'http://localhost:8080/myProfile/${username.id}';">
+        <div class="watchUser" onclick="window.location.href = '${process.env.API_URL}/myProfile/${username.id}';">
           <div class="img-avatar"><img src="${username.profilePicture}" alt="" class="img-avatar"></div>
           <div class="watcher-list-name"><span>${watcher.username}</span></div>
         </div>
@@ -454,15 +454,15 @@ export class IssueController {
     }
 
     const scriptNode5 = `
-    <a href="http://localhost:8080/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
+    <a href="${process.env.API_URL}/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
     `;
 
     const scriptNode6 = `
-    <a href="http://localhost:8080/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Modificar observadores</span></a>
+    <a href="${process.env.API_URL}/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Modificar observadores</span></a>
     `;
 
     // const scriptNode7 = `
-    // <a href="http://localhost:8080/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
+    // <a href="process.env.API_URL/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
     // `;
 
     const scriptNode4 = `
@@ -497,7 +497,7 @@ export class IssueController {
                     </div>
                     <div class="subheader">
                         <div class="created-by">
-                            <a href="http://localhost:8080/myProfile/${idUser.id}" class="created-title">Creado por ${issue.creator.username}</a>
+                            <a href="${process.env.API_URL}/myProfile/${idUser.id}" class="created-title">Creado por ${issue.creator.username}</a>
                             <div class="created-date">
                             ${issue.date}
                             </div>
@@ -508,7 +508,7 @@ export class IssueController {
                             </div>
                         </div>
     </div>`;
-    const path = `'http://localhost:8080/issue/${issue.id}/modifyIssue'`;
+    const path = `'${process.env.API_URL}/issue/${issue.id}/modifyIssue'`;
     const scriptNode2 = `
       <script>
       function modifyIssue(parameter, newValue) {
@@ -624,7 +624,7 @@ export class IssueController {
     const scriptNodeAssign = `
             <div class="assignUser" onclick="${
               username
-                ? `window.location.href = 'http://localhost:8080/myProfile/${username.id}';`
+                ? `window.location.href = '${process.env.API_URL}/myProfile/${username.id}';`
                 : ''
             }">
               <div class="img-avatar"><img src="${
@@ -758,7 +758,7 @@ export class IssueController {
         await IssueRepository.updateIssue(issue);
 
         res.status(200);
-        res.redirect(`http://localhost:8080/issue/${issueID}`);
+        res.redirect(`${process.env.API_URL}/issue/${issueID}`);
       } else {
         res.status(404).json({
           message: `Issue ${issueID} not found`,
@@ -783,7 +783,7 @@ export class IssueController {
       );
       await IssueRepository.addComment(numberIssue, comment);
       res.status(200);
-      res.redirect(`http://localhost:8080/issue/${numberIssue}`);
+      res.redirect(`${process.env.API_URL}/issue/${numberIssue}`);
     } catch (e) {
       res.status(500);
       res.json({
