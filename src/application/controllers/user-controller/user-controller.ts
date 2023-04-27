@@ -68,6 +68,7 @@ export class UserController {
         res.status(404).json({ message: 'Usuario no encontrado' });
         return;
       }
+  
       const newUser: IUser = {
         id: oldUser.id,
         email: req.body.email || oldUser.email,
@@ -79,9 +80,9 @@ export class UserController {
       await UserRepository.editarUser(oldUser, newUser);
       res.redirect(`${process.env.API_URL}/myProfile/${token}`);
     } catch (e) {
-      res.status(500);
-      res.json({
-        error: e,
+      console.log(e);
+      res.status(500).json({
+        error: e.message,
       });
     }
   }
@@ -105,13 +106,20 @@ export class UserController {
     const user = await UserRepository.getUserByUsername(username);
     const viewIssueHTML = fs.readFileSync('src/public/views/editProfile.html');
     const $ = load(viewIssueHTML);
-
     const scriptNode = `<form action="/myProfile/${token}/edit/submit" method="post">
+    <fieldset class="image-container" id="image-container">
+          <label for="image-input" class="image-label">CAMBIAR FOTO</label>
+          <input type="file" id="image-input" class="image-input" name="profilePicture">
+    </fieldset>
     <fieldset>
       <label for="username">Nombre de usuario</label>
+<<<<<<< HEAD
+      <input type="text" name="username" placeholder="${user.username}" id="username" readonly>
+=======
       <input type="text" name="username" placeholder="${
         user.username
       }" id="username">
+>>>>>>> main
     </fieldset>
     <fieldset>
       <label for="email">Correo</label>
@@ -128,7 +136,7 @@ export class UserController {
       }"></textarea>
     </fieldset>
     <fieldset class="submit">
-      <button type="submit" class="btn-small" title="Guardar">Guardar</button>
+      <button id="submit" type="submit" class="btn-small" title="Guardar">Guardar</button>
     </fieldset>
   </form>
   
