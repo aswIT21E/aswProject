@@ -1,7 +1,13 @@
 import express from 'express';
 
 // eslint-disable-next-line import/named
-import { logIn, signUp, UserController, googleAuth } from '~/application';
+import {
+  logIn,
+  signUp,
+  UserController,
+  googleAuth,
+  uploadProfilePic,
+} from '~/application';
 import {
   createUserDto,
   loginDto,
@@ -24,7 +30,7 @@ userRouter.post(
   '/user/editProfilePic',
   authMiddleware,
   uploadProfilePicDto,
-  uploadProfilePicDto,
+  uploadProfilePic,
 );
 
 userRouter.get('/users', UserController.getAllUsers);
