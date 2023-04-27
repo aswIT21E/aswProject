@@ -78,7 +78,7 @@ export class UserController {
         bio: req.body.bio || oldUser.bio,
       };
       await UserRepository.editarUser(oldUser, newUser);
-      res.redirect(`http://localhost:8081/myProfile/${token}`);
+      res.redirect(`${process.env.API_URL}/myProfile/${token}`);
     } catch (e) {
       console.log(e);
       res.status(500).json({
@@ -113,7 +113,13 @@ export class UserController {
     </fieldset>
     <fieldset>
       <label for="username">Nombre de usuario</label>
+<<<<<<< HEAD
       <input type="text" name="username" placeholder="${user.username}" id="username" readonly>
+=======
+      <input type="text" name="username" placeholder="${
+        user.username
+      }" id="username">
+>>>>>>> main
     </fieldset>
     <fieldset>
       <label for="email">Correo</label>
@@ -125,7 +131,9 @@ export class UserController {
     </fieldset>
     <fieldset>
       <label for="bio">Bio (max. 210 caracteres)</label>
-      <textarea name="bio" id="bio" maxlength="210" placeholder="${user.bio}"></textarea>
+      <textarea name="bio" id="bio" maxlength="210" placeholder="${
+        user.bio ? user.bio : ''
+      }"></textarea>
     </fieldset>
     <fieldset class="submit">
       <button id="submit" type="submit" class="btn-small" title="Guardar">Guardar</button>
@@ -166,7 +174,7 @@ export class UserController {
         <div class="profile-data">
             <h1>${user.name}</h1>
             <div class="username">@${user.username}</div>
-            <h2>${user.bio}</h2>
+            <h2>${user.bio ? user.bio : ''}</h2>
         </div>
     </section>
     <div class="main">
@@ -203,7 +211,11 @@ export class UserController {
           <button id="editPerfil" class="btn-small">Editar Perfil</button>
         </div>
       `;
+      const logOut = `
+      <button id="logout" class="btn-small" onclick="logout()">Log Out</button>
+      `;
       $('#myperfil').append(editarBioHTML);
+      $('#logout-btn').append(logOut);
     }
     const issues = await IssueRepository.getAllIssues();
     const param = req.query.view;
@@ -211,7 +223,7 @@ export class UserController {
       if (param === 'watched') {
         for (const watcher of issue.watchers) {
           if (watcher.username === username) {
-            const scriptActivities = `<div class="timeline-item"> <a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a> </div>`;
+            const scriptActivities = `<div class="timeline-item"> <a href =${process.env.API_URL}/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a> </div>`;
             $('#timeline').append(scriptActivities);
           }
         }
@@ -221,7 +233,7 @@ export class UserController {
             activity.actor.toString(),
           );
           if (user.username === username) {
-            const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =http://localhost:8081/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+            const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =${process.env.API_URL}/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
             $('#timeline').append(scriptActivities);
           }
         }

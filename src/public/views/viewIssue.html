@@ -195,7 +195,7 @@
         });
     });
 
-    attachment.addEventListener('change', () => {
+    attachment.addEventListener('change', async () => {
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       const token = localStorage.getItem('token');
@@ -204,7 +204,7 @@
       const formData = new FormData();
       formData.append('file', attachment.files[0]);
       console.log(attachment.files[0]);
-      fetch(newUrl, {
+      await fetch(newUrl, {
       method: 'POST',
             headers: {
           
@@ -219,7 +219,40 @@
         .catch((error) => {
           console.error('Error:', error);
         });
+        window.location.href = `http://localhost:8080/issue/${issueId}`;
       });
+
+
+      const removeAttachmentBtns = document.getElementsByClassName('removeAttachmentBtn');
+
+      for (const removeAttachmentBtn of removeAttachmentBtns) {
+        removeAttachmentBtn.addEventListener('click', async (event) => {
+          const attachmentIndex = event.target.dataset.attachmentIndex; // Obtener el índice del attachment del atributo data
+          const url = window.location.href;
+          const issueId = url.substring(url.lastIndexOf('/') + 1);
+          const token = localStorage.getItem('token');
+          event.preventDefault();
+          const newUrl = `http://localhost:8080/issues/${issueId}/removeAttachment`;
+          const formData = new FormData();
+          const number = 0;
+          formData.append('attachmentIndex', attachmentIndex); // Agregar el índice del attachment al FormData
+          await fetch(newUrl, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            },
+            body: formData
+          })
+          .then((data) => {
+            console.log('Success:', data);
+
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+          window.location.href = `http://localhost:8080/issue/${issueId}`;
+        });
+      }
 
 
 

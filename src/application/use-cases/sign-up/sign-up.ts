@@ -10,7 +10,7 @@ export async function signUp(req: Request, res: Response) {
     user.password = await bcrypt.hash(req.body.password, 10);
     await UserRepository.addUser(user);
     res.status(200);
-    res.redirect('http://localhost:8081/login');
+    res.redirect(`${process.env.API_URL}/login`);
   } catch (e) {
     res.status(500);
     res.json({

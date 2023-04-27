@@ -1,7 +1,13 @@
 import express from 'express';
 
 // eslint-disable-next-line import/named
-import { logIn, signUp, UserController, googleAuth, uploadProfilePic } from '~/application';
+import {
+  logIn,
+  signUp,
+  UserController,
+  googleAuth,
+  uploadProfilePic,
+} from '~/application';
 import {
   createUserDto,
   loginDto,
