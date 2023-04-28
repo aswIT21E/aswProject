@@ -140,7 +140,7 @@ export class UserController {
   `;
     const profileImage = `<img src=${user.profilePicture} alt="" class="image">`;
     $('#editP').append(scriptNode);
-    $('#image-container').append(profileImage);
+    $('#image-avatar').append(profileImage);
     res.send($.html());
   }
 

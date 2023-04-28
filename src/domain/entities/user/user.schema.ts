@@ -10,7 +10,6 @@ const UserSchema = new Schema({
   bio: { required: false, type: String },
   profilePicture: { required: true, type: String },
 });
-
 const UserModel = model<IUser>('User', UserSchema);
 
 export { UserModel };
