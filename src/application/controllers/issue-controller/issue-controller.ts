@@ -443,7 +443,7 @@ export class IssueController {
           watcher.password,
           watcher.bio,
         );
-        username.updateProfilePic(watcher.profilePicture);
+        username?.updateProfilePic(watcher.profilePicture);
         const scriptNodeWatcher = `
         <div class="watchUser" onclick="window.location.href = '${process.env.API_URL}/myProfile/${username.id}';">
           <div class="img-avatar"><img src="${username.profilePicture}" alt="" class="img-avatar"></div>
@@ -480,7 +480,7 @@ export class IssueController {
       issue.creator.password,
       issue.creator.bio,
     );
-    idUser.updateProfilePic(idUser.profilePicture);
+    idUser?.updateProfilePic(idUser.profilePicture);
     const scriptNode = `
                       <div class="detail-nom">
                         <div class="detail-title">
@@ -623,7 +623,7 @@ export class IssueController {
         issue.assignedTo.password,
         issue.assignedTo.bio,
       );
-    username.updateProfilePic(issue.assignedTo.profilePicture);
+    username?.updateProfilePic(issue.assignedTo.profilePicture);
     const scriptNodeAssign = `
             <div class="assignUser" onclick="${
               username

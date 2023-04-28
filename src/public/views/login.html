@@ -31,7 +31,10 @@
         data-type="standard"
         data-callback="handleCredentials"
       ></div>
-      <form method="post" action="http://35.181.62.162/users/login">
+      <form
+        method="post"
+        action="http://asw.issue-tracker-asw.net/login/users/login"
+      >
         <input
           type="text"
           id="username"
@@ -53,19 +56,22 @@
     <script>
       window.handleCredentials = async (credentials) => {
         console.log('Google Token', credentials);
-        const response = await fetch('http://35.181.62.162/users/googleAuth', {
-          method: 'POST',
-          body: JSON.stringify({
-            credentials: credentials.credential,
-          }),
-          headers: {
-            'Content-Type': 'application/json',
+        const response = await fetch(
+          'http://asw.issue-tracker-asw.net/login/users/googleAuth',
+          {
+            method: 'POST',
+            body: JSON.stringify({
+              credentials: credentials.credential,
+            }),
+            headers: {
+              'Content-Type': 'application/json',
+            },
           },
-        });
+        );
         const data = await response.json();
         if (response.ok) {
           localStorage.setItem('token', data.token);
-          window.location.href = 'http://35.181.62.162/issue';
+          window.location.href = 'http://asw.issue-tracker-asw.net/login/issue';
         } else if (response.status === 400) {
           console.error(data.error || data.message);
         }
@@ -75,17 +81,20 @@
         event.preventDefault();
         const formData = new FormData(event.target);
         const json = Object.fromEntries(formData.entries()); // Convierte los datos del formulario en un objeto JSON
-        const response = await fetch('http://35.181.62.162/users/login', {
-          method: 'POST',
-          body: JSON.stringify(json), // Envía los datos del formulario como JSON
-          headers: {
-            'Content-Type': 'application/json', // Establece el encabezado de la petición a application/json
+        const response = await fetch(
+          'http://asw.issue-tracker-asw.net/login/users/login',
+          {
+            method: 'POST',
+            body: JSON.stringify(json), // Envía los datos del formulario como JSON
+            headers: {
+              'Content-Type': 'application/json', // Establece el encabezado de la petición a application/json
+            },
           },
-        });
+        );
         const data = await response.json();
         if (response.ok) {
           localStorage.setItem('token', data.token);
-          window.location.href = 'http://35.181.62.162/issue';
+          window.location.href = 'http://asw.issue-tracker-asw.net/login/issue';
         } else if (response.status === 400) {
           console.error(data.error || data.message);
         }
