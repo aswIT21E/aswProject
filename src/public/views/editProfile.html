@@ -26,9 +26,7 @@
       <header>
         <h1>Configuración de Usuario</h1>
       </header>
-      <div class="image-avatar" id="image-avatar">
-        
-      </div>
+      <div class="image-avatar" id="image-avatar"></div>
       <div class="form-data" id="editP"></div>
     </section>
   </body>
@@ -38,51 +36,47 @@
     const input = document.getElementById('image-input');
 
     savebtn.addEventListener('click', (event) => {
-        event.preventDefault();
-        const token = localStorage.getItem('token');
-        const form = document.querySelector('form');
-        const headers = new Headers();
-        headers.append('Authorization', `Bearer ${token}`);
-        headers.append('Content-Type', 'application/json');
+      event.preventDefault();
+      const token = localStorage.getItem('token');
+      const form = document.querySelector('form');
+      const headers = new Headers();
+      headers.append('Authorization', `Bearer ${token}`);
+      headers.append('Content-Type', 'application/json');
 
-        const formData = new FormData(form);
-        const newUrl = window.location.href + "/submit";
+      const formData = new FormData(form);
+      const newUrl = window.location.href + '/submit';
 
-        const info = {
-          email: formData.get('email'),
-          name: formData.get('name'),
-          bio: formData.get('bio'),
-        };
+      const info = {
+        email: formData.get('email'),
+        name: formData.get('name'),
+        bio: formData.get('bio'),
+      };
 
-        fetch(newUrl, {
-  method: 'POST',
-  body: JSON.stringify(info),
-  headers: headers,
-})
-.then((data) => {
-  console.log('Success:', data);
-  const newUrl2 = 'http://localhost:8080/user/editProfilePic';
-  const formData2 = new FormData();
-  formData2.append('file', input.files[0]);
-  console.log(input.files[0]);
-  fetch(newUrl2, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
-    body: formData2
-  })
-  .then((data) => {
-    console.log('Success:', data);
-    /*window.location.href = `http://localhost:8080/myProfile/${token}`;*/
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-})
+      fetch(newUrl, {
+        method: 'POST',
+        body: JSON.stringify(info),
+        headers: headers,
+      }).then((data) => {
+        console.log('Success:', data);
+        const newUrl2 = 'http://35.181.62.162/user/editProfilePic';
+        const formData2 = new FormData();
+        formData2.append('file', input.files[0]);
+        console.log(input.files[0]);
+        fetch(newUrl2, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData2,
+        })
+          .then((data) => {
+            console.log('Success:', data);
+            /*window.location.href = `http://35.181.62.162/myProfile/${token}`;*/
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      });
     });
-
-
-
   </script>
 </html>

@@ -23,7 +23,7 @@ export async function uploadProfilePic(
       const useract = await UserRepository.getUserByUsername(user.username);
       console.log(useract);
       const token = req.header('Authorization').split(' ')[1];
-      res.redirect(`http://localhost:8080/myProfile/${token}`);
+      res.redirect(`http://35.181.62.162/myProfile/${token}`);
     } else {
       res.status(404).json({
         message: `User not found`,

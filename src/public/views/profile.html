@@ -32,8 +32,8 @@
     <div class="button" id="logout-btn"></div>
     <script>
       function redirectToUrl() {
-        window.location.href = 'http://localhost:8080/issue';
-        window.location.href = 'http://localhost:8080/issue';
+        window.location.href = 'http://35.181.62.162/issue';
+        window.location.href = 'http://35.181.62.162/issue';
       }
       document.addEventListener('DOMContentLoaded', function () {
         var editElem = document.getElementById('editPerfil');
@@ -51,7 +51,7 @@
           const author = parts[4];
           const authorReal = author.split('?');
           console.log(author);
-          const newUrl = `http://localhost:8080/myProfile/${authorReal[0]}?&view=timeline`;
+          const newUrl = `http://35.181.62.162/myProfile/${authorReal[0]}?&view=timeline`;
           window.location.href = newUrl;
         });
 
@@ -61,21 +61,20 @@
           const author = parts[4];
           const authorReal = author.split('?');
           console.log(author);
-          const newUrl = `http://localhost:8080/myProfile/${authorReal[0]}?&view=watched`;
+          const newUrl = `http://35.181.62.162/myProfile/${authorReal[0]}?&view=watched`;
           window.location.href = newUrl;
         });
 
         function viewProfile() {
           const auth = localStorage.getItem('token');
-          window.location.href = `http://localhost:8080/myProfile/${auth}/edit`;
+          window.location.href = `http://35.181.62.162/myProfile/${auth}/edit`;
         }
       });
 
       function logout() {
         localStorage.removeItem('token');
-        window.location.href = 'http://localhost:8080/login';
-
-      };
+        window.location.href = 'http://35.181.62.162/login';
+      }
     </script>
   </body>
 </html>

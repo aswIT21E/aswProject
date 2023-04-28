@@ -9,5 +9,5 @@ Ruben Torrente
 
 Link Taiga: (https://tree.taiga.io/project/jmaci-asw/timeline)
 
-Deploy: http://localhost:8080/login
+Deploy: http://35.181.62.162/login
 
