@@ -26,9 +26,9 @@
       <header>
         <h1>Configuración de Usuario</h1>
       </header>
-      <!--<div class="image-avatar">
+      <div class="image-avatar" id="image-avatar">
         
-      </div>-->
+      </div>
       <div class="form-data" id="editP"></div>
     </section>
   </body>
@@ -61,7 +61,7 @@
 })
 .then((data) => {
   console.log('Success:', data);
-  const newUrl2 = 'http://localhost:8081/user/editProfilePic';
+  const newUrl2 = 'http://localhost:8080/user/editProfilePic';
   const formData2 = new FormData();
   formData2.append('file', input.files[0]);
   console.log(input.files[0]);
@@ -74,7 +74,7 @@
   })
   .then((data) => {
     console.log('Success:', data);
-    /*window.location.href = `http://localhost:8081/myProfile/${token}`;*/
+    /*window.location.href = `http://localhost:8080/myProfile/${token}`;*/
   })
   .catch((error) => {
     console.error('Error:', error);

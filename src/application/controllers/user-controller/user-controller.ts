@@ -104,6 +104,7 @@ export class UserController {
     });
     const username = decodedToken.payload.username;
     const user = await UserRepository.getUserByUsername(username);
+    console.log(user);
     const viewIssueHTML = fs.readFileSync('src/public/views/editProfile.html');
     const $ = load(viewIssueHTML);
     const scriptNode = `<form action="/myProfile/${token}/edit/submit" method="post">
@@ -113,13 +114,9 @@ export class UserController {
     </fieldset>
     <fieldset>
       <label for="username">Nombre de usuario</label>
-<<<<<<< HEAD
-      <input type="text" name="username" placeholder="${user.username}" id="username" readonly>
-=======
       <input type="text" name="username" placeholder="${
         user.username
       }" id="username">
->>>>>>> main
     </fieldset>
     <fieldset>
       <label for="email">Correo</label>
@@ -143,7 +140,7 @@ export class UserController {
   `;
     const profileImage = `<img src=${user.profilePicture} alt="" class="image">`;
     $('#editP').append(scriptNode);
-    $('#image-container').append(profileImage);
+    $('#image-avatar').append(profileImage);
     res.send($.html());
   }
 

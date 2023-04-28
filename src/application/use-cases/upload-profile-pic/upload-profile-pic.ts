@@ -22,11 +22,8 @@ export async function uploadProfilePic(
       await UserRepository.editarUser(user, user);
       const useract = await UserRepository.getUserByUsername(user.username);
       console.log(useract);
-
-
-      res.status(200).json({
-        message: 'Profile pic uploaded',
-      });
+      const token = req.header('Authorization').split(' ')[1];
+      res.redirect(`http://localhost:8080/myProfile/${token}`);
     } else {
       res.status(404).json({
         message: `User not found`,

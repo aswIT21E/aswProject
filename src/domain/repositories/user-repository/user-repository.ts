@@ -37,7 +37,7 @@ export class UserRepository {
       userDocument.password,
       userDocument.bio,
     );
-
+    user.updateProfilePic(userDocument.profilePicture);
     return user;
   }
 
@@ -53,8 +53,9 @@ export class UserRepository {
       userDocument.username,
       userDocument.password,
       userDocument.bio,
+      
     );
-
+    user.updateProfilePic(userDocument.profilePicture);
     return user;
   }
 
