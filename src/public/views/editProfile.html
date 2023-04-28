@@ -58,8 +58,7 @@
         headers: headers,
       }).then((data) => {
         console.log('Success:', data);
-        const newUrl2 =
-          'http://asw.issue-tracker-asw.net/login/user/editProfilePic';
+        const newUrl2 = 'http://asw.issue-tracker-asw.net/user/editProfilePic';
         const formData2 = new FormData();
         formData2.append('file', input.files[0]);
         console.log(input.files[0]);
@@ -72,7 +71,7 @@
         })
           .then((data) => {
             console.log('Success:', data);
-            /*window.location.href = `http://asw.issue-tracker-asw.net/login/myProfile/${token}`;*/
+            /*window.location.href = `http://asw.issue-tracker-asw.net/myProfile/${token}`;*/
           })
           .catch((error) => {
             console.error('Error:', error);
