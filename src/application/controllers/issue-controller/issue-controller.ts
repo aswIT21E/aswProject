@@ -300,6 +300,7 @@ export class IssueController {
               issue.assignedTo.password,
               issue.assignedTo.bio,
             );
+          assigned?.updateProfilePic(issue.assignedTo?.profilePicture);
 
           const scriptNode = `                           
               <div class="issue">
