@@ -14,6 +14,7 @@ import {
   uploadProfilePicDto,
   googleAuthDto,
 } from '~/infrastructure/dtos';
+
 import { authMiddleware } from '../middlewares';
 
 export const userRouter = express.Router();
@@ -24,7 +25,7 @@ userRouter.post('/users/login', loginDto, logIn);
 
 userRouter.post('/users/googleAuth', googleAuthDto, googleAuth);
 
-userRouter.post('/users/editProfile', UserController.editUser);
+userRouter.put('/users/editProfile', UserController.editUser);
 
 userRouter.post(
   '/user/editProfilePic',
@@ -43,7 +44,7 @@ userRouter.get('/profile', UserController.getProfilePage);
 
 userRouter.get('/myProfile/:token', UserController.getMyProfilePage);
 
-userRouter.post('/myProfile/:token/edit/submit', UserController.editUser);
+userRouter.put('/myProfile/:token/edit/submit', UserController.editUser);
 
 userRouter.get('/myProfile/:token/edit', UserController.getEditProfilePage);
 

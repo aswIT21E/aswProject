@@ -107,7 +107,7 @@ export class UserController {
     console.log(user);
     const viewIssueHTML = fs.readFileSync('src/public/views/editProfile.html');
     const $ = load(viewIssueHTML);
-    const scriptNode = `<form action="/myProfile/${token}/edit/submit" method="post">
+    const scriptNode = `<form action="/myProfile/${token}/edit/submit" method="put">
     <fieldset class="image-container" id="image-container">
           <label for="image-input" class="image-label">CAMBIAR FOTO</label>
           <input type="file" id="image-input" class="image-input" name="profilePicture">

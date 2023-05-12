@@ -49,13 +49,13 @@ issueRouter.post(
   IssueController.createComment,
 );
 
-issueRouter.post(
+issueRouter.put(
   '/issue/:id/editIssue',
   checkBlockedIssue,
   IssueController.modifyIssue,
 );
 
-issueRouter.post(
+issueRouter.put(
   '/issue/:id/modifyIssue',
   checkBlockedIssue,
   IssueController.modifyIssue,
@@ -120,7 +120,7 @@ issueRouter.put('/issues/:id/lock-issue', lockIssue);
 issueRouter.put('/issues/:id/unlock-issue', unlockIssue);
 
 issueRouter.post('/issues/:id/add-watchers', addWatchersDto, addWatchers);
-issueRouter.post('/issue/:id/remove', IssueController.removeIssue);
+issueRouter.delete('/issue/:id/remove', IssueController.removeIssue);
 
 issueRouter.post(
   '/issues/:id/delete-watchers',
@@ -136,7 +136,7 @@ issueRouter.post(
   checkBlockedIssue,
   assignUserToIssue,
 );
-issueRouter.post(
+issueRouter.put(
   '/issues/:id/updateDeadline',
   authMiddleware,
   updateDeadlineDto,
@@ -144,7 +144,7 @@ issueRouter.post(
   updateDeadline,
 );
 
-issueRouter.post(
+issueRouter.delete(
   '/issues/:id/removeDeadline',
   authMiddleware,
   checkBlockedIssue,
@@ -160,7 +160,7 @@ issueRouter.post(
 
 issueRouter.post('/issues/bulkIssues', IssueController.bulkIssues);
 
-issueRouter.post(
+issueRouter.delete(
   '/issues/:id/removeAttachment',
   authMiddleware,
   removeAttachmentDto,

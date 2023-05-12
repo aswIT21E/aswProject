@@ -237,7 +237,7 @@
           const number = 0;
           formData.append('attachmentIndex', attachmentIndex); // Agregar el índice del attachment al FormData
           await fetch(newUrl, {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
               'Authorization': `Bearer ${token}`
             },
@@ -308,7 +308,7 @@
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       fetch(`http://asw.issue-tracker-asw.net/issue/${issueId}/remove`, {
-        method: 'POST',
+        method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -323,7 +323,7 @@
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       fetch(`http://asw.issue-tracker-asw.net/issue/${issueId}/modifyIssue`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -401,7 +401,7 @@ function mostrarAcividades() {
   const url = window.location.href;
   const issueId = url.substring(url.lastIndexOf('/') + 1);
   await fetch(`http://asw.issue-tracker-asw.net/issues/${issueId}/updateDeadline`, {
-  method: 'POST',
+  method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -423,7 +423,7 @@ function mostrarAcividades() {
 function eliminadeadline() {
   const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-  fetch(`http://asw.issue-tracker-asw.net/issues/${issueId}/removeDeadline`, {
+  fetch(`http://asw.issue-tracker-asw.net/issues/${issueId}Deadline`, {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json',
