@@ -63,7 +63,7 @@
       });
       function viewProfile() {
         const auth = localStorage.getItem('token');
-        window.location.href = `http://asw.issue-tracker-asw.net/myProfile/${auth}`;
+        window.location.href = `http://localhost:8081/myProfile/${auth}`;
       }
     });
 
@@ -77,7 +77,7 @@
 
         // Redirigir a la URL con el valor del input como parámetro de búsqueda
         window.location.href =
-          'http://asw.issue-tracker-asw.net/issue?&text=' + inputValue;
+          'http://localhost:8081/issue?&text=' + inputValue;
       });
   </script>
 </div>
