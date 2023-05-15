@@ -18,7 +18,7 @@
     <form
       id="issueForm"
       method="post"
-      action="http://localhost:8081/issues/create"
+      action="http://asw.issue-tracker-asw.net/issues/create"
       class="issue"
     >
       <div class="cerrar">
@@ -128,7 +128,7 @@
 
         try {
           const response = await fetch(
-            'http://localhost:8081/issues/create',
+            'http://asw.issue-tracker-asw.net/issues/create',
             {
               method: 'POST',
               headers: headers,
@@ -137,7 +137,7 @@
           );
 
           if (response.ok) {
-            window.location.href = 'http://localhost:8081/issue';
+            window.location.href = 'http://asw.issue-tracker-asw.net/issue';
           } else {
             const error = await response.json();
             console.error(error);

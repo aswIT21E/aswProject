@@ -31,7 +31,7 @@
         data-type="standard"
         data-callback="handleCredentials"
       ></div>
-      <form method="post" action="http://localhost:8081/users/login">
+      <form method="post" action="http://asw.issue-tracker-asw.net/users/login">
         <input
           type="text"
           id="username"
@@ -54,7 +54,7 @@
       window.handleCredentials = async (credentials) => {
         console.log('Google Token', credentials);
         const response = await fetch(
-          'http://localhost:8081/users/googleAuth',
+          'http://asw.issue-tracker-asw.net/users/googleAuth',
           {
             method: 'POST',
             body: JSON.stringify({
@@ -68,7 +68,7 @@
         const data = await response.json();
         if (response.ok) {
           localStorage.setItem('token', data.token);
-          window.location.href = 'http://localhost:8081/issue';
+          window.location.href = 'http://asw.issue-tracker-asw.net/issue';
         } else if (response.status === 400) {
           console.error(data.error || data.message);
         }
@@ -79,7 +79,7 @@
         const formData = new FormData(event.target);
         const json = Object.fromEntries(formData.entries()); // Convierte los datos del formulario en un objeto JSON
         const response = await fetch(
-          'http://localhost:8081/users/login',
+          'http://asw.issue-tracker-asw.net/users/login',
           {
             method: 'POST',
             body: JSON.stringify(json), // Envía los datos del formulario como JSON
@@ -91,7 +91,7 @@
         const data = await response.json();
         if (response.ok) {
           localStorage.setItem('token', data.token);
-          window.location.href = 'http://localhost:8081/issue';
+          window.location.href = 'http://asw.issue-tracker-asw.net/issue';
         } else if (response.status === 400) {
           console.error(data.error || data.message);
         }

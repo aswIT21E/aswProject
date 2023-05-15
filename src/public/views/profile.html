@@ -32,8 +32,8 @@
     <div class="button" id="logout-btn"></div>
     <script>
       function redirectToUrl() {
-        window.location.href = 'http://localhost:8081/issue';
-        window.location.href = 'http://localhost:8081/issue';
+        window.location.href = 'http://asw.issue-tracker-asw.net/issue';
+        window.location.href = 'http://asw.issue-tracker-asw.net/issue';
       }
       document.addEventListener('DOMContentLoaded', function () {
         var editElem = document.getElementById('editPerfil');
@@ -52,7 +52,7 @@
           const author = parts[4];
           const authorReal = author.split('?');
           console.log(author);
-          const newUrl = `http://localhost:8081/myProfile/${authorReal[0]}?&view=timeline`;
+          const newUrl = `http://asw.issue-tracker-asw.net/myProfile/${authorReal[0]}?&view=timeline`;
           window.location.href = newUrl;
         });
 
@@ -62,7 +62,7 @@
           const author = parts[4];
           const authorReal = author.split('?');
           console.log(author);
-          const newUrl = `http://localhost:8081/myProfile/${authorReal[0]}?&view=watched`;
+          const newUrl = `http://asw.issue-tracker-asw.net/myProfile/${authorReal[0]}?&view=watched`;
           window.location.href = newUrl;
         });
         viewToken.addEventListener('click', function () {
@@ -71,18 +71,18 @@
           const author = parts[4];
           const authorReal = author.split('?');
           console.log(author);
-          const newUrl = `http://localhost:8081/myProfile/${authorReal[0]}?&view=token`;
+          const newUrl = `http://asw.issue-tracker-asw.net/myProfile/${authorReal[0]}?&view=token`;
           window.location.href = newUrl;
         });
         function viewProfile() {
           const auth = localStorage.getItem('token');
-          window.location.href = `http://localhost:8081/myProfile/${auth}/edit`;
+          window.location.href = `http://asw.issue-tracker-asw.net/myProfile/${auth}/edit`;
         }
       });
 
       function logout() {
         localStorage.removeItem('token');
-        window.location.href = 'http://localhost:8081/login';
+        window.location.href = 'http://asw.issue-tracker-asw.net/login';
       }
     </script>
     <script>
