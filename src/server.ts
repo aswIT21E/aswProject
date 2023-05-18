@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 import express from 'express';
 import fileUpload from 'express-fileupload';
 import { connect } from 'mongoose';
+import cors from 'cors';
 
 import { routes } from '~/infrastructure';
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(
   }),
   fileUpload(),
 );
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
