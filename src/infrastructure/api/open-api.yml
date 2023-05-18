@@ -1,0 +1,659 @@
+openapi: 3.0.2
+info:
+  version: v1.0.0
+  title: Issue Tracker
+  description: "This is the Open API documentation for the REST API for the Issue Tracker. Mind that all of the requests expect an Authentication Token to be passed through the headers. Cheers."
+servers:
+  - url: 'http://aws-fib.com/'
+tags:
+  - name: Users
+    description: Operations related to users
+  - name: Issues
+    description: Operations related to issues
+security:
+  - BearerAuth: []
+paths:
+  /users/editProfile:
+    put:
+      summary: Edit Profile
+      description: edits the profile of the user making the request
+      operationId: editProfile
+      security:
+        - BearerAuth: []
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Successful update
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid request
+        '404':
+          description: User not found
+  /users:
+    get:
+      summary: Get all users
+      description: Returns the list of all users logged in to issue tracker
+      operationId: getAllUsers
+      security:
+        - BearerAuth: []
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '401':
+          description: Not authorized
+        '500':
+          description: Internal server error
+  /profile:
+    get:
+      summary: Get user profile
+      description: Retrieves the information of the user profile
+      operationId: getProfile
+      security:
+        - BearerAuth: []
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+  /issues/create:
+    post:
+      summary: Creates an issue
+      description: Creates a new issues based on the information sent
+      operationId: createIssue
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                required:
+                  - subject
+                  - description
+                  - status
+                  - type
+                  - severity
+                  - priority
+                properties:
+                  subject:
+                    type: string
+                  description:
+                    type: string
+                  status:
+                    type: string
+                  type:
+                    type: string
+                  severity:
+                    type: string
+                  priority:
+                    type: string
+      responses:
+        '201':
+          description: Ok
+        '401':
+          description: Not authorized
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /issues/{id}/editIssue:
+    put:
+      summary: Edits an issue
+      description: Edits the issue ID
+      operationId: editIssue
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                required:
+                  - parameter
+                  - newValue
+                properties:
+                  parameter:
+                    type: string
+                  newValue:
+                    type: string
+      responses:
+        '201':
+          description: Ok
+        '401':
+          description: Not authorized
+        '404':
+          description: Issue not found
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /issues/{id}/lock-issue:
+    put:
+      summary: Lock Issue
+      description: Locks the issue ID
+      operationId: lockIssue
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+        '401':
+          description: Not authorized
+        '404':
+          description: Issue not found
+        '500':
+          description: Internal server error
+  /issues/{id}/unlock-issue:
+    put:
+      summary: Unlock Issue
+      description: Unlocks the issue ID
+      operationId: unlockIssue
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+        '401':
+          description: Not authorized
+        '404':
+          description: Issue not found
+        '500':
+          description: Internal server error
+  /issues/{id}/add-watchers:
+    post:
+      summary: Adds watchers
+      description: Adds some watchers to issue ID
+      operationId: addWatchers
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: string
+      responses:
+        '201':
+          description: Ok
+        '401':
+          description: Not authorized
+        '404':
+          description: Issue not found / Watcher not found
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /issues/{id}/remove-watchers:
+    post:
+      summary: Removes watchers
+      description: Removes some watchers to issue ID
+      operationId: removeWatchers
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: string
+      responses:
+        '201':
+          description: Ok
+        '401':
+          description: Not authorized
+        '404':
+          description: Issue not found / Watcher not found
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /issues/{id}/remove:
+    delete:
+      summary: Removes an issue
+      description: Removes the issue id
+      operationId: removeIssue
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+        '401':
+          description: Not authorized
+        '404':
+          description: Issue not found
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /issues/bulk:
+    post:
+      summary: Creates an issue
+      description: Creates a new issues based on the information sent
+      operationId: bulkIssues
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - subject
+                    - description
+                    - status
+                    - type
+                    - severity
+                    - priority
+                  properties:
+                    subject:
+                      type: string
+                    description:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                    severity:
+                      type: string
+                    priority:
+                      type: string
+      responses:
+        '207':
+          description: Ok
+        '401':
+          description: Not authorized
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /issues/info/{id}:
+    get:
+      summary: Get issue
+      description: Retrieves the information of the issue ID
+      operationId: getIssue
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue'
+        '500':
+          description: Internal server error
+  /issues:
+    get:
+      summary: Get Issues
+      description: Returns all issues from the issue tracker
+      operationId: getIssues
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      responses:
+        '200':
+          description: Ok
+        '401':
+          description: Not authorized
+        '500':
+          description: Internal server error
+  /issues/{id}/new-comment:
+    post:
+      summary: Creates a comment
+      description: Creates a comment and adds it to the issue ID
+      operationId: newComment
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                required:
+                  - comment
+                properties:
+                  comment:
+                    type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Issue'
+        '404':
+          description: Issue not found
+        '401':
+          description: Not authorized
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /issues/{id}/assign:
+    post:
+      summary: Assign issue
+      description: Assigns an issue to a user
+      operationId: assignIssue
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+      responses:
+        '201':
+          description: Ok
+        '401':
+          description: Not authorized
+        '404':
+          description: Issue not found / User not found
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /issues/{id}/updateDeadline:
+    post:
+      summary: Update deadline
+      description: Updates the deadline of the issue ID
+      operationId: updateDeadline
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                required:
+                  - deadline
+                properties:
+                  deadline:
+                    type: string
+                    format: date-time
+      responses:
+        '200':
+          description: Ok
+        '404':
+          description: Issue not found
+        '401':
+          description: Not authorized
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+  /issues/{id}/addAttachment:
+    post:
+      summary: Add attachment
+      description: Updates the deadline of the issue ID
+      operationId: addAttachment
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                required:
+                  - deadline
+                properties:
+                  file:
+                    type: string
+      responses:
+        '200':
+          description: Ok
+        '404':
+          description: Issue not found
+        '401':
+          description: Not authorized
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+components:
+  securitySchemes:
+      BearerAuth:
+        type: http
+        scheme: bearer
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        bio:
+          type: string
+        profilePicture:
+          type: string
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+        author:
+          $ref: '#/components/schemas/User'
+        content:
+          type: string
+        date:
+          type: string
+    Activity:
+      type: object
+      properties:
+        id:
+          type: string
+        actor:
+          $ref: '#/components/schemas/User'
+        message:
+          type: string
+    Issue:
+      type: object
+      properties:
+        id:
+          type: string
+        numberIssue:
+          type: number
+        subject:
+          type: string
+        description:
+          type: string
+        activity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Activity'
+        creator:
+          $ref: '#/components/schemas/User'
+        status:
+          type: string
+        severity:
+          type: string
+        type:
+          type: string
+        date:
+          type: string
+        priority:
+          type: string
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        locked:
+          type: boolean
+        reasonLock:
+          type: string
+        watchers:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        assignedTo:
+          $ref: '#/components/schemas/User'
+        attachments:
+          type: array
+          items:
+            type: string
+        deadline:
+          type: string
+          format: date-time
