@@ -395,7 +395,6 @@ export class IssueController {
     }
     let contador = 0;
     for (const attachment of attachments) {
-      console.log(attachment);
       const extension = attachment.split('.').pop().toLowerCase();
       let attachmentNode;
       if (['jpg', 'jpeg', 'png', 'gif'].includes(extension)) {

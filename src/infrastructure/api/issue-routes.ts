@@ -178,9 +178,9 @@ issueRouter.get(
 
 issueRouter.get('/issuefilter', filterDto, IssueController.getIssuePage);
 
-issueRouter.get('/issue', authMiddleware, IssueController.getIssuePage);
+issueRouter.get('/issue', IssueController.getIssuePage);
 
-issueRouter.get('/issue/:id', authMiddleware, IssueController.getIssue);
+issueRouter.get('/issue/:id', IssueController.getIssue);
 
 issueRouter.get('/issue/:id/assign', IssueController.getUserInfoAssign);
 

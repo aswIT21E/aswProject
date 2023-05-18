@@ -131,32 +131,32 @@
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       const token = localStorage.getItem('token');
-
+      const headers = new Headers();
+      headers.append('Authorization', `Bearer ${token}`);
+      headers.append('Content-Type', 'application/json');
       var butonlock = document.getElementById("botonLock");
       if (butonlock.dataset.lock == "true") {
         const opciones = {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
+        headers: headers,
       };
         butonlock.innerHTML = "<i class=\"fas fa-unlock\"></i>";
-          await fetch(`http://asw-fib.com/issues/${issueId}/unlock-issue`, opciones);
+          await fetch(`http://aws-fib.com/issues/${issueId}/unlock-issue`, opciones);
       } 
       else {
+        const token = localStorage.getItem('token');
+        const headers = new Headers();
+        headers.append('Authorization', `Bearer ${token}`);
+        headers.append('Content-Type', 'application/json');
         const opciones = {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
+        headers: headers,
         body: JSON.stringify({
          reason: document.getElementById("campoTextoLock").value || null,
         })
       };
         butonlock.innerHTML = "<i class=\"fas fa-lock\"></i>";
-        await fetch(`http://asw-fib.com/issues/${issueId}/lock-issue`,opciones);
+        await fetch(`http://aws-fib.com/issues/${issueId}/lock-issue`,opciones);
       }
       window.location.reload();
       
@@ -173,22 +173,22 @@
     button.addEventListener('click', (event) => {
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-      const token = localStorage.getItem('token');
       event.preventDefault();
-      const newUrl = `http://asw-fib.com/issue/${issueId}/new-comment`;
+      const newUrl = `http://aws-fib.com/issue/${issueId}/new-comment`;
+      const token = localStorage.getItem('token');
+      const headers = new Headers();
+      headers.append('Authorization', `Bearer ${token}`);
+      headers.append('Content-Type', 'application/json');
       fetch(newUrl, {
       method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
+            headers: headers,
             body: JSON.stringify({
               comment: document.getElementById('comment').value
             })
       })
         .then((data) => {
           console.log('Success:', data);
-          window.location.href = `http://asw-fib.com/issue/${issueId}`;
+          window.location.href = `http://aws-fib.com/issue/${issueId}`;
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -200,26 +200,26 @@
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       const token = localStorage.getItem('token');
       event.preventDefault();
-      const newUrl = `http://asw-fib.com/issues/${issueId}/addAttachment`;
+      const newUrl = `http://aws-fib.com/issues/${issueId}/addAttachment`;
       const formData = new FormData();
       formData.append('file', attachment.files[0]);
       console.log(attachment.files[0]);
+      const headers = new Headers();
+      headers.append('Authorization', `Bearer ${token}`);
+      headers.append('Content-Type', 'application/json');
       await fetch(newUrl, {
       method: 'POST',
-            headers: {
-          
-              'Authorization': `Bearer ${token}`
-            },
+            headers: headers,
             body: formData
             })
         .then((data) => {
           console.log('Success:', data);
-          /*window.location.href = `http://asw-fib.com/issue/${issueId}`;*/
+          /*window.location.href = `http://aws-fib.com/issue/${issueId}`;*/
         })
         .catch((error) => {
           console.error('Error:', error);
         });
-        window.location.href = `http://asw-fib.com/issue/${issueId}`;
+        window.location.href = `http://aws-fib.com/issue/${issueId}`;
       });
 
 
@@ -232,15 +232,16 @@
           const issueId = url.substring(url.lastIndexOf('/') + 1);
           const token = localStorage.getItem('token');
           event.preventDefault();
-          const newUrl = `http://asw-fib.com/issues/${issueId}/removeAttachment`;
+          const newUrl = `http://aws-fib.com/issues/${issueId}/removeAttachment`;
           const formData = new FormData();
           const number = 0;
+          const headers = new Headers();
+          headers.append('Authorization', `Bearer ${token}`);
+          headers.append('Content-Type', 'application/json');
           formData.append('attachmentIndex', attachmentIndex); // Agregar el índice del attachment al FormData
           await fetch(newUrl, {
             method: 'DELETE',
-            headers: {
-              'Authorization': `Bearer ${token}`
-            },
+            headers: headers,
             body: formData
           })
           .then((data) => {
@@ -250,7 +251,7 @@
           .catch((error) => {
             console.error('Error:', error);
           });
-          window.location.href = `http://asw-fib.com/issue/${issueId}`;
+          window.location.href = `http://aws-fib.com/issue/${issueId}`;
         });
       }
 
@@ -264,7 +265,7 @@
   </script>
   <script>
     function redirectToUrl() {
-      window.location.href = "http://asw-fib.com/issue";
+      window.location.href = "http://aws-fib.com/issue";
     }
     document.addEventListener('DOMContentLoaded', function () {
       var textElement = document.getElementById('text');
@@ -306,28 +307,30 @@
     });
     function deleteIssue(){
       const url = window.location.href;
+      const token = localStorage.getItem('token');
+      const headers = new Headers();
+      headers.append('Authorization', `Bearer ${token}`);
+      headers.append('Content-Type', 'application/json');
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-      fetch(`http://asw-fib.com/issue/${issueId}/remove`, {
+      fetch(`http://aws-fib.com/issue/${issueId}/remove`, {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
+        headers: headers,
         credentials: 'same-origin',
       }).then(() => {
-    window.location.replace("http://asw-fib.com/issue");
+      window.location.replace("http://aws-fib.com/issue");
   })
       .catch(error => console.log(error));
     }
     function modifyIssue(parameter, newValue) {
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-      fetch(`http://asw-fib.com/issue/${issueId}/modifyIssue`, {
+      const token = localStorage.getItem('token');
+      const headers = new Headers();
+      headers.append('Authorization', `Bearer ${token}`);
+      headers.append('Content-Type', 'application/json');
+      fetch(`http://aws-fib.com/issue/${issueId}/modifyIssue`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
+        headers: headers,
         body: JSON.stringify({
           parameter: parameter,
           newValue: newValue,
@@ -400,7 +403,7 @@ function mostrarAcividades() {
   // Realiza la petición POST al servidor
   const url = window.location.href;
   const issueId = url.substring(url.lastIndexOf('/') + 1);
-  await fetch(`http://asw-fib.com/issues/${issueId}/updateDeadline`, {
+  await fetch(`http://aws-fib.com/issues/${issueId}/updateDeadline`, {
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
@@ -423,7 +426,7 @@ function mostrarAcividades() {
 function eliminadeadline() {
   const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-  fetch(`http://asw-fib.com/issues/${issueId}Deadline`, {
+  fetch(`http://aws-fib.com/issues/${issueId}Deadline`, {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json',

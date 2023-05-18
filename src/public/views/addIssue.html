@@ -18,7 +18,7 @@
     <form
       id="issueForm"
       method="post"
-      action="http://asw-fib.com/issues/create"
+      action="http://aws-fib.com/issues/create"
       class="issue"
     >
       <div class="cerrar">
@@ -127,14 +127,14 @@
         };
 
         try {
-          const response = await fetch('http://asw-fib.com/issues/create', {
+          const response = await fetch('http://aws-fib.com/issues/create', {
             method: 'POST',
             headers: headers,
             body: JSON.stringify(issue),
           });
 
           if (response.ok) {
-            window.location.href = 'http://asw-fib.com/issue';
+            window.location.href = 'http://aws-fib.com/issue';
           } else {
             const error = await response.json();
             console.error(error);
