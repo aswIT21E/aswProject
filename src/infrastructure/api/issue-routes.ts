@@ -28,6 +28,10 @@ import { authMiddleware, checkBlockedIssue } from '../middlewares';
 
 export const issueRouter = express.Router();
 
+/**
+ * POST METHODS
+ */
+
 issueRouter.post(
   '/issues/create',
   authMiddleware,
@@ -43,31 +47,128 @@ issueRouter.post(
 );
 
 issueRouter.post(
+  '/issues/:id/add-watchers',
+  authMiddleware,
+  addWatchersDto,
+  addWatchers,
+);
+
+issueRouter.post(
+  '/issuefilter',
+  authMiddleware,
+  filterDto,
+  IssueController.getIssuePage,
+);
+
+issueRouter.post(
   '/issue/:id/new-comment',
   authMiddleware,
   checkBlockedIssue,
   IssueController.createComment,
 );
 
+issueRouter.post(
+  '/issues/:id/delete-watchers',
+  authMiddleware,
+  removeWatchersDto,
+  checkBlockedIssue,
+  removeWatchers,
+);
+
+issueRouter.post(
+  '/issues/:id/assign',
+  authMiddleware,
+  assignIssueDto,
+  checkBlockedIssue,
+  assignUserToIssue,
+);
+
+issueRouter.post(
+  '/issues/:id/addAttachment',
+  authMiddleware,
+  addAttachmentDto,
+  addAttachment,
+);
+
+issueRouter.post('/issues/bulkIssues', IssueController.bulkIssues);
+
+/**
+ * PUT METHODS
+ */
+
 issueRouter.put(
   '/issue/:id/editIssue',
+  authMiddleware,
   checkBlockedIssue,
   IssueController.modifyIssue,
 );
 
 issueRouter.put(
   '/issue/:id/modifyIssue',
+  authMiddleware,
   checkBlockedIssue,
   IssueController.modifyIssue,
 );
 
-issueRouter.get('/issue/:id/assign', IssueController.getUserInfoAssign);
+issueRouter.put(
+  '/issues/:id/lock-issue',
+  authMiddleware,
+  authMiddleware,
+  lockIssue,
+);
 
-issueRouter.get('/issue/:id/watchers', IssueController.getUserInfoWatchers);
+issueRouter.put(
+  '/issues/:id/updateDeadline',
+  authMiddleware,
+  updateDeadlineDto,
+  checkBlockedIssue,
+  updateDeadline,
+);
 
-issueRouter.get('/issues', IssueController.getAllIssues);
+issueRouter.put('/issues/:id/unlock-issue', authMiddleware, unlockIssue);
+
+/**
+ * GET METHODS
+ */
+
+issueRouter.get('/issues', authMiddleware, IssueController.getAllIssues);
+
+issueRouter.get(
+  '/issues/info/:id',
+  authMiddleware,
+  IssueController.getIssueInfo,
+);
+
+/**
+ * DELETE METHODS
+ */
+
+issueRouter.delete(
+  '/issue/:id/remove',
+  authMiddleware,
+  IssueController.removeIssue,
+);
+
+issueRouter.delete(
+  '/issues/:id/removeDeadline',
+  authMiddleware,
+  checkBlockedIssue,
+  removeDeadline,
+);
+
+issueRouter.delete(
+  '/issues/:id/removeAttachment',
+  authMiddleware,
+  removeAttachmentDto,
+  removeAttachment,
+);
+
+/**
+ * PAGES AND STYLES
+ */
 
 issueRouter.get('/issues/bulk', IssueController.getBulkIssuesPage);
+
 issueRouter.get('/issues/newIssue', IssueController.getNewIssuePage);
 
 issueRouter.get(
@@ -75,15 +176,15 @@ issueRouter.get(
   IssueController.getNewIssuePageCss,
 );
 
-issueRouter.get('/issue', IssueController.getIssuePage);
-
-issueRouter.get('/issue/:id', IssueController.getIssue);
-
 issueRouter.get('/issuefilter', filterDto, IssueController.getIssuePage);
 
-issueRouter.post('/issuefilter', filterDto, IssueController.getIssuePage);
+issueRouter.get('/issue', authMiddleware, IssueController.getIssuePage);
 
-issueRouter.get('/info/:id', IssueController.getIssueInfo);
+issueRouter.get('/issue/:id', authMiddleware, IssueController.getIssue);
+
+issueRouter.get('/issue/:id/assign', IssueController.getUserInfoAssign);
+
+issueRouter.get('/issue/:id/watchers', IssueController.getUserInfoWatchers);
 
 issueRouter.get(
   '/stylesheets/searchIssue.css',
@@ -113,56 +214,4 @@ issueRouter.get(
 issueRouter.get(
   '/stylesheets/bulkIssues.css',
   IssueController.getBulkIssuesPageCss,
-);
-
-issueRouter.put('/issues/:id/lock-issue', lockIssue);
-
-issueRouter.put('/issues/:id/unlock-issue', unlockIssue);
-
-issueRouter.post('/issues/:id/add-watchers', addWatchersDto, addWatchers);
-issueRouter.delete('/issue/:id/remove', IssueController.removeIssue);
-
-issueRouter.post(
-  '/issues/:id/delete-watchers',
-  removeWatchersDto,
-  checkBlockedIssue,
-  removeWatchers,
-);
-
-issueRouter.post(
-  '/issues/:id/assign',
-  authMiddleware,
-  assignIssueDto,
-  checkBlockedIssue,
-  assignUserToIssue,
-);
-issueRouter.put(
-  '/issues/:id/updateDeadline',
-  authMiddleware,
-  updateDeadlineDto,
-  checkBlockedIssue,
-  updateDeadline,
-);
-
-issueRouter.delete(
-  '/issues/:id/removeDeadline',
-  authMiddleware,
-  checkBlockedIssue,
-  removeDeadline,
-);
-
-issueRouter.post(
-  '/issues/:id/addAttachment',
-  authMiddleware,
-  addAttachmentDto,
-  addAttachment,
-);
-
-issueRouter.post('/issues/bulkIssues', IssueController.bulkIssues);
-
-issueRouter.delete(
-  '/issues/:id/removeAttachment',
-  authMiddleware,
-  removeAttachmentDto,
-  removeAttachment,
 );
