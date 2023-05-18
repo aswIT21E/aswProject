@@ -185,9 +185,11 @@ export class UserController {
                     <ion-icon class="icon" name="eye-outline"></ion-icon>
                     <span>Observado</span>
                 </a>
+                
             </nav>
             <div class="timeline" id="timeline" style="display:flex; flex-direction:column;">
             </div>
+            
         </div>
         <aside class="profile-sidebar">
         <button class="botonLock" onclick="redirectToUrl()">
@@ -213,6 +215,12 @@ export class UserController {
       `;
       $('#myperfil').append(editarBioHTML);
       $('#logout-btn').append(logOut);
+
+      const scriptActivitiesButton = `<a class="tab" id="viewToken" >
+      <span>Api Key</span>
+        </a>`
+
+      $('.profile-content-tabs').append(scriptActivitiesButton);
     }
     const issues = await IssueRepository.getAllIssues();
     const param = req.query.view;
@@ -224,7 +232,7 @@ export class UserController {
             $('#timeline').append(scriptActivities);
           }
         }
-      } else {
+      } else if(param === 'timeline') {
         for (const activity of issue.activity) {
           const user = await UserRepository.getUserById(
             activity.actor.toString(),
@@ -235,8 +243,20 @@ export class UserController {
           }
         }
       }
+      
     }
-    res.send($.html());
+    if(param === 'token' ){
+     
+      const parts = token.split('.');
+      const scriptActivities = `<div class="timeline-item"> ${parts[0]}${parts[1]}</div>
+      <div class="timeline-item" > ${parts[2]}
+      <button id="copy-button" >
+      <i class="fas fa-solid fa-copy"></i> 
+      </button></div>`;
+      
+      $('#timeline').append(scriptActivities);
+    }
+      res.send($.html());
   }
 
   public static async getSignUpPageCss(
