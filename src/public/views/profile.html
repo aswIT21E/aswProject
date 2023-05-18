@@ -70,7 +70,7 @@
           const author = parts[4];
           const authorReal = author.split('?');
           console.log(author);
-          const newUrl = `http://asw.issue-tracker-asw.net/myProfile/${authorReal[0]}?&view=token`;
+          const newUrl = `http://aws-fib.com/myProfile/${authorReal[0]}?&view=token`;
           window.location.href = newUrl;
         });
         function viewProfile() {
@@ -85,14 +85,14 @@
       }
     </script>
     <script>
-        const copyButton = document.getElementById('copy-button');
+      const copyButton = document.getElementById('copy-button');
       copyButton.addEventListener('click', () => {
         const url = window.location.href;
-          const parts = url.split('/');
-          const author = parts[4];
-          const authorReal = author.split('?');
-      navigator.clipboard.writeText(authorReal);
-  });
+        const parts = url.split('/');
+        const author = parts[4];
+        const authorReal = author.split('?');
+        navigator.clipboard.writeText(authorReal);
+      });
     </script>
   </body>
 </html>
