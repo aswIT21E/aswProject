@@ -23,7 +23,7 @@ export async function uploadProfilePic(
       const useract = await UserRepository.getUserByUsername(user.username);
       console.log(useract);
       const token = req.header('Authorization').split(' ')[1];
-      res.redirect(`http://asw.issue-tracker-asw.net/myProfile/${token}`);
+      res.redirect(`http://aws-fib.com/myProfile/${token}`);
     } else {
       res.status(404).json({
         message: `User not found`,
