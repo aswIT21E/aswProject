@@ -19,13 +19,15 @@ import { authMiddleware } from '../middlewares';
 
 export const userRouter = express.Router();
 
+/**
+ * POST METHODS
+ */
+
 userRouter.post('/users/signup', createUserDto, signUp);
 
 userRouter.post('/users/login', loginDto, logIn);
 
 userRouter.post('/users/googleAuth', googleAuthDto, googleAuth);
-
-userRouter.put('/users/editProfile', UserController.editUser);
 
 userRouter.post(
   '/user/editProfilePic',
@@ -34,7 +36,21 @@ userRouter.post(
   uploadProfilePic,
 );
 
-userRouter.get('/users', UserController.getAllUsers);
+/**
+ * PUT METHODS
+ */
+
+userRouter.put('/users/editProfile', authMiddleware, UserController.editUser);
+
+/**
+ * GET METHODS
+ */
+
+userRouter.get('/users', authMiddleware, UserController.getAllUsers);
+
+/**
+ * PAGES AND STYLES
+ */
 
 userRouter.get('/signup', UserController.getSignUpPage);
 
