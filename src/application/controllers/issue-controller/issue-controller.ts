@@ -52,7 +52,7 @@ export class IssueController {
         await IssueRepository.addIssue(issue);
       }
 
-      res.status(200);
+      res.status(207);
       res.redirect(`${process.env.API_URL}/issue`);
     } catch (e) {
       res.status(500);
@@ -83,7 +83,7 @@ export class IssueController {
       });
       const x = await IssueRepository.addIssue(issue);
       console.log(x);
-      res.status(200);
+      res.status(201);
       res.redirect(`${process.env.API_URL}/issue`);
     } catch (e) {
       res.status(500);
