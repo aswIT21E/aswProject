@@ -32,8 +32,8 @@
     <div class="button" id="logout-btn"></div>
     <script>
       function redirectToUrl() {
-        window.location.href = 'http://asw.issue-tracker-asw.net/issue';
-        window.location.href = 'http://asw.issue-tracker-asw.net/issue';
+        window.location.href = 'http://asw-fib.com/issue';
+        window.location.href = 'http://asw-fib.com/issue';
       }
       document.addEventListener('DOMContentLoaded', function () {
         var editElem = document.getElementById('editPerfil');
@@ -51,7 +51,7 @@
           const author = parts[4];
           const authorReal = author.split('?');
           console.log(author);
-          const newUrl = `http://asw.issue-tracker-asw.net/myProfile/${authorReal[0]}?&view=timeline`;
+          const newUrl = `http://asw-fib.com/myProfile/${authorReal[0]}?&view=timeline`;
           window.location.href = newUrl;
         });
 
@@ -61,19 +61,19 @@
           const author = parts[4];
           const authorReal = author.split('?');
           console.log(author);
-          const newUrl = `http://asw.issue-tracker-asw.net/myProfile/${authorReal[0]}?&view=watched`;
+          const newUrl = `http://asw-fib.com/myProfile/${authorReal[0]}?&view=watched`;
           window.location.href = newUrl;
         });
 
         function viewProfile() {
           const auth = localStorage.getItem('token');
-          window.location.href = `http://asw.issue-tracker-asw.net/myProfile/${auth}/edit`;
+          window.location.href = `http://asw-fib.com/myProfile/${auth}/edit`;
         }
       });
 
       function logout() {
         localStorage.removeItem('token');
-        window.location.href = 'http://asw.issue-tracker-asw.net/login';
+        window.location.href = 'http://asw-fib.com/login';
       }
     </script>
   </body>

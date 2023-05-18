@@ -57,7 +57,7 @@
       const url = window.location.href;
       const parts = url.split('/');
       const issueId = parts[4];
-      const newUrl = `http://asw.issue-tracker-asw.net/issues/${issueId}/add-watchers`;
+      const newUrl = `http://asw-fib.com/issues/${issueId}/add-watchers`;
 
       const data = {
         users: usersId,
@@ -71,8 +71,8 @@
         .then((response) => response.json())
         .then((data) => {
           console.log('Success:', data);
-          window.location.href = `http://asw.issue-tracker-asw.net/issue/${issueId}`;
-          window.location.href = `http://asw.issue-tracker-asw.net/issue/${issueId}`;
+          window.location.href = `http://asw-fib.com/issue/${issueId}`;
+          window.location.href = `http://asw-fib.com/issue/${issueId}`;
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -91,7 +91,7 @@
       const url = window.location.href;
       const parts = url.split('/');
       const issueId = parts[4];
-      const newUrl = `http://asw.issue-tracker-asw.net/issues/${issueId}/delete-watchers`;
+      const newUrl = `http://asw-fib.com/issues/${issueId}/delete-watchers`;
       const data = {
         users: usersId,
       };
@@ -104,7 +104,7 @@
         .then((response) => response.json())
         .then((data) => {
           console.log('Success:', data);
-          window.location.href = `http://asw.issue-tracker-asw.net/issue/${issueId}`;
+          window.location.href = `http://asw-fib.com/issue/${issueId}`;
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -114,7 +114,7 @@
       const url = window.location.href;
       const parts = url.split('/');
       const issueId = parts[4];
-      const newUrl = `http://asw.issue-tracker-asw.net/issue/${issueId}`;
+      const newUrl = `http://asw-fib.com/issue/${issueId}`;
       window.location.href = newUrl;
     });
   </script>

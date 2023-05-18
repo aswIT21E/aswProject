@@ -142,7 +142,7 @@
         },
       };
         butonlock.innerHTML = "<i class=\"fas fa-unlock\"></i>";
-          await fetch(`http://asw.issue-tracker-asw.net/issues/${issueId}/unlock-issue`, opciones);
+          await fetch(`http://asw-fib.com/issues/${issueId}/unlock-issue`, opciones);
       } 
       else {
         const opciones = {
@@ -156,7 +156,7 @@
         })
       };
         butonlock.innerHTML = "<i class=\"fas fa-lock\"></i>";
-        await fetch(`http://asw.issue-tracker-asw.net/issues/${issueId}/lock-issue`,opciones);
+        await fetch(`http://asw-fib.com/issues/${issueId}/lock-issue`,opciones);
       }
       window.location.reload();
       
@@ -175,7 +175,7 @@
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       const token = localStorage.getItem('token');
       event.preventDefault();
-      const newUrl = `http://asw.issue-tracker-asw.net/issue/${issueId}/new-comment`;
+      const newUrl = `http://asw-fib.com/issue/${issueId}/new-comment`;
       fetch(newUrl, {
       method: 'POST',
             headers: {
@@ -188,7 +188,7 @@
       })
         .then((data) => {
           console.log('Success:', data);
-          window.location.href = `http://asw.issue-tracker-asw.net/issue/${issueId}`;
+          window.location.href = `http://asw-fib.com/issue/${issueId}`;
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -200,7 +200,7 @@
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       const token = localStorage.getItem('token');
       event.preventDefault();
-      const newUrl = `http://asw.issue-tracker-asw.net/issues/${issueId}/addAttachment`;
+      const newUrl = `http://asw-fib.com/issues/${issueId}/addAttachment`;
       const formData = new FormData();
       formData.append('file', attachment.files[0]);
       console.log(attachment.files[0]);
@@ -214,12 +214,12 @@
             })
         .then((data) => {
           console.log('Success:', data);
-          /*window.location.href = `http://asw.issue-tracker-asw.net/issue/${issueId}`;*/
+          /*window.location.href = `http://asw-fib.com/issue/${issueId}`;*/
         })
         .catch((error) => {
           console.error('Error:', error);
         });
-        window.location.href = `http://asw.issue-tracker-asw.net/issue/${issueId}`;
+        window.location.href = `http://asw-fib.com/issue/${issueId}`;
       });
 
 
@@ -232,7 +232,7 @@
           const issueId = url.substring(url.lastIndexOf('/') + 1);
           const token = localStorage.getItem('token');
           event.preventDefault();
-          const newUrl = `http://asw.issue-tracker-asw.net/issues/${issueId}/removeAttachment`;
+          const newUrl = `http://asw-fib.com/issues/${issueId}/removeAttachment`;
           const formData = new FormData();
           const number = 0;
           formData.append('attachmentIndex', attachmentIndex); // Agregar el índice del attachment al FormData
@@ -250,7 +250,7 @@
           .catch((error) => {
             console.error('Error:', error);
           });
-          window.location.href = `http://asw.issue-tracker-asw.net/issue/${issueId}`;
+          window.location.href = `http://asw-fib.com/issue/${issueId}`;
         });
       }
 
@@ -264,7 +264,7 @@
   </script>
   <script>
     function redirectToUrl() {
-      window.location.href = "http://asw.issue-tracker-asw.net/issue";
+      window.location.href = "http://asw-fib.com/issue";
     }
     document.addEventListener('DOMContentLoaded', function () {
       var textElement = document.getElementById('text');
@@ -307,7 +307,7 @@
     function deleteIssue(){
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-      fetch(`http://asw.issue-tracker-asw.net/issue/${issueId}/remove`, {
+      fetch(`http://asw-fib.com/issue/${issueId}/remove`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -315,14 +315,14 @@
         },
         credentials: 'same-origin',
       }).then(() => {
-    window.location.replace("http://asw.issue-tracker-asw.net/issue");
+    window.location.replace("http://asw-fib.com/issue");
   })
       .catch(error => console.log(error));
     }
     function modifyIssue(parameter, newValue) {
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-      fetch(`http://asw.issue-tracker-asw.net/issue/${issueId}/modifyIssue`, {
+      fetch(`http://asw-fib.com/issue/${issueId}/modifyIssue`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -400,7 +400,7 @@ function mostrarAcividades() {
   // Realiza la petición POST al servidor
   const url = window.location.href;
   const issueId = url.substring(url.lastIndexOf('/') + 1);
-  await fetch(`http://asw.issue-tracker-asw.net/issues/${issueId}/updateDeadline`, {
+  await fetch(`http://asw-fib.com/issues/${issueId}/updateDeadline`, {
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
@@ -423,7 +423,7 @@ function mostrarAcividades() {
 function eliminadeadline() {
   const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-  fetch(`http://asw.issue-tracker-asw.net/issues/${issueId}Deadline`, {
+  fetch(`http://asw-fib.com/issues/${issueId}Deadline`, {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json',
