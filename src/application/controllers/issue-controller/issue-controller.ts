@@ -858,7 +858,9 @@ export class IssueController {
       const numberIssue: string = req.params.id;
       await IssueRepository.deleteIssue(numberIssue);
       res.status(200);
-      res.end();
+      res.json({
+        message: 'issue deleted successfully',
+      });
     } catch (e) {
       res.status(500);
       res.json({
