@@ -67,6 +67,31 @@ paths:
           description: Invalid request
         '404':
           description: User not found
+  /users/{id}:
+    get:
+      summary: Get user
+      description: Retrieves the information of the user ID
+      operationId: getUserId
+      security:
+        - BearerAuth: []
+      tags:
+        - Users
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
   /users:
     get:
       summary: Get all users
