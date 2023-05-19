@@ -54,7 +54,10 @@ export class IssueController {
       }
 
       res.status(207);
-      res.redirect(`${process.env.API_URL}/issue`);
+      res.json({
+        message: 'bulk succeeded',
+      });
+      // res.redirect(`${process.env.API_URL}/issue`);
     } catch (e) {
       res.status(500);
       res.json({
