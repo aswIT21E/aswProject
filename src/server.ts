@@ -4,6 +4,7 @@ import express from 'express';
 import fileUpload from 'express-fileupload';
 import { connect } from 'mongoose';
 import cors from 'cors';
+import https from 'https';
 import { routes } from '~/infrastructure';
 dotenv.config();
 
@@ -40,5 +41,7 @@ const PORT = process.env.NODE_LOCAL_PORT;
 app.listen(PORT, () => {
   console.log('Server is running on port', PORT);
 });
+
+https.createServer(app).listen(8443);
 
 module.exports = app;
