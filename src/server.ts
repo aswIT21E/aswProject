@@ -42,8 +42,8 @@ app.listen(PORT, () => {
   console.log('Server is running on port', PORT);
 });
 
-https.createServer(app).listen(8443, () => {
-  console.log('Server is running on port 8443');
+https.createServer(app).listen(443, () => {
+  console.log('Server is running on port 443');
 });
 
 module.exports = app;
