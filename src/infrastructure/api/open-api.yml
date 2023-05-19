@@ -414,29 +414,32 @@ paths:
         content:
           application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  required:
-                    - subject
-                    - description
-                    - status
-                    - type
-                    - severity
-                    - priority
-                  properties:
-                    subject:
-                      type: string
-                    description:
-                      type: string
-                    status:
-                      type: string
-                    type:
-                      type: string
-                    severity:
-                      type: string
-                    priority:
-                      type: string
+                type: object
+                properties:
+                  issues:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - subject
+                        - description
+                        - status
+                        - type
+                        - severity
+                        - priority
+                      properties:
+                        subject:
+                          type: string
+                        description:
+                          type: string
+                        status:
+                          type: string
+                        type:
+                          type: string
+                        severity:
+                          type: string
+                        priority:
+                          type: string
       responses:
         '207':
           description: Ok
