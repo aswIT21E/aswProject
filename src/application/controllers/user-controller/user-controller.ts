@@ -80,7 +80,6 @@ export class UserController {
       await UserRepository.editarUser(oldUser, newUser);
       res.redirect(`${process.env.API_URL}/myProfile/${token}`);
     } catch (e) {
-      console.log(e);
       res.status(500).json({
         error: e.message,
       });
@@ -218,7 +217,7 @@ export class UserController {
 
       const scriptActivitiesButton = `<a class="tab" id="viewToken" >
       <span>Api Key</span>
-        </a>`
+        </a>`;
 
       $('.profile-content-tabs').append(scriptActivitiesButton);
     }

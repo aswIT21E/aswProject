@@ -4,7 +4,8 @@ import { load } from 'cheerio';
 import type { Request, Response } from 'express';
 
 import { addActivity } from '~/application/use-cases';
-import { IUser, User } from '~/domain/entities';
+import type { IUser} from '~/domain/entities';
+import { User } from '~/domain/entities';
 import type { IComment } from '~/domain/entities/comment';
 import { Comment, CommentModel } from '~/domain/entities/comment';
 import type { IFilter } from '~/domain/entities/filter';
@@ -81,8 +82,7 @@ export class IssueController {
         creator,
         numberIssue: lastNumberIssue + 1,
       });
-      const x = await IssueRepository.addIssue(issue);
-      console.log(x);
+      await IssueRepository.addIssue(issue);
       res.status(201);
       res.redirect(`${process.env.API_URL}/issue`);
     } catch (e) {
@@ -680,7 +680,7 @@ export class IssueController {
         );
       else
         $('#deadl').append(`Deadline: <span style="color: green;">${d}</span>`);
-    } else $('#deadl').append(`Deadline: - `);
+    } else $('#deadl').append('Deadline: - ');
 
     res.send($.html());
   }

@@ -26,7 +26,7 @@ export async function uploadProfilePic(
       res.redirect(`http://api.aws-fib.com/myProfile/${token}`);
     } else {
       res.status(404).json({
-        message: `User not found`,
+        message: 'User not found',
       });
     }
   } catch (e) {

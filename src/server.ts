@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
+import cors from 'cors';
 import * as dotenv from 'dotenv';
 import express from 'express';
 import fileUpload from 'express-fileupload';
 import { connect } from 'mongoose';
-import cors from 'cors';
+
 // import https from 'https';
 import { routes } from '~/infrastructure';
 dotenv.config();
