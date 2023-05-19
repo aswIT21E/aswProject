@@ -38,12 +38,12 @@ connectToMongo();
 
 const PORT = process.env.NODE_LOCAL_PORT;
 
-app.listen(PORT, () => {
-  console.log('Server is running on port', PORT);
-});
+// app.listen(PORT, () => {
+//   console.log('Server is running on port', PORT);
+// });
 
-https.createServer(app).listen(443, () => {
-  console.log('Server is running on port 443');
+app.listen(8443, () => {
+  console.log('Server is running on port', 8443);
 });
 
 module.exports = app;
