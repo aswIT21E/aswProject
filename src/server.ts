@@ -36,14 +36,14 @@ async function connectToMongo() {
 
 connectToMongo();
 
-// const PORT = process.env.NODE_LOCAL_PORT;
+const PORT = process.env.NODE_LOCAL_PORT;
 
-// app.listen(PORT, () => {
-//   console.log('Server is running on port', PORT);
-// });
-
-app.listen(8443, () => {
-  console.log('Server is running on port', 8443);
+app.listen(PORT, () => {
+  console.log('Server is running on port', PORT);
 });
+
+// app.listen(8443, () => {
+//   console.log('Server is running on port', 8443);
+// });
 
 module.exports = app;

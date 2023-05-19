@@ -50,7 +50,7 @@
       const url = window.location.href;
       const parts = url.split('/');
       const issueId = parts[4];
-      const newUrl = `http://aws-fib.com/issues/${issueId}/assign`;
+      const newUrl = `http://api.aws-fib.com/issues/${issueId}/assign`;
       const data = {
         userId: userId,
       };
@@ -63,7 +63,7 @@
         .then((response) => response.json())
         .then((data) => {
           console.log('Success:', data);
-          window.location.href = `http://aws-fib.com/issue/${issueId}`;
+          window.location.href = `http://api.aws-fib.com/issue/${issueId}`;
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -73,7 +73,7 @@
       const url = window.location.href;
       const parts = url.split('/');
       const issueId = parts[4];
-      const newUrl = `http://aws-fib.com/issue/${issueId}`;
+      const newUrl = `http://api.aws-fib.com/issue/${issueId}`;
       window.location.href = newUrl;
     });
   </script>

@@ -63,7 +63,7 @@
       });
       function viewProfile() {
         const auth = localStorage.getItem('token');
-        window.location.href = `http://localhost:8081/myProfile/${auth}`;
+        window.location.href = `http://api.aws-fib.com/myProfile/${auth}`;
       }
     });
 
@@ -76,7 +76,7 @@
         var inputValue = document.getElementById('inputSearchbar').value;
 
         // Redirigir a la URL con el valor del input como parámetro de búsqueda
-        window.location.href = 'http://localhost:8081/issue?&text=' + inputValue;
+        window.location.href = 'http://api.aws-fib.com/issue?&text=' + inputValue;
       });
   </script>
 </div>

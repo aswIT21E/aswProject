@@ -4,7 +4,7 @@ info:
   title: Issue Tracker
   description: "This is the Open API documentation for the REST API for the Issue Tracker. Mind that all of the requests expect an Authentication Token to be passed through the headers. Cheers."
 servers:
-  - url: 'http://aws-fib.com/'
+  - url: 'http://api.aws-fib.com/'
 tags:
   - name: Users
     description: Operations related to users
@@ -153,7 +153,7 @@ paths:
           description: Bad request
         '500':
           description: Internal server error
-  /issues/{id}/editIssue:
+  /issues/{id}/editIssueObject:
     put:
       summary: Edits an issue
       description: Edits the issue ID
@@ -188,8 +188,6 @@ paths:
           description: Ok
         '401':
           description: Not authorized
-        '404':
-          description: Issue not found
         '400':
           description: Bad request
         '500':
@@ -215,8 +213,6 @@ paths:
           description: Ok
         '401':
           description: Not authorized
-        '404':
-          description: Issue not found
         '500':
           description: Internal server error
   /issues/{id}/unlock-issue:
