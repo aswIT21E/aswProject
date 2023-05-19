@@ -89,7 +89,7 @@ paths:
           description: Not authorized
         '500':
           description: Internal server error
-  /profile:
+  /users/profile:
     get:
       summary: Get user profile
       description: Retrieves the information of the user profile
