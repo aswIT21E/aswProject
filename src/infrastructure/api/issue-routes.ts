@@ -185,7 +185,7 @@ issueRouter.get(
 
 issueRouter.get('/issuefilter', filterDto, IssueController.getIssuePage);
 
-issueRouter.get('/issues', IssueController.getIssuePage);
+issueRouter.get('/issue', IssueController.getIssuePage);
 
 issueRouter.get('/issues/:id', IssueController.getIssue);
 
