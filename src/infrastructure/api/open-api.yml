@@ -4,7 +4,7 @@ info:
   title: Issue Tracker
   description: "This is the Open API documentation for the REST API for the Issue Tracker. Mind that all of the requests expect an Authentication Token to be passed through the headers. Cheers."
 servers:
-  - url: 'http://api.asw-fib.net/'
+  - url: 'https://35cb-95-127-39-47.ngrok-free.app'
 tags:
   - name: Users
     description: Operations related to users
@@ -154,7 +154,7 @@ paths:
         '500':
           description: Internal server error
   /issues/{id}/editIssueObject:
-    put:
+    post:
       summary: Edits an issue
       description: Edits the issue ID
       operationId: editIssue
@@ -208,6 +208,15 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  reason:
+                    type: string
       responses:
         '200':
           description: Ok
@@ -571,14 +580,13 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
-              schema:
-                type: object
-                required:
-                  - deadline
-                properties:
-                  file:
-                    type: string
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
       responses:
         '200':
           description: Ok
