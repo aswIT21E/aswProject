@@ -323,7 +323,7 @@ export class IssueController {
                   }</div>
                   <div class="texto-peticion" id="TextoPeticion"><a id="linkIssue" href="${
                     process.env.API_URL
-                  }/issue/${issue.id}">${issue.subject}</a> </div>
+                  }/issues/${issue.id}">${issue.subject}</a> </div>
               </div>
               <div class="estado" >${issue.status}</div>
               <div class="fecha-creacion" id="FechaPeticion" onclick="${
@@ -428,7 +428,7 @@ export class IssueController {
     }
 
     for (const act of issue.activity) {
-      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =${process.env.API_URL}/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+      const scriptActivities = `<div class="activityIssue"> ${act.message}  "<a href =${process.env.API_URL}/issues/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
       $('.activitieslist').append(scriptActivities);
     }
     $('#comment-count').append(`${comments.length}`);
@@ -459,15 +459,15 @@ export class IssueController {
     }
 
     const scriptNode5 = `
-    <a href="${process.env.API_URL}/issue/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
+    <a href="${process.env.API_URL}/issues/${issue.id}/assign" class="ticket-actions-link"><span>Añadir asignación</span></a>
     `;
 
     const scriptNode6 = `
-    <a href="${process.env.API_URL}/issue/${issue.id}/watchers" class="ticket-actions-link"><span>Modificar observadores</span></a>
+    <a href="${process.env.API_URL}/issues/${issue.id}/watchers" class="ticket-actions-link"><span>Modificar observadores</span></a>
     `;
 
     // const scriptNode7 = `
-    // <a href="process.env.API_URL/issue/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
+    // <a href="process.env.API_URL/issues/${issue.id}/watchers" class="ticket-actions-link"><span>No observar</span></a>
     // `;
 
     const scriptNode4 = `
@@ -514,7 +514,7 @@ export class IssueController {
                             </div>
                         </div>
     </div>`;
-    const path = `'${process.env.API_URL}/issue/${issue.id}/modifyIssue'`;
+    const path = `'${process.env.API_URL}/issues/${issue.id}/modifyIssue'`;
     const scriptNode2 = `
       <script>
       function modifyIssue(parameter, newValue) {
@@ -765,7 +765,7 @@ export class IssueController {
         await IssueRepository.updateIssue(issue);
 
         res.status(200);
-        res.redirect(`${process.env.API_URL}/issue/${issueID}`);
+        res.redirect(`${process.env.API_URL}/issues/${issueID}`);
       } else {
         res.status(404).json({
           message: `Issue ${issueID} not found`,
@@ -790,7 +790,7 @@ export class IssueController {
       );
       await IssueRepository.addComment(numberIssue, comment);
       res.status(200);
-      res.redirect(`${process.env.API_URL}/issue/${numberIssue}`);
+      res.redirect(`${process.env.API_URL}/issues/${numberIssue}`);
     } catch (e) {
       res.status(500);
       res.json({
@@ -810,7 +810,7 @@ export class IssueController {
         parameter,
         newValue,
       );
-      res.redirect(`/issue/${numberIssue}`);
+      res.redirect(`/issues/${numberIssue}`);
       res.status(200);
     } catch (e) {
       res.status(500);

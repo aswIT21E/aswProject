@@ -68,7 +68,7 @@ export class UserController {
         res.status(404).json({ message: 'Usuario no encontrado' });
         return;
       }
-  
+
       const newUser: IUser = {
         id: oldUser.id,
         email: req.body.email || oldUser.email,
@@ -227,35 +227,33 @@ export class UserController {
       if (param === 'watched') {
         for (const watcher of issue.watchers) {
           if (watcher.username === username) {
-            const scriptActivities = `<div class="timeline-item"> <a href =${process.env.API_URL}/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a> </div>`;
+            const scriptActivities = `<div class="timeline-item"> <a href =${process.env.API_URL}/issues/${issue.id}>${issue.numberIssue}  ${issue.subject}</a> </div>`;
             $('#timeline').append(scriptActivities);
           }
         }
-      } else if(param === 'timeline') {
+      } else if (param === 'timeline') {
         for (const activity of issue.activity) {
           const user = await UserRepository.getUserById(
             activity.actor.toString(),
           );
           if (user.username === username) {
-            const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =${process.env.API_URL}/issue/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
+            const scriptActivities = `<div class="timeline-item"> ${activity.message}  "<a href =${process.env.API_URL}/issues/${issue.id}>${issue.numberIssue}  ${issue.subject}</a>" </div>`;
             $('#timeline').append(scriptActivities);
           }
         }
       }
-      
     }
-    if(param === 'token' ){
-     
+    if (param === 'token') {
       const parts = token.split('.');
       const scriptActivities = `<div class="timeline-item"> ${parts[0]}${parts[1]}</div>
       <div class="timeline-item" > ${parts[2]}
       <button id="copy-button" >
       <i class="fas fa-solid fa-copy"></i> 
       </button></div>`;
-      
+
       $('#timeline').append(scriptActivities);
     }
-      res.send($.html());
+    res.send($.html());
   }
 
   public static async getSignUpPageCss(

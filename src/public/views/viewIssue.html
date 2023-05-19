@@ -174,7 +174,7 @@
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       event.preventDefault();
-      const newUrl = `http://api.asw-fib.net/issue/${issueId}/new-comment`;
+      const newUrl = `http://api.asw-fib.net/issues/${issueId}/new-comment`;
       const token = localStorage.getItem('token');
       const headers = new Headers();
       headers.append('Authorization', `Bearer ${token}`);
@@ -188,7 +188,7 @@
       })
         .then((data) => {
           console.log('Success:', data);
-          window.location.href = `http://api.asw-fib.net/issue/${issueId}`;
+          window.location.href = `http://api.asw-fib.net/issues/${issueId}`;
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -214,12 +214,12 @@
             })
         .then((data) => {
           console.log('Success:', data);
-          /*window.location.href = `http://api.asw-fib.net/issue/${issueId}`;*/
+          /*window.location.href = `http://api.asw-fib.net/issues/${issueId}`;*/
         })
         .catch((error) => {
           console.error('Error:', error);
         });
-        window.location.href = `http://api.asw-fib.net/issue/${issueId}`;
+        window.location.href = `http://api.asw-fib.net/issues/${issueId}`;
       });
 
 
@@ -251,7 +251,7 @@
           .catch((error) => {
             console.error('Error:', error);
           });
-          window.location.href = `http://api.asw-fib.net/issue/${issueId}`;
+          window.location.href = `http://api.asw-fib.net/issues/${issueId}`;
         });
       }
 
@@ -312,7 +312,7 @@
       headers.append('Authorization', `Bearer ${token}`);
       headers.append('Content-Type', 'application/json');
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-      fetch(`http://api.asw-fib.net/issue/${issueId}/remove`, {
+      fetch(`http://api.asw-fib.net/issues/${issueId}/remove`, {
         method: 'DELETE',
         headers: headers,
         credentials: 'same-origin',
@@ -328,7 +328,7 @@
       const headers = new Headers();
       headers.append('Authorization', `Bearer ${token}`);
       headers.append('Content-Type', 'application/json');
-      fetch(`http://api.asw-fib.net/issue/${issueId}/modifyIssue`, {
+      fetch(`http://api.asw-fib.net/issues/${issueId}/modifyIssue`, {
         method: 'PUT',
         headers: headers,
         body: JSON.stringify({

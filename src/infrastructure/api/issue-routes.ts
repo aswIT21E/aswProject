@@ -40,7 +40,7 @@ issueRouter.post(
 );
 
 issueRouter.post(
-  '/issue/bulk',
+  '/issues/bulk',
   authMiddleware,
   bulkIssuesDto,
   IssueController.bulkIssues,
@@ -61,7 +61,7 @@ issueRouter.post(
 );
 
 issueRouter.post(
-  '/issue/:id/new-comment',
+  '/issues/:id/new-comment',
   authMiddleware,
   checkBlockedIssue,
   IssueController.createComment,
@@ -97,14 +97,14 @@ issueRouter.post('/issues/bulkIssues', IssueController.bulkIssues);
  */
 
 issueRouter.put(
-  '/issue/:id/editIssue',
+  '/issues/:id/editIssue',
   authMiddleware,
   checkBlockedIssue,
   IssueController.modifyIssue,
 );
 
 issueRouter.put(
-  '/issue/:id/modifyIssue',
+  '/issues/:id/modifyIssue',
   authMiddleware,
   checkBlockedIssue,
   IssueController.modifyIssue,
@@ -151,7 +151,7 @@ issueRouter.get(
  */
 
 issueRouter.delete(
-  '/issue/:id/remove',
+  '/issues/:id/remove',
   authMiddleware,
   IssueController.removeIssue,
 );
@@ -185,13 +185,13 @@ issueRouter.get(
 
 issueRouter.get('/issuefilter', filterDto, IssueController.getIssuePage);
 
-issueRouter.get('/issue', IssueController.getIssuePage);
+issueRouter.get('/issues', IssueController.getIssuePage);
 
-issueRouter.get('/issue/:id', IssueController.getIssue);
+issueRouter.get('/issues/:id', IssueController.getIssue);
 
-issueRouter.get('/issue/:id/assign', IssueController.getUserInfoAssign);
+issueRouter.get('/issues/:id/assign', IssueController.getUserInfoAssign);
 
-issueRouter.get('/issue/:id/watchers', IssueController.getUserInfoWatchers);
+issueRouter.get('/issues/:id/watchers', IssueController.getUserInfoWatchers);
 
 issueRouter.get(
   '/stylesheets/searchIssue.css',
@@ -209,12 +209,12 @@ issueRouter.get(
 );
 
 issueRouter.get(
-  '/issue/:id/stylesheets/assign.css',
+  '/issues/:id/stylesheets/assign.css',
   IssueController.getAssignPageCss,
 );
 
 issueRouter.get(
-  '/issue/:id/stylesheets/watchers.css',
+  '/issues/:id/stylesheets/watchers.css',
   IssueController.getWatchersPageCss,
 );
 

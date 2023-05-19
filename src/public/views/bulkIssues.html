@@ -64,7 +64,7 @@
           }));
 
           try {
-            const response = await fetch('/issue/bulk', {
+            const response = await fetch('/issues/bulk', {
               method: 'POST',
               headers: headers,
               body: JSON.stringify({ issues: bulkIssues }),
