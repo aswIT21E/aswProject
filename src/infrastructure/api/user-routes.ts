@@ -45,6 +45,8 @@ userRouter.put('/users/editProfile', authMiddleware, UserController.editUser);
  * GET METHODS
  */
 
+userRouter.get('/users/profile', authMiddleware, UserController.getUserProfile);
+
 userRouter.get('/users', authMiddleware, UserController.getAllUsers);
 
 /**

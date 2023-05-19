@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 import type { IUser } from '~/domain/entities/user';
 import { IssueRepository } from '~/domain/repositories';
 import { UserRepository } from '~/domain/repositories/user-repository/user-repository';
+import { getActor } from '~/utils';
 
 export class UserController {
   public static async createUser(req: Request, res: Response): Promise<void> {
@@ -90,6 +91,22 @@ export class UserController {
     res: Response,
   ): Promise<void> {
     res.sendFile('public/views/profile.html', { root: 'src' });
+  }
+
+  public static async getUserProfile(
+    req: Request,
+    res: Response,
+  ): Promise<void> {
+    const user = await getActor(req);
+    if (user) {
+      res.status(200);
+      res.json({ user });
+    } else {
+      res.status(404);
+      res.json({
+        message: 'user not found',
+      });
+    }
   }
 
   public static async getEditProfilePage(
