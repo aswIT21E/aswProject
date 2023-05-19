@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import type { Request, Response } from 'express';
 
 import { addActivity } from '~/application/use-cases';
-import type { IUser} from '~/domain/entities';
+import type { IUser } from '~/domain/entities';
 import { User } from '~/domain/entities';
 import type { IComment } from '~/domain/entities/comment';
 import { Comment, CommentModel } from '~/domain/entities/comment';
@@ -84,7 +84,11 @@ export class IssueController {
       });
       await IssueRepository.addIssue(issue);
       res.status(201);
-      res.redirect(`${process.env.API_URL}/issue`);
+      res.json({
+        message: 'Issue created successfully',
+        issue,
+      });
+      // res.redirect(`${process.env.API_URL}/issue`);
     } catch (e) {
       res.status(500);
       res.json({
@@ -816,7 +820,10 @@ export class IssueController {
       });
     }
   }
-  public static async modifyIssueObject(req: Request, res: Response): Promise<void> {
+  public static async modifyIssueObject(
+    req: Request,
+    res: Response,
+  ): Promise<void> {
     try {
       const numberIssue: string = req.params.id;
       const parameter: string = req.body.parameter;
