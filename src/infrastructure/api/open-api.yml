@@ -224,6 +224,29 @@ paths:
           description: Not authorized
         '500':
           description: Internal server error
+  /issues/{id}/removeDeadline:
+    delete:
+      summary: Remove Deadline
+      description: Remove dedaline issue
+      operationId: removeDeadline
+      security:
+        - BearerAuth: []
+      tags:
+        - Issues
+      parameters:
+        - name: id
+          in: path
+          description: ID of the issue
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+        '401':
+          description: Not authorized
+        '500':
+          description: Internal server error
   /issues/{id}/unlock-issue:
     put:
       summary: Unlock Issue
@@ -523,7 +546,7 @@ paths:
         '500':
           description: Internal server error
   /issues/{id}/updateDeadline:
-    post:
+    put:
       summary: Update deadline
       description: Updates the deadline of the issue ID
       operationId: updateDeadline
