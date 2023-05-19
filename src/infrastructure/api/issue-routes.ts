@@ -117,7 +117,7 @@ issueRouter.put(
   lockIssue,
 );
 
-issueRouter.put(
+issueRouter.post(
   '/issues/:id/editIssueObject',
   authMiddleware,
   checkBlockedIssue,
