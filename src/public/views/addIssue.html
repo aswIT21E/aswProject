@@ -127,7 +127,7 @@
         };
 
         try {
-          const response = await fetch('http://aws-fib.com/issues/create', {
+          const response = await fetch('http://api.aws-fib.net/issues/create', {
             method: 'POST',
             headers: headers,
             body: JSON.stringify(issue),

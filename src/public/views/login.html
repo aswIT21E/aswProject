@@ -87,7 +87,7 @@
         });
         const data = await response.json();
         if (response.ok) {
-          window.location.href = 'http://aws-fib.com/issue';
+          window.location.href = 'http://api.aws-fib.net/issue';
         } else if (response.status === 400) {
           console.error(data.error || data.message);
         }

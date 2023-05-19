@@ -63,7 +63,7 @@
         .then((response) => response.json())
         .then((data) => {
           console.log('Success:', data);
-          window.location.href = `http://aws-fib.com/issue/${issueId}`;
+          window.location.href = `http://api.aws-fib.net/issue/${issueId}`;
         })
         .catch((error) => {
           console.error('Error:', error);
