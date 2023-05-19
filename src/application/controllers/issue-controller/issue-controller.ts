@@ -814,8 +814,11 @@ export class IssueController {
         parameter,
         newValue,
       );
-      res.redirect(`/issues/${numberIssue}`);
+      // res.redirect(`/issues/${numberIssue}`);
       res.status(200);
+      res.json({
+        message: 'Issue editted successfuly',
+      });
     } catch (e) {
       res.status(500);
       res.json({
