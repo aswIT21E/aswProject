@@ -765,7 +765,11 @@ export class IssueController {
         await IssueRepository.updateIssue(issue);
 
         res.status(200);
-        res.redirect(`${process.env.API_URL}/issues/${issueID}`);
+        res.json({
+          message: 'Comment added successfully',
+          issue,
+        });
+        //res.redirect(`${process.env.API_URL}/issues/${issueID}`);
       } else {
         res.status(404).json({
           message: `Issue ${issueID} not found`,
