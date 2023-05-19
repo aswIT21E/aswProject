@@ -43,7 +43,7 @@ export class UserController {
   }
 
   public static async getUserId(req: Request, res: Response): Promise<void> {
-    const userId = req.params.userId;
+    const userId = req.params.id;
 
     try {
       const user = await UserRepository.getUserById(userId);
