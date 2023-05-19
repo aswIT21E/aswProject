@@ -49,6 +49,8 @@ userRouter.get('/users/profile', authMiddleware, UserController.getUserProfile);
 
 userRouter.get('/users', authMiddleware, UserController.getAllUsers);
 
+userRouter.get('/users/:id', authMiddleware, UserController.getUserId);
+
 /**
  * PAGES AND STYLES
  */

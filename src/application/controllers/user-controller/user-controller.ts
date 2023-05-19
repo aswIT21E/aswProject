@@ -42,6 +42,30 @@ export class UserController {
     }
   }
 
+  public static async getUserId(req: Request, res: Response): Promise<void> {
+    const userId = req.params.userId;
+
+    try {
+      const user = await UserRepository.getUserById(userId);
+      if (!user) {
+        res.status(404);
+        res.json({
+          message: 'User not found',
+        });
+      } else {
+        res.status(200);
+        res.json({
+          user,
+        });
+      }
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+      });
+    }
+  }
+
   public static async getSignUpPage(
     _req: Request,
     res: Response,
