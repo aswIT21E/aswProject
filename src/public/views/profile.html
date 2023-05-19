@@ -32,7 +32,7 @@
     <div class="button" id="logout-btn"></div>
     <script>
       function redirectToUrl() {
-        window.location.href = 'http://aws-fib.com/issue';
+        window.location.href = 'http://api.asw-fib.net/issue';
       }
       document.addEventListener('DOMContentLoaded', function () {
         var editElem = document.getElementById('editPerfil');
@@ -51,7 +51,7 @@
           const author = parts[4];
           const authorReal = author.split('?');
           console.log(author);
-          const newUrl = `http://aws-fib.com/myProfile/${authorReal[0]}?&view=timeline`;
+          const newUrl = `http://api.asw-fib.net/myProfile/${authorReal[0]}?&view=timeline`;
           window.location.href = newUrl;
         });
 
@@ -61,7 +61,7 @@
           const author = parts[4];
           const authorReal = author.split('?');
           console.log(author);
-          const newUrl = `http://aws-fib.com/myProfile/${authorReal[0]}?&view=watched`;
+          const newUrl = `http://api.asw-fib.net/myProfile/${authorReal[0]}?&view=watched`;
           window.location.href = newUrl;
         });
         viewToken.addEventListener('click', function () {
@@ -70,18 +70,18 @@
           const author = parts[4];
           const authorReal = author.split('?');
           console.log(author);
-          const newUrl = `http://aws-fib.com/myProfile/${authorReal[0]}?&view=token`;
+          const newUrl = `http://api.asw-fib.net/myProfile/${authorReal[0]}?&view=token`;
           window.location.href = newUrl;
         });
         function viewProfile() {
           const auth = localStorage.getItem('token');
-          window.location.href = `http://aws-fib.com/myProfile/${auth}/edit`;
+          window.location.href = `http://api.asw-fib.net/myProfile/${auth}/edit`;
         }
       });
 
       function logout() {
         localStorage.removeItem('token');
-        window.location.href = 'http://aws-fib.com/login';
+        window.location.href = 'http://api.asw-fib.net/login';
       }
     </script>
     <script>

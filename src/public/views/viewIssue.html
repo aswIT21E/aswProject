@@ -141,7 +141,7 @@
         headers: headers,
       };
         butonlock.innerHTML = "<i class=\"fas fa-unlock\"></i>";
-          await fetch(`http://aws-fib.com/issues/${issueId}/unlock-issue`, opciones);
+          await fetch(`http://api.asw-fib.net/issues/${issueId}/unlock-issue`, opciones);
       } 
       else {
         const token = localStorage.getItem('token');
@@ -156,7 +156,7 @@
         })
       };
         butonlock.innerHTML = "<i class=\"fas fa-lock\"></i>";
-        await fetch(`http://aws-fib.com/issues/${issueId}/lock-issue`,opciones);
+        await fetch(`http://api.asw-fib.net/issues/${issueId}/lock-issue`,opciones);
       }
       window.location.reload();
       
@@ -174,7 +174,7 @@
       const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       event.preventDefault();
-      const newUrl = `http://aws-fib.com/issue/${issueId}/new-comment`;
+      const newUrl = `http://api.asw-fib.net/issue/${issueId}/new-comment`;
       const token = localStorage.getItem('token');
       const headers = new Headers();
       headers.append('Authorization', `Bearer ${token}`);
@@ -188,7 +188,7 @@
       })
         .then((data) => {
           console.log('Success:', data);
-          window.location.href = `http://aws-fib.com/issue/${issueId}`;
+          window.location.href = `http://api.asw-fib.net/issue/${issueId}`;
         })
         .catch((error) => {
           console.error('Error:', error);
@@ -200,7 +200,7 @@
       const issueId = url.substring(url.lastIndexOf('/') + 1);
       const token = localStorage.getItem('token');
       event.preventDefault();
-      const newUrl = `http://aws-fib.com/issues/${issueId}/addAttachment`;
+      const newUrl = `http://api.asw-fib.net/issues/${issueId}/addAttachment`;
       const formData = new FormData();
       formData.append('file', attachment.files[0]);
       console.log(attachment.files[0]);
@@ -214,12 +214,12 @@
             })
         .then((data) => {
           console.log('Success:', data);
-          /*window.location.href = `http://aws-fib.com/issue/${issueId}`;*/
+          /*window.location.href = `http://api.asw-fib.net/issue/${issueId}`;*/
         })
         .catch((error) => {
           console.error('Error:', error);
         });
-        window.location.href = `http://aws-fib.com/issue/${issueId}`;
+        window.location.href = `http://api.asw-fib.net/issue/${issueId}`;
       });
 
 
@@ -232,7 +232,7 @@
           const issueId = url.substring(url.lastIndexOf('/') + 1);
           const token = localStorage.getItem('token');
           event.preventDefault();
-          const newUrl = `http://aws-fib.com/issues/${issueId}/removeAttachment`;
+          const newUrl = `http://api.asw-fib.net/issues/${issueId}/removeAttachment`;
           const formData = new FormData();
           const number = 0;
           const headers = new Headers();
@@ -251,7 +251,7 @@
           .catch((error) => {
             console.error('Error:', error);
           });
-          window.location.href = `http://aws-fib.com/issue/${issueId}`;
+          window.location.href = `http://api.asw-fib.net/issue/${issueId}`;
         });
       }
 
@@ -265,7 +265,7 @@
   </script>
   <script>
     function redirectToUrl() {
-      window.location.href = "http://aws-fib.com/issue";
+      window.location.href = "http://api.asw-fib.net/issue";
     }
     document.addEventListener('DOMContentLoaded', function () {
       var textElement = document.getElementById('text');
@@ -312,12 +312,12 @@
       headers.append('Authorization', `Bearer ${token}`);
       headers.append('Content-Type', 'application/json');
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-      fetch(`http://aws-fib.com/issue/${issueId}/remove`, {
+      fetch(`http://api.asw-fib.net/issue/${issueId}/remove`, {
         method: 'DELETE',
         headers: headers,
         credentials: 'same-origin',
       }).then(() => {
-      window.location.replace("http://aws-fib.com/issue");
+      window.location.replace("http://api.asw-fib.net/issue");
   })
       .catch(error => console.log(error));
     }
@@ -328,7 +328,7 @@
       const headers = new Headers();
       headers.append('Authorization', `Bearer ${token}`);
       headers.append('Content-Type', 'application/json');
-      fetch(`http://aws-fib.com/issue/${issueId}/modifyIssue`, {
+      fetch(`http://api.asw-fib.net/issue/${issueId}/modifyIssue`, {
         method: 'PUT',
         headers: headers,
         body: JSON.stringify({
@@ -403,7 +403,7 @@ function mostrarAcividades() {
   // Realiza la petición POST al servidor
   const url = window.location.href;
   const issueId = url.substring(url.lastIndexOf('/') + 1);
-  await fetch(`http://aws-fib.com/issues/${issueId}/updateDeadline`, {
+  await fetch(`http://api.asw-fib.net/issues/${issueId}/updateDeadline`, {
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
@@ -426,7 +426,7 @@ function mostrarAcividades() {
 function eliminadeadline() {
   const url = window.location.href;
       const issueId = url.substring(url.lastIndexOf('/') + 1);
-  fetch(`http://aws-fib.com/issues/${issueId}Deadline`, {
+  fetch(`http://api.asw-fib.net/issues/${issueId}Deadline`, {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json',
