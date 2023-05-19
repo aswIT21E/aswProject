@@ -63,7 +63,16 @@
       });
       function viewProfile() {
         const auth = localStorage.getItem('token');
-        window.location.href = `http://api.asw-fib.net/myProfile/${auth}`;
+        window.location.href = `http://localhost:8081/myProfile/${auth}`;
+        // const headers = new Headers();
+        // headers.append('Authorization', `Bearer ${auth}`);
+        // headers.append('Content-Type', 'application/json');
+        // console.log(headers)
+        // const response = fetch(`http://localhost:8081/myProfile/${auth}`, {
+        //   method: 'GET',
+        //   headers: headers,
+        // });
+        //window.location.href = `http://localhost:8081/myProfile/${auth}`
       }
     });
 
@@ -77,7 +86,7 @@
 
         // Redirigir a la URL con el valor del input como parámetro de búsqueda
         window.location.href =
-          'http://api.asw-fib.net/issue?&text=' + inputValue;
+          'http://localhost:8081/issue?&text=' + inputValue;
       });
   </script>
 </div>
