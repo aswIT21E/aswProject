@@ -4,7 +4,7 @@ info:
   title: Issue Tracker
   description: "This is the Open API documentation for the REST API for the Issue Tracker. Mind that all of the requests expect an Authentication Token to be passed through the headers. Cheers."
 servers:
-  - url: 'http://api.aws-fib.com/'
+  - url: 'http://api.asw-fib.net/'
 tags:
   - name: Users
     description: Operations related to users
