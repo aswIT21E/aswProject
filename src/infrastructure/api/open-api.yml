@@ -153,7 +153,7 @@ paths:
           description: Bad request
         '500':
           description: Internal server error
-  /issues/{id}/editIssue:
+  /issues/{id}/editIssueObject:
     put:
       summary: Edits an issue
       description: Edits the issue ID
@@ -188,8 +188,6 @@ paths:
           description: Ok
         '401':
           description: Not authorized
-        '404':
-          description: Issue not found
         '400':
           description: Bad request
         '500':
@@ -215,8 +213,6 @@ paths:
           description: Ok
         '401':
           description: Not authorized
-        '404':
-          description: Issue not found
         '500':
           description: Internal server error
   /issues/{id}/unlock-issue:

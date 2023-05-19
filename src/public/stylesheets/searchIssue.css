@@ -318,3 +318,14 @@ button {
     margin-left: 5px;
     min-width: fit-content;
 }
+#irperfil{
+    background-color: #008aa8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-right: 5px;
+    min-width: fit-content;
+}

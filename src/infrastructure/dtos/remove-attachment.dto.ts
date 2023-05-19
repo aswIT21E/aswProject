@@ -14,7 +14,6 @@ export async function removeAttachmentDto(
 ) {
   const DTO = new RemoveAttachmentDto();
   DTO.attachmentIndex = req.body.attachmentIndex;
-  console.log(DTO);
   const errors = await validate(DTO);
   if (errors.length) {
     res.status(400).json({ errors });

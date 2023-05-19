@@ -4,7 +4,8 @@ import { load } from 'cheerio';
 import type { Request, Response } from 'express';
 
 import { addActivity } from '~/application/use-cases';
-import { IUser, User } from '~/domain/entities';
+import type { IUser} from '~/domain/entities';
+import { User } from '~/domain/entities';
 import type { IComment } from '~/domain/entities/comment';
 import { Comment, CommentModel } from '~/domain/entities/comment';
 import type { IFilter } from '~/domain/entities/filter';
@@ -81,8 +82,7 @@ export class IssueController {
         creator,
         numberIssue: lastNumberIssue + 1,
       });
-      const x = await IssueRepository.addIssue(issue);
-      console.log(x);
+      await IssueRepository.addIssue(issue);
       res.status(201);
       res.redirect(`${process.env.API_URL}/issue`);
     } catch (e) {
@@ -680,7 +680,7 @@ export class IssueController {
         );
       else
         $('#deadl').append(`Deadline: <span style="color: green;">${d}</span>`);
-    } else $('#deadl').append(`Deadline: - `);
+    } else $('#deadl').append('Deadline: - ');
 
     res.send($.html());
   }
@@ -812,7 +812,29 @@ export class IssueController {
       res.status(500);
       res.json({
         error: e,
-        message: 'comment not created',
+        message: 'issue not modified',
+      });
+    }
+  }
+  public static async modifyIssueObject(req: Request, res: Response): Promise<void> {
+    try {
+      const numberIssue: string = req.params.id;
+      const parameter: string = req.body.parameter;
+      const newValue = req.body.newValue;
+      await IssueRepository.modifyParameterIssue(
+        numberIssue,
+        parameter,
+        newValue,
+      );
+      res.status(200);
+      res.json({
+        message: 'issue modified correctly',
+      });
+    } catch (e) {
+      res.status(500);
+      res.json({
+        error: e,
+        message: 'issue not modified',
       });
     }
   }

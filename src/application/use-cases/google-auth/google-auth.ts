@@ -1,9 +1,9 @@
 import type { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import { OAuth2Client } from 'google-auth-library';
+import jwt from 'jsonwebtoken';
 
 import { UserModel } from '~/domain/entities/user';
-import { GoogleAuthDto } from '~/infrastructure';
+import type { GoogleAuthDto } from '~/infrastructure';
 
 export async function googleAuth(req: Request, res: Response): Promise<void> {
   console.log('google auth');

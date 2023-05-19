@@ -103,6 +103,8 @@ issueRouter.put(
   IssueController.modifyIssue,
 );
 
+
+
 issueRouter.put(
   '/issue/:id/modifyIssue',
   authMiddleware,
@@ -214,4 +216,11 @@ issueRouter.get(
 issueRouter.get(
   '/stylesheets/bulkIssues.css',
   IssueController.getBulkIssuesPageCss,
+);
+
+issueRouter.put(
+  '/issue/:id/editIssueObject',
+  authMiddleware,
+  checkBlockedIssue,
+  IssueController.modifyIssue,
 );
