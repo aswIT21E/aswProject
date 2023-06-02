@@ -20,6 +20,7 @@ export class IssueRepository {
       })
       .populate({ path: 'assignedTo', model: 'User' })
       .populate({ path: 'watchers', model: 'User' })
+      .populate({ path: 'assignedTo', model: 'User' })
       .populate({
         path: 'activity',
         model: 'Activity',
@@ -55,6 +56,7 @@ export class IssueRepository {
         path: 'creator',
         model: 'User',
       })
+      .populate({ path: 'assignedTo', model: 'User' })
       .populate({ path: 'watchers', model: 'User' })
       .populate({ path: 'activity', model: 'Activity' });
     return issueDocument;
@@ -157,27 +159,32 @@ export class IssueRepository {
       ...(filter.asign_to && { assignedTo: {} }),
     };
     if (filter.crated_by) {
-      const users = await UserModel.find({ username: { $in: filter.crated_by } });
+      const users = await UserModel.find({
+        username: { $in: filter.crated_by },
+      });
       query.creator = { $in: users };
-  }
-  if (filter.asign_to) {
-    const users = await UserModel.find({ username: { $in: filter.asign_to } });
-    query.assignedTo = { $in: users };
-}
+    }
+    if (filter.asign_to) {
+      const users = await UserModel.find({
+        username: { $in: filter.asign_to },
+      });
+      query.assignedTo = { $in: users };
+    }
 
-    return await IssueModel.find(query) .populate({
-      path: 'creator',
-      model: 'User',
-    })
-    .populate({ path: 'watchers', model: 'User' })
-    .populate({ path: 'assignedTo', model: 'User' })
-    .populate({
-      path: 'activity',
-      model: 'Activity',
-      populate: {
-        path: 'actor',
+    return await IssueModel.find(query)
+      .populate({
+        path: 'creator',
         model: 'User',
-      },
-    });
+      })
+      .populate({ path: 'watchers', model: 'User' })
+      .populate({ path: 'assignedTo', model: 'User' })
+      .populate({
+        path: 'activity',
+        model: 'Activity',
+        populate: {
+          path: 'actor',
+          model: 'User',
+        },
+      });
   }
 }
